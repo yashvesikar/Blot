@@ -22,7 +22,7 @@ const setupBlog = setupLimiter.wrap(async (blogID, sharingLink) => {
   );
 
   const checkInterval = 100; // Interval (in ms) to check for new directories
-  const timeout = 1000 * 5; // Timeout (in ms) to wait for a new directory: 5 seconds
+  const timeout = 1000 * 5; // Timeout (in ms) to wait for a new directory: 5 seconds 
   const start = Date.now();
 
   // Get the initial state of the top-level directories
@@ -62,6 +62,9 @@ const setupBlog = setupLimiter.wrap(async (blogID, sharingLink) => {
 
       const oldPath = join(iCloudDriveDirectory, newDirName);
       const newPath = join(iCloudDriveDirectory, blogID);
+
+      // If there is already a folder with the blogID, delete it
+      await fs.remove(newPath);
 
       // Rename the folder
       await fs.rename(oldPath, newPath);
@@ -181,9 +184,9 @@ module.exports = async (req, res) => {
   try {
     await setupBlog(blogID, sharingLink);
     console.log(`Setup complete for blogID: ${blogID}`);
-    await status(blogID, { setupComplete: true });
+    await status(blogID, { acceptedSharingLink: true, error: null });
   } catch (error) {
     console.error(`Setup failed for blogID (${blogID}):`, error);
-    await status(blogID, { setupComplete: false, error: error.message });
+    await status(blogID, { acceptedSharingLink: false, error: error.message });
   }
 };
