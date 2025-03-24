@@ -3,6 +3,8 @@
     why doesn't docker restart reset sync locks?
     update stale and retries to ensure that on restart we can re-aquire sync lock?
 
+Add script to resync all icloud folders – make sure they are up to date
+
 Fix bug with template error causing server to go down (issue with folder rebuild)
 
     reproduce bug with chinese template?
