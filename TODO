@@ -1,10 +1,5 @@
- reset sync locks on server start?
-
-    why doesn't docker restart reset sync locks?
-    update stale and retries to ensure that on restart we can re-aquire sync lock?
-
-Add script to resync all icloud folders – make sure they are up to date
-
+When the server has just started, wait for the stalesness duration before failing any attempts to acquire a sync lock
+    
 Fix bug with template error causing server to go down (issue with folder rebuild)
 
     reproduce bug with chinese template?
@@ -33,6 +28,8 @@ Trigger an error with build template on iCloud client to work out why server cra
     }
 
 
+Add script to resync all icloud folders – make sure they are up to date
+
 Check that Google Drive is staying in sync:
 - login -> node scripts/google-drive/reset.js
 - add proper bottlenecks then run this regularly
@@ -40,7 +37,10 @@ Check that Google Drive is staying in sync:
 Come up with plan to handle google docs on disconnection from Google drive -> convert to markdown?
 - tell henryirvine about issues with his site
 
-Write proper tests for Google Drive client
+Write proper tests for clients:
+- Dropbox
+- Google Drive
+- iCloud
 
 ---
 

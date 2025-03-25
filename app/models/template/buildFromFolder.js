@@ -46,6 +46,15 @@ module.exports = function (blogID, callback) {
     },
     function (err) {
       getTemplateList(blogID, function (err, templates) {
+
+        if (err) {
+          return callback();
+        }
+
+        if (!templates) {
+          return callback();
+        }
+        
         const localTemplatesToRemove = templates.filter(
           template =>
             template.localEditing === true &&
@@ -57,7 +66,9 @@ module.exports = function (blogID, callback) {
           localTemplatesToRemove,
           function (template, next) {
             drop(blogID, template.slug, function (err) {
-              if (err) return next(err);
+              if (err) {
+                console.error("Failed to remove template", template.slug);
+              }
               next();
             });
           },
