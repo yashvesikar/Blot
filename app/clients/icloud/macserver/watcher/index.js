@@ -144,6 +144,8 @@ const watch = async (blogID) => {
   let initialScanComplete = false;
 
   console.log(`Starting watcher for blog folder: ${blogID}`);
+  // Monitor the CPU usage on the macserver before and after
+  // making any changes to the polling intervals
   const watcher = chokidar
     .watch(blogPath, {
       usePolling: true,
