@@ -18,7 +18,8 @@ var CACHE_CONTROL = "Cache-Control";
 
 const {minifyJS, minifyCSS} = require("./minify");
 const injectScreenshotScript = require("./injectScreenshotScript");
-const replaceFolderLinks = require("./replaceFolderLinks");
+const replaceFolderLinks = require("./replaceFolderLinks/html");
+const replaceFolderLinksCSS = require("./replaceFolderLinks/css");
 
 var cacheDuration = "public, max-age=31536000";
 var JS = "application/javascript";
@@ -156,6 +157,10 @@ module.exports = function (req, res, _next) {
             if (viewType === "text/html") {
               req.log("Replacing folder links with CDN links");
               output = await replaceFolderLinks(blog.cacheID, blogID, output);
+              req.log("Replaced folder links with CDN links");
+            } else if (viewType === "text/css") {
+              req.log("Replacing folder links with CDN links");
+              output = await replaceFolderLinksCSS(blog.cacheID, blogID, output);
               req.log("Replaced folder links with CDN links");
             }
 
