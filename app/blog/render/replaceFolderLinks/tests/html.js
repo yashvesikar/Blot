@@ -24,6 +24,32 @@ describe("replaceFolderLinks", function () {
     );
   });
 
+  it("should change the CDN url if the source file changes", async function () {
+    await this.write({ path: "/test.jpg", content: "image 1" });
+    await this.template({ "entries.html": '<img src="/test.jpg">' });
+
+    const res = await this.get("/");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/test.jpg"));
+
+    const version = result.match(/v-[a-f0-9]{8}/)[0];
+
+    // wait one second to ensure the file is written at a different time
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    await this.write({ path: "/test.jpg", content: "image 2" });
+    
+    const res2 = await this.get("/");
+    const result2 = await res2.text();
+
+    expect(result2).toMatch(cdnRegex("/test.jpg"));
+    
+    const version2 = result2.match(/v-[a-f0-9]{8}/)[0];
+
+    expect(version2).not.toEqual(version);
+  });
+
   it("should leave code blocks as-is", async function () {
     await this.write({ path: "/docs/test.pdf", content: "fake pdf data" });
     await this.write({
@@ -93,12 +119,12 @@ describe("replaceFolderLinks", function () {
     await this.write({ path: "/test.jpg", content: "image" });
     await this.template({
       "entries.html": `
-                <!DOCTYPE html>
-                <html>
-                    <head><title>Test</title></head>
-                    <body><img src="/test.jpg"></body>
-                </html>
-            `.trim(),
+                  <!DOCTYPE html>
+                  <html>
+                      <head><title>Test</title></head>
+                      <body><img src="/test.jpg"></body>
+                  </html>
+              `.trim(),
     });
 
     const res = await this.get("/");
@@ -153,7 +179,9 @@ describe("replaceFolderLinks", function () {
     const res = await this.get("/");
     const result = await res.text();
 
-    expect(result).toEqual('<img src="../../../../a.jpg"><a href="../../../../etc/passwd">');
+    expect(result).toEqual(
+      '<img src="../../../../a.jpg"><a href="../../../../etc/passwd">'
+    );
   });
 
   it("ignores empty hrefs and srcs", async function () {
@@ -248,14 +276,14 @@ describe("replaceFolderLinks", function () {
     await this.write({ path: "/deep/nested/test.jpg", content: "image" });
     await this.template({
       "entries.html": `
-                <div>
-                    <section>
-                        <article>
-                            <img src="/deep/nested/test.jpg">
-                        </article>
-                    </section>
-                </div>
-            `.trim(),
+                  <div>
+                      <section>
+                          <article>
+                              <img src="/deep/nested/test.jpg">
+                          </article>
+                      </section>
+                  </div>
+              `.trim(),
     });
 
     const res = await this.get("/");
