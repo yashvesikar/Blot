@@ -1,39 +1,13 @@
-Make CDN routes more specific
+Watch the logs for requests to files in blog folder which aren't passed to CDN
+- add some logging to blog/assets.js
 
 How can we server template files over CDN?
 - do we have to remap references to other files in stylesheets since we're doing a switcheroo
 
 Image cacher should work for webp, tiff, etc. as well as JPG
 
-When the server has just started, wait for the stalesness duration before failing any attempts to acquire a sync lock
-    
 Fix bug with template error causing server to go down (issue with folder rebuild)
-
     reproduce bug with chinese template?
-
-Trigger an error with build template on iCloud client to work out why server crashed
-- suspect it's to do with async handling in util establish sync lock
-- this should not tank the server...
-    [23/Mar/2025:00:55:29 +0000] [green] blog_8b57c40 sync_a1eb8a9 client=icloud Error building templates from folder
-    [23/Mar/2025:00:55:29 +0000] [green] blog_8b57c40 sync_a1eb8a9 client=icloud Releasing lock
-    /usr/src/app/app/models/template/getMetadata.js:13
-          err = new Error("No template: " + id);
-                ^
-
-    Error: No template: blog_8b57c40:xxx-xxx-xxx
-        at Command.callback (/usr/src/app/app/models/template/getMetadata.js:13:13)
-        at normal_reply (/usr/src/app/node_modules/redis/index.js:655:21)
-        at RedisClient.return_reply (/usr/src/app/node_modules/redis/index.js:753:9)
-        at JavascriptRedisParser.returnReply (/usr/src/app/node_modules/redis/index.js:138:18)
-        at JavascriptRedisParser.execute (/usr/src/app/node_modules/redis-parser/lib/parser.js:544:14)
-        at Socket.<anonymous> (/usr/src/app/node_modules/redis/index.js:219:27)
-        at Socket.emit (node:events:524:28)
-        at addChunk (node:internal/streams/readable:561:12)
-        at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
-        at Readable.push (node:internal/streams/readable:392:5) {
-      code: 'ENOENT'
-    }
-
 
 Add script to resync all icloud folders – make sure they are up to date
 
@@ -48,33 +22,6 @@ Write proper tests for clients:
 - Dropbox
 - Google Drive
 - iCloud
-
----
-
-Work out why there are still 502 errors 'Blot is offline' during deployments during the failtimout window – why isn't proxy next retries kicking in?
-- Monitor the nginx error log for 'disabled' while doing a deployment
-- Try and work out rigorously how try_next upstream works, make sure it does this for 502
-
-Work out why iCloud bugs out with philpin's folder
-- Re-set up development env so I can test this
-- It seems that when you try and send changes to blogs with folder locks pending, the follow up requests always fail. I think we need to re-create the read stream
-- Issue seems to be with modified time – what is the significates of 2262-04-11T23?
-- issue seems to be with inital transfer, mtimes, etc. This means 2262-04-11T23:47:16.854775807Z is the last valid timestamp before integer overflow occurs in a nanosecond-precision int64_t timestamp system.
-- Can we get rid of chokidar and stream changes use brctl logs? or events?
-- We're using polling to workaround the issue with chokidar and large numbers of 
-  - https://github.com/bluwy/chokidar-lots-of-files-repro
-  - https://github.com/paulmillr/chokidar/issues/1385
-  - I made changes to macserver/README so revert them since the change had no effect
-- Can we refactor anything to ensure as much data is flowing from iCloud -> Blot server to save on bandwidth?
-- Make the setup flow more robust – only start watching for changes once the initial transfer is complete
-- Is there an issue writing preview files?
-  - maybe during other operations?
-  - is the issue when the preview file already exists?
-  - with spaces in their name?
-- Check in on the number of file descriptors used by the macserver
-- Work out why stats are failing
-- Test reboot of entire macserver – does file descriptor setting persist?
-- Catch the infinite email loop on Blot's server
 
 Make initial health check /health more powerful
 - inspect blogs directory and verify there are the expected number of folders
@@ -96,8 +43,6 @@ Migrate scripts in bashrc into deployment flow
 
 Use npm run test in production
 - echo github env -> scripts/tests/.env
-
-Can we configure email notifications easily with netdata?
 
 ---
 
