@@ -147,8 +147,8 @@ const watch = async (blogID) => {
   const watcher = chokidar
     .watch(blogPath, {
       usePolling: true,
-      interval: 1000, // Poll every 1s for non-binary files
-      binaryInterval: 3000, // Poll every 3s for binary files
+      interval: 250, // Poll every 0.25s for non-binary files
+      binaryInterval: 1000, // Poll every 1s for binary files
       ignoreInitial: false, // Process initial events
       ignored: /(^|[/\\])\../, // Ignore dotfiles
     })
