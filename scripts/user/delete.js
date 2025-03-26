@@ -92,8 +92,8 @@ function main(user, callback) {
 
         async.applyEachSeries(
           async.reflectAll([
-            Delete.exports.blogs,
             Delete.exports.subscription,
+            Delete.exports.blogs,
             Delete.exports.user,
           ]),
           req,
