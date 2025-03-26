@@ -7,7 +7,7 @@ const lockfile = require("proper-lockfile");
 const messenger = require("./messenger");
 
 const LOCK_STALE_TIMEOUT_MS = 10 * 1000;
-const LOCK_UPDATE_INTERVAL_MS = 5 * 1000;
+const LOCK_UPDATE_INTERVAL_MS = 3 * 1000; // lowered from 5s to avoid ECOMPROMISED errors?
 const PROCESS_STARTED = Date.now();
 
 function sync(blogID, callback) {
