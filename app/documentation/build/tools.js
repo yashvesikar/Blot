@@ -8,6 +8,10 @@ const rootDirectory = config.blot_directory + "/app";
 const toolsDirectory = rootDirectory + "/views/tools";
 const outputDirectory = config.views_directory + "/tools";
 const html = require("./html");
+const cdn = require("documentation/tools/cdn-url-helper")({
+            cacheID: new Date().getTime(),
+            viewDirectory: config.views_directory,
+          });
 
 const renderTemplate = async (name, data, destination) => {
   const template = await fs.readFile(toolsDirectory + "/" + name, "utf8");
@@ -134,7 +138,7 @@ const main = async () => {
 
   result.tools.sort((a, b) => b.updated - a.updated);
 
-  await renderTemplate("index.html", result);
+  await renderTemplate("index.html", {...result, cdn});
 
   for (const category of result.categories) {
     await renderTemplate(
@@ -145,6 +149,7 @@ const main = async () => {
         }),
         description: category.description,
         tools: category.tools,
+        cdn,
         category
       },
       category.slug + "/index.html"
@@ -156,6 +161,7 @@ const main = async () => {
       "tool.html",
       {
         ...tool,
+        cdn,
         category: result.categories.find(c => c.slug === tool.category),
         related: result.categories
           .find(c => c.slug === 'all-' + tool.category)

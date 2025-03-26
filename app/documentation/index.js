@@ -68,12 +68,6 @@ documentation.get(
   }
 );
 
-// Adds a handy 'edit this page' link
-documentation.use(
-  ["/how", "/about"],
-  require("./tools/determine-source")
-);
-
 documentation.use(require("./selected"));
 
 documentation.get("/", require("./templates.js"), function (req, res, next) {
