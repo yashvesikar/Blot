@@ -227,7 +227,7 @@ Investigate bug with link format using filename and [follow up with yct](https:/
 
 Overdue subscription payment form not working
 - Possible bug introduced by recent stripe upgrade
-- Revisit stripe integration and try to update
+- Migrate [Stripe library to v7](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7)
 
 Fix file sorting on folder on dashboard (clicking 'Date modified' e.g. does nothing)
 
@@ -491,8 +491,6 @@ Remove packages:
 - node-fetch (use global fetch)
 - twemoji (delete the plugin)
 
-Migrate [Stripe library to v7](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7)
-
 Make it possible to embed audio like so `![Audio]({{{path}}})`
 
 Experiement with injecting script into preview sites which can postMessage to embedding page, sending html2canvas result which can be stored locally for faster loading?
@@ -638,10 +636,6 @@ Add [textbundle support](http://textbundle.org/spec/) and tell [questioner](http
 - this will help me understand how best to accomplish multi-file posts
 
 Document image zoom disable feature ?zoom=false and tell [questioner](https://blot.im/questions/2236)
-
-Identify accounts that pay but do not create a blog and add monitoring for this
-- There might not even be accounts Just subscriptions in stripe 
-- Investigate, then Block and autorefund these payments: they're card testers that Stripe's anti-fraud missed
 
 Add way to import directly
 - Add/fix micro.blog import to dashboard and tell [Gabriel](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwJRvfgrRhXwqDNDlxbpXmRlbd]
@@ -898,7 +892,6 @@ Improvements to server
 - [ ] tune performance of express-mustache in production and development
 - [ ] add optional HTML/JS/CSS minification to express-disk-cache
 - [ ] Test overdue subscription re-start
-- [ ] Disable call to stripe for every pageview on /account
 - [ ] Create blog > Dropbox > Create blog > Dropbox failed to set up properly
 - [ ] Prevent GET request to log in page from setting `connect.sid` cookie
   - [ ] or otherwise work out how to try and cache everything at nginx
@@ -1222,9 +1215,6 @@ Improvements to simple local server (npm run local):
 -  Can we expand this to a simple self-hosting process ('npx blot-server')?
 
 ---
-
-Improve server-side scheduled tasks:
-- Write task to identify and delete long overdue customers
 
 Fetch dimensions of images even if optimize and cache is disable, so that image zoom can work. Tell [Joshua](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsmhMtGvPcwxlSHSSTFVpJVbd)
 
