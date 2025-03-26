@@ -1,3 +1,10 @@
+Make CDN routes more specific
+
+How can we server template files over CDN?
+- do we have to remap references to other files in stylesheets since we're doing a switcheroo
+
+Image cacher should work for webp, tiff, etc. as well as JPG
+
 When the server has just started, wait for the stalesness duration before failing any attempts to acquire a sync lock
     
 Fix bug with template error causing server to go down (issue with folder rebuild)
