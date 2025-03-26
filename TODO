@@ -1,5 +1,15 @@
+Resolve paths properly like a browser would in replaceFolderLinks
+- e.g. ../Type -> /Type if there is no more 'up' to go
+- respect ./image.jpg if the parent stylesheet is located in a subdirectory, e.g. /styles/sheet.css and ./image.jpg
+- Fix bug which is preventing the helped from working on Erin's site
+- Handle lowercase files properly (dropbox client!!!!) and resolve issue with discombobulated
+
 Watch the logs for requests to files in blog folder which aren't passed to CDN
 - add some logging to blog/assets.js
+
+Fix bug which prevents the CDN url replacer working for drafts
+- Refactor so the draft route relies more on the middleware function
+- At the moment, drafts bypass a lot of the code – many template features won't work
 
 How can we server template files over CDN?
 - do we have to remap references to other files in stylesheets since we're doing a switcheroo
