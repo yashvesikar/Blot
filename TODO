@@ -4,6 +4,8 @@ Resolve paths properly like a browser would in replaceFolderLinks
 - Fix bug which is preventing the helped from working on Erin's site
 - Handle lowercase files properly (dropbox client!!!!) and resolve issue with discombobulated
 
+Can we switch the Dropbox client over to using the correct filename case and get rid of a lot of bullshit around the lowercasing?
+
 Watch the logs for requests to files in blog folder which aren't passed to CDN
 - add some logging to blog/assets.js
 
