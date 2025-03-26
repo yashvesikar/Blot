@@ -8,10 +8,8 @@ const rootDirectory = config.blot_directory + "/app";
 const toolsDirectory = rootDirectory + "/views/tools";
 const outputDirectory = config.views_directory + "/tools";
 const html = require("./html");
-const cdn = require("documentation/tools/cdn-url-helper")({
-            cacheID: new Date().getTime(),
-            viewDirectory: config.views_directory,
-          });
+// Returns mustache code that will be replaced with a CDN URL
+const cdn = () => (text, render) => '{{#cdn}}' + render(text) + '{{/cdn}}';
 
 const renderTemplate = async (name, data, destination) => {
   const template = await fs.readFile(toolsDirectory + "/" + name, "utf8");
