@@ -28,10 +28,6 @@ const main = async () => {
 
     const restOfKey = key.slice(("blog:" + blogID + ":folder:").length);
 
-    if (restOfKey.includes(":")) {
-      return console.log("Skipping key wrong format", key);
-    }
-
     if (restOfKey !== "everything" && !restOfKey.startsWith("/")) {
       return console.log("Skipping key wrong format", key);
     }
