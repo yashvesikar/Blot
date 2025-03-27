@@ -5,7 +5,37 @@ const each = require("../each/blog");
 const getConfirmation = require("../util/getConfirmation");
 const Sync = require("sync");
 const { promisify } = require("util");
-const blog = require("../each/blog");
+const fs = require("fs-extra");
+const alreadyProcessed = [];
+
+try {
+  const json = JSON.parse(
+    fs.readFileSync(__dirname + "/data/processed.json", "utf8")
+  );
+  json.each((blogID) => {
+    alreadyProcessed.push(blogID);
+  });
+  console.log("Already processed blogs", alreadyProcessed.join(", "));
+} catch (e) {
+  console.log("No processed.json file found");
+}
+
+const addBlogIDToProcessed = (blogID) => {
+  let json = [];
+
+  try {
+    json = JSON.parse(
+      fs.readFileSync(__dirname + "/data/processed.json", "utf8")
+    );
+  } catch (e) {}
+
+  json.push(blogID);
+
+  fs.outputFileSync(
+    __dirname + "/data/processed.json",
+    JSON.stringify(json, null, 2)
+  );
+};
 
 const main = async (blogID) => {
   try {
@@ -38,7 +68,7 @@ if (process.argv[2]) {
     (user, blog, next) => {
       if (!blog || blog.isDisabled) return next();
       if (blog.client !== "dropbox") return next();
-
+      if (alreadyProcessed.includes(blog.id)) return next();
       blogIDsToReset.push(blog.id);
       next();
     },
@@ -73,6 +103,7 @@ if (process.argv[2]) {
         console.log();
         console.log(i + 1 + " of " + blogIDsToReset.length, blogID);
         await main(blogID);
+        addBlogIDToProcessed(blogID);
       }
 
       console.log("All blogs reset!");
