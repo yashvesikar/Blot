@@ -48,7 +48,7 @@ const main = async (blogID) => {
       console.log("Skipping matching dateStamps", id);
       continue;
     }
-    
+
     // update the date of the original entry to match the deleted
     // lowercase entry
     console.log("Updating entry", id, "to match", id.toLowerCase());
@@ -64,7 +64,7 @@ const main = async (blogID) => {
     );
 
     const confirmation = await getConfirmation(
-      `Update entry ${id} to match ${id.toLowerCase()}?`
+      `${blogID} update ${id} to match ${id.toLowerCase()}?`
     );
 
     if (!confirmation) {
