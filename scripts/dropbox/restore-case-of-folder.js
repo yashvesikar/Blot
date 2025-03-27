@@ -3,16 +3,31 @@ const lowerCaseContents = require("sync/lowerCaseContents");
 const get = require("../get/blog");
 const each = require("../each/blog");
 const getConfirmation = require("../util/getConfirmation");
+const Sync = require("sync");
+const { promisify } = require("util");
+
+const main = async (blogID) => {
+  try {
+    console.log();
+    const { folder, done } = await establishSyncLock(blogID);
+    folder.status('Restoring case of folder contents');
+    await lowerCaseContents(blogID, { restore: true });
+    folder.status('Case of folder contents restored');
+    await done();
+  } catch (e) {
+    console.log("Error resetting blog", blogID, e);
+  }
+};
 
 if (process.argv[2]) {
   get(process.argv[2], async function (err, user, blog) {
     if (err) throw err;
 
-    console.log("Restoring case of folder contents");
-    // Turns lowercase files and folders in the blogs directory
-    // into their real, display case for transition to other clients
-    await lowerCaseContents(blog.id, { restore: true });
-    console.log("Restored case of folder contents");
+    if (!blog || blog.isDisabled) throw new Error("Blog not found or disabled");
+
+    if (blog.client !== "dropbox") throw new Error("Blog is not using Dropbox");
+
+    await main(blog.id);
 
     process.exit();
   });
@@ -43,23 +58,35 @@ if (process.argv[2]) {
         process.exit();
       }
 
-      // shuffle the order of the blogs to reset so we can run 
+      // shuffle the order of the blogs to reset so we can run
       // this script in parallel on multiple servers
       blogIDsToReset.sort(() => Math.random() - 0.5);
 
       for (let i = 0; i < blogIDsToReset.length; i++) {
         const blogID = blogIDsToReset[i];
-        try {
-          console.log("Restoring case of folder contents");
-          await lowerCaseContents(blogID, { restore: true });
-          console.log("Restored case of folder contents");
-        } catch (e) {
-          console.log("Error resetting blog", blogID, e);
-        }
+        await main(blogID);
       }
 
       console.log("All blogs reset!");
       process.exit();
     }
   );
+}
+
+function establishSyncLock(blogID) {
+  return new Promise((resolve, reject) => {
+    Sync(blogID, function check(err, folder, done) {
+      if (err) return reject(err);
+      folder.update = promisify(folder.update);
+      // I don't quite understand this
+      const doneAsync = async function (err) {
+        if (err) {
+          await promisify(done.bind(null, err))();
+        } else {
+          await promisify(done.bind(null, null))();
+        }
+      };
+      resolve({ folder, done: doneAsync });
+    });
+  });
 }
