@@ -1,3 +1,5 @@
+Why do posts on blog_eddd8e5 take so long to set, let alone rebuild?
+
 Resolve paths properly like a browser would in replaceFolderLinks
 - e.g. ../Type -> /Type if there is no more 'up' to go
 - respect ./image.jpg if the parent stylesheet is located in a subdirectory, e.g. /styles/sheet.css and ./image.jpg
