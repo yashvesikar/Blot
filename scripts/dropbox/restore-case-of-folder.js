@@ -43,6 +43,10 @@ if (process.argv[2]) {
         process.exit();
       }
 
+      // shuffle the order of the blogs to reset so we can run 
+      // this script in parallel on multiple servers
+      blogIDsToReset.sort(() => Math.random() - 0.5);
+
       for (let i = 0; i < blogIDsToReset.length; i++) {
         const blogID = blogIDsToReset[i];
         try {
