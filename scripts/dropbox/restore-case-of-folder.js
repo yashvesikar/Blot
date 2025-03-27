@@ -10,15 +10,19 @@ const config = require("config");
 const alreadyProcessed = [];
 const processedFile = config.data_directory + "/dropbox-case-processed.json";
 
-try {
-  const json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
-  json.forEach((blogID) => {
-    alreadyProcessed.push(blogID);
-  });
-  console.log("Already processed blogs", alreadyProcessed.join(", "));
-} catch (e) {
-  console.log("No processed.json file found");
-}
+const loadProcessed = () => {
+  try {
+    const json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
+    json.forEach((blogID) => {
+      if (!alreadyProcessed.includes(blogID)) alreadyProcessed.push(blogID);
+    });
+    console.log("Already processed blogs", alreadyProcessed.join(", "));
+  } catch (e) {
+    console.log("No processed.json file found");
+  }
+};
+
+loadProcessed();
 
 const addBlogIDToProcessed = (blogID) => {
   let json = [];
@@ -34,6 +38,13 @@ const addBlogIDToProcessed = (blogID) => {
 
 const main = async (blogID) => {
   try {
+    loadProcessed();
+
+    if (alreadyProcessed.includes(blogID)) {
+      console.log("Blog already processed", blogID);
+      return;
+    }
+
     console.log();
     const { folder, done } = await establishSyncLock(blogID);
     folder.status("Restoring case of folder contents");
