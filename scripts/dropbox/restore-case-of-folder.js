@@ -6,9 +6,9 @@ const each = require("../each/blog");
 const getConfirmation = require("../util/getConfirmation");
 const Sync = require("sync");
 const fs = require("fs-extra");
-
+const config = require("config");
 const alreadyProcessed = [];
-const processedFile = __dirname + "/data/processed.json";
+const processedFile = config.data_directory + "/dropbox-case-processed.json";
 
 try {
   const json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
