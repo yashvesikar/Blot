@@ -45,7 +45,7 @@ const main = async (blogID) => {
   }
 };
 
-if (process.argv[2]) {
+if (process.argv[2] && process.argv[2] !== "-r") {
   get(process.argv[2], async function (err, user, blog) {
     if (err) throw err;
 
@@ -93,8 +93,10 @@ if (process.argv[2]) {
       // shuffle the order of the blogs to reset so we can run
       // this script in parallel on multiple servers
       if (process.argv.includes("-r")) {
+        console.log("Shuffling the order of the blogs to reset");
         blogIDsToReset.sort(() => Math.random() - 0.5);
       } else {
+        console.log("Sorting the order of the blogs to reset");
         blogIDsToReset.sort();
       }
 
