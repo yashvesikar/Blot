@@ -20,11 +20,14 @@ const loadProcessed = () => {
 };
 
 const addBlogIDToProcessed = (blogID) => {
+  let json = [];
   try {
-    const json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
-    if (!json.includes(blogID)) json.push(blogID);
-    fs.outputFileSync(processedFile, JSON.stringify(json, null, 2));
-  } catch (e) {}
+    json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
+  } catch (e) {
+    console.log(e);
+  }
+  if (!json.includes(blogID)) json.push(blogID);
+  fs.outputFileSync(processedFile, JSON.stringify(json, null, 2));
 };
 
 loadProcessed();
