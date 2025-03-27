@@ -5,14 +5,15 @@ const each = require("../each/blog");
 const getConfirmation = require("../util/getConfirmation");
 const Sync = require("sync");
 const { promisify } = require("util");
+const blog = require("../each/blog");
 
 const main = async (blogID) => {
   try {
     console.log();
     const { folder, done } = await establishSyncLock(blogID);
-    folder.status('Restoring case of folder contents');
+    folder.status("Restoring case of folder contents");
     await lowerCaseContents(blogID, { restore: true });
-    folder.status('Case of folder contents restored');
+    folder.status("Case of folder contents restored");
     await done();
   } catch (e) {
     console.log("Error resetting blog", blogID, e);
@@ -58,12 +59,19 @@ if (process.argv[2]) {
         process.exit();
       }
 
+      // if one of the arguments to this script is '-r', then
       // shuffle the order of the blogs to reset so we can run
       // this script in parallel on multiple servers
-      blogIDsToReset.sort(() => Math.random() - 0.5);
+      if (process.argv.includes("-r")) {
+        blogIDsToReset.sort(() => Math.random() - 0.5);
+      } else {
+        blogIDsToReset.sort();
+      }
 
       for (let i = 0; i < blogIDsToReset.length; i++) {
         const blogID = blogIDsToReset[i];
+        console.log();
+        console.log(i + 1 + " of " + blogIDsToReset.length, blogID);
         await main(blogID);
       }
 
