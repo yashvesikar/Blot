@@ -1,18 +1,18 @@
 // docker exec -it blot-node-app-1 node scripts/dropbox/reset.js
+const { promisify } = require("util");
 const lowerCaseContents = require("sync/lowerCaseContents");
 const get = require("../get/blog");
 const each = require("../each/blog");
 const getConfirmation = require("../util/getConfirmation");
 const Sync = require("sync");
-const { promisify } = require("util");
 const fs = require("fs-extra");
+
 const alreadyProcessed = [];
+const processedFile = __dirname + "/data/processed.json";
 
 try {
-  const json = JSON.parse(
-    fs.readFileSync(__dirname + "/data/processed.json", "utf8")
-  );
-  json.each((blogID) => {
+  const json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
+  json.forEach((blogID) => {
     alreadyProcessed.push(blogID);
   });
   console.log("Already processed blogs", alreadyProcessed.join(", "));
@@ -24,17 +24,12 @@ const addBlogIDToProcessed = (blogID) => {
   let json = [];
 
   try {
-    json = JSON.parse(
-      fs.readFileSync(__dirname + "/data/processed.json", "utf8")
-    );
+    json = JSON.parse(fs.readFileSync(processedFile, "utf8"));
   } catch (e) {}
 
-  json.push(blogID);
+  if (!json.includes(blogID)) json.push(blogID);
 
-  fs.outputFileSync(
-    __dirname + "/data/processed.json",
-    JSON.stringify(json, null, 2)
-  );
+  fs.outputFileSync(processedFile, JSON.stringify(json, null, 2));
 };
 
 const main = async (blogID) => {
@@ -74,6 +69,11 @@ if (process.argv[2]) {
     },
     async (err) => {
       if (err) throw err;
+
+      if (!blogIDsToReset.length) {
+        console.log("No blogs to reset!");
+        process.exit();
+      }
 
       console.log(
         "Blogs to restore the case of items in the folders: ",
