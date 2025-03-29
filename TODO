@@ -1,10 +1,6 @@
-Resolve paths properly like a browser would in replaceFolderLinks
-- e.g. ../Type -> /Type if there is no more 'up' to go
-- respect ./image.jpg if the parent stylesheet is located in a subdirectory, e.g. /styles/sheet.css and ./image.jpg
-- Fix bug which is preventing the helped from working on Erin's site
-- Handle lowercase files properly (dropbox client!!!!) and resolve issue with discombobulated
 
-
+Improve replaceFolderLinks to handle situation where people include their own domain in image links –> parse this out
+- fix issue with discombobulated
 
 Run dropbox reset as ec2-user not root
 - run chown on all data files...
