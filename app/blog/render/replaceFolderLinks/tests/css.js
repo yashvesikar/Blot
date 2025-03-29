@@ -424,8 +424,14 @@ describe("replaceCssUrls", function () {
 
   it("should use cached versions for repeated requests to global static files", async function () {
     await this.template({
-      "style.css": `@font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(/plugins/katex/files/KaTeX_AMS-Regular.woff2) format("woff2")}`,
+      "style.css": `@font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(/plugins/katex.woff2) format("woff2")}`,
     });
+
+    await fs.outputFile(
+      config.blot_directory +
+        "/app/blog/static/plugins/katex.woff2",
+      "fake image data"
+    );
 
     const origStat = fs.stat;
 
@@ -434,9 +440,13 @@ describe("replaceCssUrls", function () {
     // First request
     const result1 = await this.text("/style.css");
 
+    expect(result1).toMatch(
+      globalStaticFileRegex("/plugins/katex.woff2")
+    );
+    
     expect(fs.stat).toHaveBeenCalledWith(
       config.blot_directory +
-        "/app/blog/static/plugins/katex/files/KaTeX_AMS-Regular.woff2"
+        "/app/blog/static/plugins/katex.woff2"
     );
     expect(fs.stat.calls.count()).toBe(1);
 
@@ -449,5 +459,10 @@ describe("replaceCssUrls", function () {
     expect(fs.stat).not.toHaveBeenCalled();
 
     fs.stat = origStat;
+
+    await fs.remove(
+      config.blot_directory +
+        "/app/blog/static/plugins/katex.woff2"
+    );
   });
 });
