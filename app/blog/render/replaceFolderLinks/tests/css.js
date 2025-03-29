@@ -411,14 +411,14 @@ describe("replaceCssUrls", function () {
     });
     await this.template({
       "style.css": `.test { background-image: url('/plugins/katex/files/test.jpg'); }
-      @font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(/plugins/katex/files/KaTeX_AMS-Regular.woff2) format("woff2")}`,
+      @font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(/plugins/katex/files/KaTeX_AMS-Regular.ttf) format("ttf")}`,
     });
     expect(await this.text("/style.css")).toMatch(
       cdnRegex("/plugins/katex/files/test.jpg")
     );
 
     expect(await this.text("/style.css")).toMatch(
-      globalStaticFileRegex("/plugins/katex/files/KaTeX_AMS-Regular.woff2")
+      globalStaticFileRegex("/plugins/katex/files/KaTeX_AMS-Regular.ttf")
     );
   });
 
