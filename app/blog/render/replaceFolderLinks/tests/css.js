@@ -8,7 +8,7 @@ describe("replaceCssUrls", function () {
       `${config.cdn.origin}/folder/v-[a-f0-9]{8}/blog_[a-f0-9]+${path}`
     );
   const globalStaticFileRegex = (path) =>
-    new RegExp(`${config.cdn.origin}/${path}`);
+    new RegExp(`${config.cdn.origin}${path}`);
 
   it("should replace url() with versioned CDN URLs", async function () {
     await this.write({ path: "/images/test.jpg", content: "fake image data" });

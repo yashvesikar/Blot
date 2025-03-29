@@ -55,13 +55,13 @@ async function lookupFile(blogID, cacheID, value) {
     try {
       // check  if the file exists in the global static files set
       if (globalStaticFiles.has(pathFromValue)) {
-        return `${config.cdn.origin}/${value}`;
+        return `${config.cdn.origin}${value}`;
       }
       await fs.stat(filePath);
       // store the pathFromValue in set of valid static files
       // so we can use it later
       globalStaticFiles.add(pathFromValue);
-      return `${config.cdn.origin}/${value}`;
+      return `${config.cdn.origin}${value}`;
     } catch (err) {}
   }
 
