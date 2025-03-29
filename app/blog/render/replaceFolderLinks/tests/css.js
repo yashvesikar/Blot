@@ -7,6 +7,8 @@ describe("replaceCssUrls", function () {
     new RegExp(
       `${config.cdn.origin}/folder/v-[a-f0-9]{8}/blog_[a-f0-9]+${path}`
     );
+  const globalStaticFileRegex = (path) =>
+    new RegExp(`${config.cdn.origin}/${path}`);
 
   it("should replace url() with versioned CDN URLs", async function () {
     await this.write({ path: "/images/test.jpg", content: "fake image data" });
@@ -18,6 +20,30 @@ describe("replaceCssUrls", function () {
     const result = await res.text();
 
     expect(result).toMatch(cdnRegex("/images/test.jpg"));
+  });
+
+  it("should handle no quotes", async function () {
+    await this.write({ path: "/images/test.jpg", content: "fake image data" });
+    await this.template({
+      "style.css": `.test { background-image: url(/images/test.jpg); }`,
+    });
+    expect(await this.text("/style.css")).toMatch(cdnRegex("/images/test.jpg"));
+  });
+
+  it("should handle single quotes", async function () {
+    await this.write({ path: "/images/test.jpg", content: "fake image data" });
+    await this.template({
+      "style.css": `.test { background-image: url('/images/test.jpg'); }`,
+    });
+    expect(await this.text("/style.css")).toMatch(cdnRegex("/images/test.jpg"));
+  });
+
+  it("should handle double quotes", async function () {
+    await this.write({ path: "/images/test.jpg", content: "fake image data" });
+    await this.template({
+      "style.css": `.test { background-image: url("/images/test.jpg"); }`,
+    });
+    expect(await this.text("/style.css")).toMatch(cdnRegex("/images/test.jpg"));
   });
 
   it("should handle unquoted URLs", async function () {
@@ -173,15 +199,38 @@ describe("replaceCssUrls", function () {
     expect(result).toEqual(css);
   });
 
+  it("can handle whitespace unlike postcss", async function () {
+    const css = `@media screen and (max-width: 400px) {
+  
+  .wide {background: url(/test.jpg);}
+
+ }
+`;
+    await this.template({ "style.css": css });
+    await this.write({ path: "/test.jpg", content: "image" });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+    expect(result).toMatch(cdnRegex("/test.jpg"));
+  });
+
   it("should handle relative paths", async function () {
     await this.write({ path: "/a.jpg", content: "image" });
     await this.write({ path: "/b.jpg", content: "image" });
+    await this.write({
+      path: "/Type/valkyrie_b_bold_italic.woff2",
+      content: "image",
+    });
     await this.template({
       "style.css": `
           .test { 
             background: url(./a.jpg);
             border-image: url(b.jpg);
-          }`,
+            background-image: url('../c.jpg') format('webp');
+          }
+
+          @font-face{font-family:valkyrie_b;font-style:italic;font-weight:700;font-stretch:normal;font-display:auto;src:url('../Type/valkyrie_b_bold_italic.woff2') format('woff2')}
+            `,
     });
 
     const res = await this.get("/style.css");
@@ -189,6 +238,7 @@ describe("replaceCssUrls", function () {
 
     expect(result).toMatch(cdnRegex("/a.jpg"));
     expect(result).toMatch(cdnRegex("/b.jpg"));
+    expect(result).toMatch(cdnRegex("/Type/valkyrie_b_bold_italic.woff2"));
   });
 
   it("should change the CDN url if the source file changes", async function () {
@@ -228,5 +278,176 @@ describe("replaceCssUrls", function () {
 
     expect(result).toMatch(cdnRegex("/mobile.jpg"));
     expect(result).toMatch(/@media \(max-width:768px\)/);
+  });
+
+  it("should handle URLs with special characters", async function () {
+    await this.write({ path: "/image with spaces.jpg", content: "image" });
+    await this.write({ path: "/image.jpg", content: "image" });
+    await this.template({
+      "style.css": `
+        .test { 
+          background: url('/image with spaces.jpg');
+          border-image: url('/image.jpg#hash');
+        }`,
+    });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/image with spaces.jpg"));
+    expect(result).toMatch(cdnRegex("/image.jpg"));
+  });
+
+  it("should handle malformed URL syntax", async function () {
+    await this.write({ path: "/test.jpg", content: "image" });
+    const css = `
+      .test { 
+        background: url(/test.jpg;
+        border: url('test.jpg);
+        content: url("test.jpg;
+      }`;
+    await this.template({ "style.css": css });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+
+    expect(result).toEqual(css);
+  });
+
+  it("should handle multiple nested @rules", async function () {
+    await this.write({ path: "/test.jpg", content: "image" });
+    await this.template({
+      "style.css": `
+        @media print {
+          @supports (display: grid) {
+            @media (max-width: 600px) {
+              .test { background: url(/test.jpg); }
+            }
+          }
+        }`,
+    });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/test.jpg"));
+    expect(result).toMatch(/@media print/);
+    expect(result).toMatch(/@supports/);
+  });
+
+  it("should handle URL lists in custom properties", async function () {
+    await this.write({ path: "/test.jpg", content: "image" });
+    await this.template({
+      "style.css": `
+        :root {
+          --bg-images: url(/test.jpg), linear-gradient(red, blue);
+        }`,
+    });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/test.jpg"));
+    expect(result).toMatch(/linear-gradient\(red, blue\)/);
+  });
+
+  it("should handle concurrent requests for different files", async function () {
+    await this.write({ path: "/1.jpg", content: "image1" });
+    await this.write({ path: "/2.jpg", content: "image2" });
+    await this.write({ path: "/3.jpg", content: "image3" });
+
+    const template = {};
+
+    for (let i = 1; i <= 3; i++) {
+      template[`style${i}.css`] = `.test { background-image: url(/${i}.jpg); }`;
+    }
+
+    await this.template(template);
+
+    const promises = [1, 2, 3].map(async (n) => {
+      const res = await this.get(`/style${n}.css`);
+      return res;
+    });
+
+    const results = await Promise.all(promises);
+    const texts = await Promise.all(results.map((r) => r.text()));
+
+    texts.forEach((text, i) => {
+      expect(text).toMatch(cdnRegex(`/${i + 1}.jpg`));
+    });
+  });
+
+  it("should handle URLs with fragments", async function () {
+    await this.write({ path: "/sprite.svg", content: "<svg>...</svg>" });
+    await this.template({
+      "style.css": `.test { mask-image: url(/sprite.svg#icon-home); }`,
+    });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/sprite.svg"));
+  });
+
+  it("should handle CSS comments containing URLs", async function () {
+    await this.write({ path: "/test.jpg", content: "image" });
+    await this.template({
+      "style.css": `
+        /* background: url(/test.jpg); */
+        .test { background: url(/test.jpg); }`,
+    });
+
+    const res = await this.get("/style.css");
+    const result = await res.text();
+
+    const matches = result.match(cdnRegex("/test.jpg"));
+    expect(matches.length).toBe(1); // Should only replace the actual URL, not the one in comments
+  });
+
+  it("should handle global static files", async function () {
+    await this.write({
+      path: "/plugins/katex/files/test.jpg",
+      content: "fake image data",
+    });
+    await this.template({
+      "style.css": `.test { background-image: url('/plugins/katex/files/test.jpg'); }
+      @font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(/plugins/katex/files/KaTeX_AMS-Regular.woff2) format("woff2")}`,
+    });
+    expect(await this.text("/style.css")).toMatch(
+      cdnRegex("/plugins/katex/files/test.jpg")
+    );
+
+    expect(await this.text("/style.css")).toMatch(
+      globalStaticFileRegex("/plugins/katex/files/KaTeX_AMS-Regular.woff2")
+    );
+  });
+
+  it("should use cached versions for repeated requests to global static files", async function () {
+    await this.template({
+      "style.css": `@font-face{font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url(/plugins/katex/files/KaTeX_AMS-Regular.woff2) format("woff2")}`,
+    });
+
+    const origStat = fs.stat;
+
+    fs.stat = jasmine.createSpy("stat").and.callFake(origStat);
+
+    // First request
+    const result1 = await this.text("/style.css");
+
+    expect(fs.stat).toHaveBeenCalledWith(
+      config.blot_directory +
+        "/app/blog/static/plugins/katex/files/KaTeX_AMS-Regular.woff2"
+    );
+    expect(fs.stat.calls.count()).toBe(1);
+
+    fs.stat.calls.reset();
+
+    // Second request
+    const result2 = await this.text("/style.css");
+
+    expect(result1).toEqual(result2);
+    expect(fs.stat).not.toHaveBeenCalled();
+
+    fs.stat = origStat;
   });
 });
