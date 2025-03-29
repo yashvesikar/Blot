@@ -2,7 +2,7 @@
 // and doing Dropbox.Dropbox is too upsetting
 // in every single file. I wrap the constructor.
 
-const Dropbox = require("dropbox").Dropbox;
+const { Dropbox } = require("dropbox");
 const database = require("../database");
 const config = require("config");
 
@@ -11,7 +11,7 @@ module.exports = function (blogID, callback) {
     if (err) return callback(err);
     if (!account) return callback(new Error("No Dropbox account"));
 
-    const client = new Dropbox({ fetch });
+    const client = new Dropbox();
 
     client.auth.setAccessToken(account.access_token);
 
