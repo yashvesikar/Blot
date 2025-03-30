@@ -7,19 +7,25 @@ const MACSERVER_URL = config.icloud.server_address; // The Macserver base URL fr
 const MACSERVER_AUTH = config.icloud.secret; // The Macserver Authorization secret from config
 
 module.exports = async (blogID, callback) => {
-  await database.delete(blogID);
+  try {
+    await database.delete(blogID);
 
-  const response = await fetch(`${MACSERVER_URL}/disconnect`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: MACSERVER_AUTH,
-      blogID: blogID,
-    },
-  });
+    const response = await fetch(`${MACSERVER_URL}/disconnect`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: MACSERVER_AUTH,
+        blogID: blogID,
+      },
+    });
 
-  if (!response.ok) {
-    console.error(`Macserver /disconnect request failed: ${response.status}`);
+    if (!response.ok) {
+      console.error(`Macserver /disconnect request failed: ${response.status}`);
+    }
+  } catch (error) {
+    console.error(
+      `Error during Macserver /disconnect request: ${error.message}`
+    );
   }
 
   Blog.set(blogID, { client: "" }, async function (err) {
