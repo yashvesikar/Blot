@@ -48,8 +48,6 @@ async function resetToBlot(blogID, publish) {
     }
   }
 
-  publish("Checking the case of files within your folder");
-
   // It's import that these args match those used in delta.js
   // A way to quickly get a cursor for the folder's state.
   // From the docs:
@@ -97,7 +95,7 @@ const walk = async (blogID, client, publish, dropboxRoot, dir) => {
     if (!remoteCounterpart) {
       publish("Removing", path_display);
       try {
-        await fs.remove(join(localRoot, path_display));
+        await fs.remove(join(localRoot, dir, name));
       } catch (e) {
         publish("Failed to remove", path_display, e.message);
       }
@@ -111,9 +109,8 @@ const walk = async (blogID, client, publish, dropboxRoot, dir) => {
 
     const { path_display, name } = remoteItem;
     const pathOnDropbox = path_display;
-    const pathOnBlot =
-      dropboxRoot === "/" ? path_display : path_display.slice(dropboxRoot.length);
-    const pathOnDisk = join(localRoot, pathOnBlot);
+    const pathOnBlot = join(dir, name);
+    const pathOnDisk = join(localRoot, dir, name);
 
     if (remoteItem.is_directory) {
       if (localCounterpart && !localCounterpart.is_directory) {
