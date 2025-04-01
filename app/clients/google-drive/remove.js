@@ -1,38 +1,37 @@
-const createDriveClient = require("./util/createDriveClient");
+const createDriveClient = require("./serviceAccount/createDriveClient");
 const localPath = require("helper/localPath");
 const clfdate = require("helper/clfdate");
 const fs = require("fs-extra");
 const database = require("./database");
 
 module.exports = async function remove(blogID, path, callback) {
-  const prefix = () => clfdate() + " Google Drive:";
+  const prefix = () =>
+    clfdate() + " Google Drive: Remove:" + blogID + ":" + path + ":";
+
   try {
-    const { drive, account } = await createDriveClient(blogID);
-    const { getByPath } = database.folder(account.folderId);
+    const { serviceAccountId, folderId } = await database.blog.get(blogID);
+    const drive = await createDriveClient(serviceAccountId);
+    const { getByPath, remove } = database.folder(folderId);
 
-    console.log(prefix(), "Looking up fileId for", path);
+    console.log(prefix(), "Removing from local folder");
+    const pathOnBlot = localPath(blogID, path);
+    await fs.remove(pathOnBlot);
 
+    console.log(prefix(), "Looking up fileId");
     const fileId = await getByPath(path);
 
     if (fileId) {
-      console.log(prefix(), "Removing", fileId, "from API");
+      console.log(prefix(), "Removing fileId from db");
+      await remove(fileId);
+      console.log(prefix(), "Removing fileId from API");
       await drive.files.delete({ fileId });
-      console.log(prefix(), "Removed", fileId, "from API");
     } else {
-      console.log(prefix(), "No fileId found in db for", path);
+      console.log(prefix(), "WARNING No fileId found in db");
     }
 
-    // We don't need to update the client database
-    // database.folder.remove(...)
-    // of file IDs because once removed, we'll sync
-    // with google drive after receiving a webhook
-    console.log(prefix(), "Removing", path, "from local folder");
-    const pathOnBlot = localPath(blogID, path);
-    await fs.remove(pathOnBlot);
-    console.log(prefix(), "Removed", path, "from local folder");
+    callback(null);
   } catch (e) {
-    console.log(prefix(), "Error removing", path, e);
-    return callback(e);
+    console.log(prefix(), "Remove: Error", path, e);
+    callback(e);
   }
-  callback(null);
 };

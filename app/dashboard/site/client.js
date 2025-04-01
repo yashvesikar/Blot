@@ -9,7 +9,6 @@ const load = require("./load");
 const Sync = require("sync");
 const Fix = require("sync/fix");
 const Rebuild = require("sync/rebuild");
-const parse = require("dashboard/util/parse");
 
 const { promisify } = require("util");
 const getStatuses = promisify(Blog.getStatuses);
@@ -29,11 +28,11 @@ client_routes
   .get(load.clients, function (req, res) {
     res.locals.breadcrumbs.add("Switch", "switch");
     res.render("dashboard/clients/switch", {
-      title: "Switch to another client"
+      title: "Switch to another client",
     });
   })
 
-  .post(parse, function (req, res, next) {
+  .post(function (req, res, next) {
     const redirect = req.baseUrl + "/" + req.body.client;
 
     if (!req.body.client) {
@@ -58,7 +57,7 @@ const verbs = {
   Downloading: "downloaded",
   Syncing: "synced",
   Transferring: "transferred",
-  Removing: "removed"
+  Removing: "removed",
 };
 
 client_routes.route("/activity").get(load.clients, async function (req, res) {
@@ -71,8 +70,8 @@ client_routes.route("/activity").get(load.clients, async function (req, res) {
     .map((value, key) => ({
       syncID: key,
       messages: value
-        .map(item => {
-          const matchedVerb = Object.keys(verbs).find(i =>
+        .map((item) => {
+          const matchedVerb = Object.keys(verbs).find((i) =>
             item.message.startsWith(i + " /")
           );
 
@@ -91,16 +90,16 @@ client_routes.route("/activity").get(load.clients, async function (req, res) {
 
           return item;
         })
-        .filter(({ message }) => message !== "Syncing" && message !== "Synced")
+        .filter(({ message }) => message !== "Syncing" && message !== "Synced"),
     }))
-    .filter(i => i.messages && i.messages.length)
+    .filter((i) => i.messages && i.messages.length)
     .value();
 
   res.render("dashboard/clients/activity", {
     title: "Activity",
     statuses,
     next,
-    previous
+    previous,
   });
 });
 
@@ -111,7 +110,7 @@ client_routes
   .get(load.client, function (req, res) {
     res.locals.breadcrumbs.add("Reset", "reset");
     res.render("dashboard/clients/reset", {
-      title: "Reset your folder"
+      title: "Reset your folder",
     });
   });
 
@@ -163,22 +162,14 @@ client_routes.post("/reset/resync", load.client, function (req, res, next) {
     res.message(res.locals.base + "/client/reset", "Begin resync of your site");
 
     try {
-      await res.locals.client.resync(req.blog.id, folder.status);
+      await res.locals.client.resync(req.blog.id, folder.status, promisify(folder.update));
     } catch (err) {
       console.log("ERROR:", err);
     }
 
-    Rebuild(req.blog.id, function (err) {
+    folder.status("Finished re-syncing your site");
+    done(null, function (err) {
       if (err) console.log(err);
-      folder.status("Checking your site for issues");
-      Fix(req.blog, function (err) {
-        if (err) console.log(err);
-        folder.status("Finished site rebuild");
-
-        done(null, function (err) {
-          if (err) console.log(err);
-        });
-      });
     });
   });
 });
@@ -189,12 +180,12 @@ client_routes
   .get(load.clients, function (req, res) {
     if (req.blog.client) {
       return res.redirect(req.baseUrl + "/" + req.blog.client);
-    } 
+    }
 
     res.render("dashboard/clients", { title: "Select a client" });
   })
 
-  .post(parse, function (req, res, next) {
+  .post(function (req, res, next) {
     let redirect;
 
     if (!req.body.client) {

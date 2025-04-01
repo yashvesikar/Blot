@@ -7,52 +7,6 @@ var site = require("site");
 var trace = require("helper/trace");
 var clfdate = require("helper/clfdate");
 
-const { PerformanceObserver } = require('perf_hooks');
-
-// 1. GC Observer
-const obs = new PerformanceObserver((list) => {
-  list.getEntries().forEach((entry) => {
-    // Get memory usage details
-    const memoryUsage = process.memoryUsage();
-    const heapUsedMB = (memoryUsage.heapUsed / 1024 / 1024).toFixed(2);
-    const heapTotalMB = (memoryUsage.heapTotal / 1024 / 1024).toFixed(2);
-
-    // Log GC event and heap size
-    console.log(
-      `${clfdate()} [GC] kind=${entry.kind}, duration=${entry.duration}ms, ` +
-      `heapUsed=${heapUsedMB}MB, heapTotal=${heapTotalMB}MB`
-    );
-  });
-});
-obs.observe({ entryTypes: ['gc'], buffered: true });
-
-// 2. Event-Loop Lag Measurement
-// We'll measure the delay in setInterval to gauge how behind the event loop is.
-const CHECK_INTERVAL_MS = 1000; // How frequently to check in ms
-let lastCheck = process.hrtime.bigint();
-
-setInterval(() => {
-  const now = process.hrtime.bigint();
-  // Convert nanoseconds to milliseconds, then see how far we deviated from 1000 ms
-  const diffMs = (Number(now - lastCheck) / 1e6) - CHECK_INTERVAL_MS;
-
-  // Get memory usage details
-  const memoryUsage = process.memoryUsage();
-  const heapUsedMB = (memoryUsage.heapUsed / 1024 / 1024).toFixed(2);
-  const heapTotalMB = (memoryUsage.heapTotal / 1024 / 1024).toFixed(2);
-
-  // Log event loop lag and heap size
-  console.log(
-    `${clfdate()} [LoopLag] ${diffMs.toFixed(2)}ms, ` +
-    `heapUsed=${heapUsedMB}MB, heapTotal=${heapTotalMB}MB`
-  );
-
-  lastCheck = now;
-}, CHECK_INTERVAL_MS);
-
-
-
-
 // Welcome to Blot. This is the Express application which listens on port 8080.
 // NGINX listens on port 80 in front of Express app and proxies requests to
 // port 8080. NGINX handles SSL termination, cached response delivery and
@@ -85,7 +39,7 @@ server.get("/redis-health", function (req, res) {
 
   client.ping(function (err, reply) {
     if (err) {
-      res.status(500).send("Failed to ping redis");
+      res.status(400).send("Failed to ping redis");
     } else {
       res.send("OK");
     }
@@ -100,95 +54,7 @@ server.use(helmet.frameguard("allow-from", config.host));
 // Log response time in development mode
 server.use(trace.init);
 
-let unrespondedRequests = [];
-
-setInterval(function () {
-  console.log(
-    clfdate(),
-    "PID=" + process.pid,
-    "PENDING=" + unrespondedRequests.length,
-    unrespondedRequests.join(", ")
-  );
-}, 1000 * 15); // 15 seconds
-server.use(function (req, res, next) {
-  var init = Date.now();
-
-  try {
-    if (req.headers["x-request-id"])
-      unrespondedRequests.push(req.headers["x-request-id"].slice(0, 8));
-
-    console.log(
-      clfdate(),
-      req.headers["x-request-id"] ? req.headers["x-request-id"] : "no-request-id",
-      "PID=" + process.pid,
-      req.protocol + "://" + req.hostname + req.originalUrl,
-      req.method
-    );
-  } catch (e) {
-    console.error("Error: Failed to construct canonical log line:", e);
-  }
-
-  // add method req.log which exposes a logging function prefixed with the request id, clfdate, and time in ms between each invocation
-  let lastLogTime = Date.now();
-  req.log = function () {
-    let args = Array.prototype.slice.call(arguments);
-    const currentTime = Date.now();
-    const timeDiff = currentTime - lastLogTime;
-    lastLogTime = currentTime;
-
-    args.unshift(`+${timeDiff}ms`);
-
-    if (req.headers["x-request-id"]) {
-      args.unshift(req.headers["x-request-id"]);
-    } else {
-      args.unshift("no-request-id");
-    }
-    args.unshift(clfdate());
-    console.log.apply(console, args);
-  };
-
-  let hasFinished = false;
-  res.on("finish", function () {
-    hasFinished = true;
-    try {
-      if (req.headers["x-request-id"])
-        unrespondedRequests = unrespondedRequests.filter(
-          id => id !== req.headers["x-request-id"].slice(0, 8)
-        );
-      console.log(
-        clfdate(),
-        req.headers["x-request-id"] && req.headers["x-request-id"],
-        res.statusCode,
-        ((Date.now() - init) / 1000).toFixed(3),
-        "PID=" + process.pid,
-        req.protocol + "://" + req.hostname + req.originalUrl
-      );
-    } catch (e) {
-      console.error("Error: Failed to construct canonical log line:", e);
-    }
-  });
-
-  req.on("close", function () {
-    if (hasFinished) return;
-    try {
-      if (req.headers["x-request-id"])
-        unrespondedRequests = unrespondedRequests.filter(
-          id => id !== req.headers["x-request-id"].slice(0, 8)
-        );
-      console.log(
-        clfdate(),
-        req.headers["x-request-id"] && req.headers["x-request-id"],
-        "Connection closed by client",
-        "PID=" + process.pid,
-        req.protocol + "://" + req.hostname + req.originalUrl
-      );
-    } catch (e) {
-      console.error("Error: Failed to construct canonical log line:", e);
-    }
-  });
-
-  next();
-});
+server.use(require('./request-logger'));
 
 // Blot is composed of two sub applications.
 
@@ -203,7 +69,7 @@ server.use(vhost(config.host, site));
 // The Webhook forwarder
 // -------------
 // Forwards webhooks to development environment
-if (config.webhooks.server_host) {
+if (config.webhooks.server_host && config.master) {
   console.log(clfdate(), "Webhooks relay on", config.webhooks.server_host);
   server.use(vhost(config.webhooks.server_host, require("./clients/webhooks")));
 }

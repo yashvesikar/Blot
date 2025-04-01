@@ -1,5 +1,17 @@
-Node server started
+{{container}} server started
 
 Log in to server and grep:
 
-cat logs/app.log | grep "Starting pid" -B 100
+logs {{container}} | grep -B 5 "Starting server on"
+
+To find recently killed services for memory reasons, log in to server and run:
+
+kills
+
+Keep an eye on upstream errors by logging in and running:
+
+upstream-errors
+
+View the docker containers and the resources they're using:
+
+stats

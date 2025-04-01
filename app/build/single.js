@@ -6,20 +6,15 @@ var ensure = require("helper/ensure");
 var async = require("async");
 var converters = require("./converters");
 
-module.exports = function (blog, path, options, callback) {
+module.exports = function (blog, path, callback) {
   ensure(blog, "object").and(path, "string").and(callback, "function");
-
-  // Used for testing
-  if (options.kill) {
-    throw new Error("KILL THIS PROCESS PLEASE");
-  }
 
   async.each(
     converters,
     function (converter, next) {
       if (!converter.is(path)) return next();
 
-      converter.read(blog, path, options, function (err, html, stat) {
+      converter.read(blog, path, function (err, html, stat) {
         if (err) {
           debug("Blog:", blog.id, path, "conversion error", err);
           return callback(err);

@@ -1,31 +1,20 @@
 const config = require("config");
-const root = require("helper/rootDir");
 const fs = require("fs-extra");
 
-const redis = require("models/redis");
-const client = new redis();
+const client = require("models/client");
 const documentation = require("./documentation/build");
 const templates = require("./templates");
 const folders = require("./templates/folders");
 const async = require("async");
 const clfdate = require("helper/clfdate");
+const scheduler = require("./scheduler");
+const flush = require("documentation/tools/flush-cache");
 const configureLocalBlogs = require("./configure-local-blogs");
 
-const log = (...arguments) =>
-  console.log.apply(null, [clfdate(), "Setup:", ...arguments]);
+const log = (...args) =>
+  console.log.apply(null, [clfdate(), "Setup:", ...args]);
 
-// skip building the documentation if it's already been built
-// this suggests that the server has already been started
-// and this speeds up the restart process when we run out of memory
-const SERVER_RESTART = config.environment === "production" && fs.existsSync(config.views_directory + "/documentation.html")
-
-function main (callback) {
-
-  if (SERVER_RESTART) {
-    log("Server restart detected. Skipping setup.");
-    return callback();
-  }
-
+function main(callback) {
   async.series(
     [
       async function () {
@@ -63,56 +52,126 @@ function main (callback) {
           }
         );
       },
-      
-       function (callback) {
-        // we only want to watch for changes in the templates in development
-        log("Building templates");
-        templates(
-          { watch: config.environment === "development" },
-          function (err) {
-            if (err) throw err;
-            log("Built templates");
-            callback();
-          }
-        );
-      },
 
-
-      async function () {
-        log("Building documentation");
-        // we only want to watch for changes in the documentation in development
-        await documentation({ watch: config.environment === "development" });
-        log("Built documentation");
-      },
-
-      // async function () {
-      //   // if (config.environment === "production") {
-      //   //   log("Building folders");
-      //   //   await folders();
-      //   //   log("Built folders");
-      //   // }
-      // },
-
-      async function ()  {
-        if (config.environment === "development") {
-          log("Configuring local blogs");
-          await configureLocalBlogs();
-          log("Configured local blogs");
+      function (callback) {
+        // we only want to build the templates once per deployment
+        if (config.master) {
+          log("Building templates");
+          templates(
+            // we only want to watch for changes in the templates in development
+            { watch: config.environment === "development" },
+            function (err) {
+              if (err) throw err;
+              log("Built templates");
+              callback();
+            }
+          );
+        } else {
+          log("Skipping template build");
+          callback();
         }
       },
 
+      async function () {
+        // The docker build stage for production runs this script ahead of time
+        if (config.environment !== "development") return;
+        await documentation({ watch: true });
+      },
+
+      async function () {
+        if (config.environment !== "production") return;
+        if (!config.master) return;
+
+        log("Building folders");
+        try {
+          await folders();
+          log("Built folders");
+        } catch (e) {
+          log("Error building folders", e);
+        }
+      },
+
+      function (callback) {
+        if (!config.master) return callback();
+
+        // Launch scheduler for background tasks, like backups, emails
+        scheduler();
+        callback();
+      },
+
+      function (callback) {
+        if (!config.master) return callback();
+
+        // Run any initialization that clients need
+        // Google Drive will renew any webhooks, e.g.
+        const clients = Object.values(require("clients"));
+        for (const { init, display_name } of clients) {
+          if (init) {
+            console.log(clfdate(), display_name + " client:", "Initializing");
+            init();
+          }
+        }
+        callback();
+      },
+
+      function (callback) {
+        // Flush the cache of the public site and documentation
+        flush();
+        callback();
+      },
+
+      function (callback) {
+        if (config.environment !== "development") return callback();
+
+        configureLocalBlogs();
+        callback();
+      },
+
+      // This is neccessary because when we deploy new dashboard or site code
+      // the old container will continue to serve the old code until they are
+      // replaced. So once the new code is deployed, we need to purge the CDN
+      // at the end of each setup.
+      async function () {
+        if (!config.bunny.secret) return;
+
+        if (config.environment !== "production") return;
+
+        try {
+          const cdnURL = require("documentation/tools/cdn-url-helper")({
+            cacheID: new Date().getTime(),
+            viewDirectory: config.views_directory,
+          })();
+
+          const urls = [
+            "/dashboard.min.css",
+            "/dashboard.min.js",
+            "/documentation.min.css",
+            "/documentation.min.js",
+          ]
+            .map((path) => cdnURL(path, (p) => p))
+            .map((p) => encodeURIComponent(p));
+
+          for (const urlToPurge of urls) {
+            const url = `https://api.bunny.net/purge?url=${urlToPurge}&async=false`;
+            const options = {
+              method: "POST",
+              headers: { AccessKey: config.bunny.secret },
+            };
+            console.log("Purging Bunny CDN cache", url);
+            const res = await fetch(url, options);
+            if (res.status !== 200) {
+              console.error("Failed to purge Bunny CDN cache", res.status);
+            } else {
+              console.log("Purged Bunny CDN cache", res.status);
+            }
+          }
+        } catch (e) {
+          console.error("Failed to run function to purge Bunny CDN cache", e);
+        }
+      },
     ],
     callback
   );
-}
-
-if (require.main === module) {
-  console.log("Setting up Blot...");
-  main(function (err) {
-    if (err) throw err;
-    console.log("Setup complete!");
-    process.exit();
-  });
 }
 
 module.exports = main;

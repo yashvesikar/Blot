@@ -3,7 +3,6 @@ var site = express.Router();
 var load = require("./load");
 var save = require("./save");
 var trace = require("helper/trace");
-const parse = require("dashboard/util/parse");
 const sse = require("helper/sse")({ channel: (req) => `sync:status:${req.blog.id}` });
 
 site
@@ -23,6 +22,8 @@ site
     trace("removed any tmp files"),
     save.finish
   )
+
+site.get("/", require('./load/scheduled'));
 
 // Load the files and folders inside a blog's folder
 site.get(["/", "/folder/:path(*)"], require("./folder"));
@@ -75,7 +76,7 @@ site
     res.locals.breadcrumbs.add("404 log", "404s");
     res.render("dashboard/settings/redirects/404s");
   })
-  .post(parse, require("./save/404"));
+  .post(require("./save/404"));
 
   site.route("/redirects/bulk")
   .get(load.redirects, function (req, res) {

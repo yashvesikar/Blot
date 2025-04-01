@@ -23,6 +23,7 @@ var dictionary = {
   "is": require("./is"),
   "latestEntry": require("./latestEntry"),
   "page": require("./page"),
+  "posts": require("./posts"),
   "plugin_css": require("./plugin_css"),
   "plugin_js": require("./plugin_js"),
   "popular_tags": require("./popular_tags"),
@@ -45,8 +46,6 @@ module.exports = function (req, retrieve, callback) {
 
   var locals = {};
 
-  req.log("Retrieving locals");
-
   async.each(
     _.keys(retrieve),
     function (localName, nextLocal) {
@@ -61,11 +60,12 @@ module.exports = function (req, retrieve, callback) {
 
         if (value !== undefined) locals[localName] = value;
 
+        req.log("Retrieved local", localName);
         return nextLocal();
       });
     },
     function () {
-      req.log("Retrieved locals");
+      req.log("Retrieved all locals");
       callback(null, locals);
     }
   );

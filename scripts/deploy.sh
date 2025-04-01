@@ -77,20 +77,22 @@ PURPLE_CONTAINER="blot-container-purple"
 PURPLE_CONTAINER_PORT=8091
 
 # Define the docker run command template with placeholders
+# 1048.00 MB max memory default is 75% of the 1.5gb limit for the container
 DOCKER_RUN_COMMAND="docker run --pull=always -d \
   --name {{CONTAINER_NAME}} \
   --platform $PLATFORM_OS/$PLATFORM_ARCH \
   -p {{CONTAINER_PORT}}:8080 \
   --env-file /etc/blot/secrets.env \
   -e CONTAINER_NAME={{CONTAINER_NAME}} \
+  -e NODE_OPTIONS='--max-old-space-size=1048' \
   -v /var/www/blot/data:/usr/src/app/data \
   --restart unless-stopped \
   --memory=1.5g --cpus=1 \
   ghcr.io/davidmerfield/blot:$GIT_COMMIT_HASH"
 
 # Configurable health check timeout
-timeout=${HEALTH_CHECK_TIMEOUT:-60}  # Default to 60 seconds
-interval=2  # Interval between health checks
+timeout=${HEALTH_CHECK_TIMEOUT:-120}  # Default to 120 seconds
+interval=5  # Interval between health checks
 
 # Function to run a command over SSH
 ssh_blot() {

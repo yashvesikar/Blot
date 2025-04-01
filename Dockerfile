@@ -27,13 +27,11 @@ RUN ARCH=$(echo ${TARGETPLATFORM} | sed -nE 's/^linux\/(amd64|arm64)$/\1/p') \
   && chmod +x /usr/local/bin/pandoc \
   && rm -r pandoc-${PANDOC_VERSION}
 
-# Copy package files
-COPY package.json package-lock.json ./
+# Copy package file
+COPY package.json ./
 
-# Install dependencies (args from https://sharp.pixelplumbing.com/install#cross-platform)
-# --maxsockets 1 is a workaround for an issue with npm install timing out with qemu on arm64
-# the other args are to ensure the correct sharp binary is installed
-RUN npm install --maxsockets 1 --os=linux --libc=musl --cpu=${TARGETPLATFORM} && npm cache clean --force
+RUN npm install --maxsockets 1 && \
+    npm cache clean --force
 
 ## Stage 2 (development)
 # This stage is for development and testing purposes
@@ -61,19 +59,19 @@ WORKDIR /usr/src/app
 # Copy files and set ownership for non-root user
 COPY ./scripts ./scripts
 COPY ./config ./config
-COPY ./notes ./notes
 COPY ./app ./app
-COPY ./todo.txt ./todo.txt
+COPY ./TODO ./TODO
 
 ## Stage 4 (default, production)
 # The final production stage
 FROM source AS prod
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+HEALTHCHECK --interval=10s --timeout=5s --start-period=120s --start-interval=5s --retries=3 \
   CMD curl --fail http://localhost:8080/health || exit 1
 
-# Ensure the logfile directory exists
-RUN mkdir -p /usr/src/app/data/logs/docker
+# Ensure the data directory exists
+# In production we mount the shared data directory to this location
+RUN mkdir -p /usr/src/app/data
 
 # Give the non-root user ownership of the app directory and data directory
 RUN chown -R 1000:1000 /usr/src/app/app && chown -R 1000:1000 /usr/src/app/data
@@ -84,5 +82,7 @@ USER 1000
 # Re-configuring git for the non-root user
 RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 
-# 1048.00 MB max memory default is 75% of the 1.5gb limit for the container
-CMD ["sh", "-c", "node  /usr/src/app/app/index.js >> /usr/src/app/data/logs/docker/app.log 2>&1"]
+# Build the documentation
+RUN node app/documentation/build
+
+CMD ["node", "/usr/src/app/app/index.js"]

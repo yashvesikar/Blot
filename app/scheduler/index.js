@@ -11,7 +11,6 @@ const freeDiskSpace = require("./free-disk-space");
 const os = require("os");
 const fs = require("fs-extra");
 const exec = require("child_process").exec;
-const fix = require("sync/fix/all");
 const zombies = require("./zombies");
 const checkCardTesters = require("./check-card-testers");
 

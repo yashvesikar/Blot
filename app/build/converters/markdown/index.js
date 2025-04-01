@@ -7,7 +7,8 @@ var extname = require("path").extname;
 var layout = require("./layout");
 var katex = require("./katex");
 var convert = require("./convert");
-var metadata = require("./metadata");
+var extractMetadata = require("build/metadata");
+var yaml = require("yaml");
 var extractBibAndCSL = require("./extractBibAndCSL");
 var linebreaks = require("./linebreaks");
 
@@ -18,10 +19,9 @@ function is (path) {
   );
 }
 
-function read (blog, path, options, callback) {
+function read (blog, path, callback) {
   ensure(blog, "object")
     .and(path, "string")
-    .and(options, "object")
     .and(callback, "function");
 
   var localPath = LocalPath(blog.id, path);
@@ -45,7 +45,8 @@ function read (blog, path, options, callback) {
       text = text.replace(/\r\r/gm, "\n\n");
 
       time("metadata");
-      text = metadata(text);
+      const parsed = extractMetadata(text);
+      text = parsed.html;
       time.end("metadata");
 
       time("layout");
@@ -64,16 +65,20 @@ function read (blog, path, options, callback) {
         time.end("katex");
       }
 
-      extractBibAndCSL(blog, path, text, function (err, bib, csl) {
+      extractBibAndCSL(blog, path, parsed.metadata, function (err, bib, csl) {
         if (err) return callback(err);
 
         let options = {
-          bib: bib,
-          csl: csl
+          bib,
+          csl
         };
 
         convert(blog, text, options, function (err, html) {
           if (err) return callback(err);
+
+          if (Object.keys(parsed.metadata).length > 0) {
+            html = '---\n' + yaml.stringify(parsed.metadata) + '---\n' + html;
+          }
 
           callback(null, html, stat);
         });

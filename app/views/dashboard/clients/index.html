@@ -14,10 +14,10 @@ button[name="client"]:hover {background: #f0f4ff70;cursor: pointer;}
 
   <p style="max-width: 400px;">Choose a way to sync the folder for this site. Blot turns files inside this folder into posts and pages.</p>
 
+  <input type="hidden" name="_csrf" value="{{csrftoken}}">
 
 {{#clients}}
 
-  <input type="hidden" name="_csrf" value="{{csrftoken}}">
 
   <button type="submit" name="client" value="{{name}}">
     <img width="16" height="16" src="{{#cdn}}/images/sync/{{name}}.svg{{/cdn}}" style="position: relative;top:1px;margin-right: 4px;" />

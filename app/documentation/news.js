@@ -192,11 +192,16 @@ news.post("/sign-up", parse, function (req, res, next) {
   var confirm, email, locals;
   var guid = uuid();
 
-  if (!req.body || !req.body.email) {
+  if (!req.body && !req.body.contact_gfhkj) {
     return next(new Error("No email"));
   }
 
-  email = req.body.email.trim().toLowerCase();
+  // honeypot fields
+  if (req.body.email || req.body.name) {
+    return next(new Error("Honeypot triggered"));
+  }
+
+  email = req.body.contact_gfhkj.trim().toLowerCase();
   guid = guid.split("-").join("");
   guid = encodeURIComponent(guid);
   confirm = confirmationLink(guid);
@@ -214,7 +219,7 @@ news.post("/sign-up", parse, function (req, res, next) {
 });
 
 function loadToDo (req, res, next) {
-  fs.readFile(join(root, "todo.txt"), "utf-8", function (err, todo) {
+  fs.readFile(join(root, "TODO"), "utf-8", function (err, todo) {
     if (err) {
       console.log(err);
       res.locals.todo = "";

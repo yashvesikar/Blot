@@ -1,6 +1,5 @@
 const Express = require("express");
 const TemplateEditor = new Express.Router();
-const parse = require("dashboard/util/parse");
 const formJSON = require("helper/formJSON");
 const Template = require("models/template");
 const Blog = require("models/blog");
@@ -34,7 +33,7 @@ TemplateEditor.route('/deleted')
     res.locals.title = 'Deleted templates';
     res.render('dashboard/template/deleted');
   })
-  .post(parse, (req, res, next) => {
+  .post((req, res, next) => {
     // either undelete a specific template
     // or purge all deleted templates
   });
@@ -46,7 +45,7 @@ TemplateEditor.route('/disable')
     res.locals.title = 'Disable template';
     res.render('dashboard/template/disable');
   })
-  .post(parse, (req, res, next) => {
+  .post((req, res, next) => {
     // either disable the current template
     // or enable the current template
   });
@@ -58,7 +57,7 @@ TemplateEditor.route('/new')
     res.locals.title = 'New template';
     res.render('dashboard/template/new');
   })
-  .post(parse, (req, res, next) => {
+  .post((req, res, next) => {
     Template.create(req.blog.id, req.body.name, (err, template) => {
       if (err) return next(err);
       res.redirect(req.baseUrl + '/' + template.slug);
@@ -66,7 +65,7 @@ TemplateEditor.route('/new')
   });
 
 TemplateEditor.route("/:templateSlug/install")
-  .post(parse, function (req, res, next) {
+  .post(function (req, res, next) {
     var templateID = req.body.template;
     if (!templateID) return next(new Error("No template ID"));
     var updates = {template: templateID};
@@ -84,7 +83,6 @@ TemplateEditor.route("/:templateSlug")
   .all(require("./load/navigation-inputs"))
   .all(require("./load/dates"))
   .post(
-    parse,
     require('./save/fork-if-needed'),
     require("./save/previewPath"),
     function (req, res, next) {
@@ -124,8 +122,6 @@ TemplateEditor.route("/:templateSlug")
       next();
     },
     require("./save/layout-inputs"),
-    require("./save/syntax-highlighter"),
-    require("./save/fonts"),
     function (req, res, next) {
       Template.update(
         req.blog.id,
@@ -156,7 +152,7 @@ TemplateEditor.route("/:templateSlug/local-editing")
     res.locals.title = `Local editing - ${req.template.name}`;
     res.render("dashboard/template/local-editing");
   })
-  .post(parse, function (req, res, next) {
+  .post(function (req, res, next) {
     Template.setMetadata(
       req.template.id,
       { localEditing: true },
@@ -178,7 +174,7 @@ TemplateEditor.route("/:templateSlug/local-editing")
     );
   });
 
-  TemplateEditor.route('/:templateSlug/download')
+  TemplateEditor.route('/:templateSlug/download-zip')
   .get(function (req, res) {
 
     // create a zip file of the template on the fly and send it to the user
@@ -193,22 +189,24 @@ TemplateEditor.route("/:templateSlug/local-editing")
 
     // Handle errors
     archive.on('error', function(err) {
-      res.status(500).send({error: err.message});
+      res.status(400).send({error: err.message});
     });
 
     // Pipe the archive data to the response.
     archive.pipe(res);
 
     Template.getAllViews(req.template.id, function (err, views, template) {
-      if (err || !views || !template) return     res.status(500).send({error: err.message});
+      if (err || !views || !template) return     res.status(400).send({error: err.message});
 
       // Add the views to the archive
       for (const view in views) {
         archive.append(views[view].content, { name: view });
       }
 
+      const package = Template.package.generate(req.blog.id, template, views);
+
       // append the template JSON as 'package.json'
-      archive.append(JSON.stringify(template, null, 2), { name: 'package.json' });
+      archive.append(package, { name: 'package.json' });
 
       // Finalize the archive
       archive.finalize();
@@ -222,7 +220,7 @@ TemplateEditor.route("/:templateSlug/local-editing")
 
     res.render("dashboard/template/duplicate");
   })
-  .post(parse, async (req, res, next) => {
+  .post(async (req, res, next) => {
     try {
       const template = await createTemplate({
         isPublic: false,
@@ -244,7 +242,7 @@ TemplateEditor.route("/:templateSlug/rename")
     res.locals.breadcrumbs.add("Rename", "rename");
     res.render("dashboard/template/rename");
   })
-  .post(parse, function (req, res, next) {
+  .post(function (req, res, next) {
     Template.setMetadata(
       req.template.id,
       { name: req.body.name },
@@ -262,7 +260,7 @@ TemplateEditor.route("/:templateSlug/links")
   res.locals.breadcrumbs.add("Links", "links");
   res.render("dashboard/template/links");
 })
-.post(parse, function (req, res, next) {
+.post(function (req, res, next) {
   
       res.message(res.locals.base, "Saved links!");
     
@@ -274,22 +272,22 @@ TemplateEditor.route("/:templateSlug/photo")
   res.locals.breadcrumbs.add("Photo", "photo");
   res.render("dashboard/template/photo");
 })
-.post(parse, function (req, res, next) {
+.post(function (req, res, next) {
   
       res.message(res.locals.base, "Saved photo!");
     
 });
 
-TemplateEditor.route("/:templateSlug/share")
+TemplateEditor.route("/:templateSlug/download")
 
   .get(function (req, res) {
-    res.locals.title = `Share - ${req.template.name}`;
+    res.locals.title = `Download - ${req.template.name}`;
     res.locals.shareURL = `${req.protocol}://${req.hostname}/sites/share-template/${res.locals.template.shareID}`;
-    res.locals.breadcrumbs.add("Share", "share");
+    res.locals.breadcrumbs.add("Download", "download");
 
-    res.render("dashboard/template/share");
+    res.render("dashboard/template/download");
   })
-  .post(parse, function (req, res, next) {
+  .post(function (req, res, next) {
     if (req.template.shareID) {
       Template.dropShareID(req.template.shareID, function (err) {
         if (err) return next(err);

@@ -1,57 +1,53 @@
-Fix, I have confirmed that the uploader of the file, regardless of the owner of the folder into which it is uploaded, pays the storage 'cost' for the file. To demonstate this I used two google drive accounts (dmerfield@gmail.com and david@blot.im)
+# Google Drive Client for Blot
 
-I created a shared folder in dmerfield@gmail.com, then shared it with david@blot.im. I uploaded a file into it using david@blot.im's account. The storage usage for david@blot.im went up, but dmerfield@gmail.com's storage usage did not.
+This repository contains the code for Blot’s Google Drive Client, designed to handle all interactions with Google Drive for the Blot blogging platform. The client is responsible for managing shared folders, syncing changes, and facilitating smooth integration between Blot and Google Drive.
 
----
+Right now we ask the user to type in their Google Drive email. We avoid doing any sort of OAUTH because this involves Google  more than is strictly neccessary.
 
+After inserting their email address, the user is asked to create a new folder in their drive and then share it with a service account controlled by Blot.
 
-Add new redirect URIs here:
-https://console.cloud.google.com/apis/credentials?project=quickstart-1585441405190
+Google Drive service accounts automatically accept sharing requests sent to them, which is handy.
 
----
+How is storage usage affected by 'service accounts'?
+- it seems like each service account gets its own storage quota of 15GB
 
-Questions
-- is there an overhead to creating the oauth2 client each time? can we safely reuse it?
-- is it possible to restrict Blot's access to a single folder in the google drive?
-  - it doesn't seem like it is
+Do multiple service accounts share the same storage quota? If we upgrade the storage size and have this affect all service accounts?
+- No they do not share the same quota
 
-I believe we will need this API for drive changes:
-https://developers.google.com/drive/activity/v2
+## How to add a new service account
 
-Since the changes.list api doesn't return rename events, it seems.
+Service accounts are robot google drive accounts which sync the user's folder to Blot's server. The user shares their site folder through Google Drive with the service account, which in turn calls Blot.
 
-The webhooks are now tunnelled through webhooks.blot.im using clients/webhooks.js
+1. Create a Google Account and open the cloud console:
 
-Test server
-```
-http://localhost:8822/clients/googledrive/authenticate
-```
+https://console.cloud.google.com
 
-Resources:
+2. Go to 'Enabled APIs & services' and enable:
 
-[Verify domain ownership](https://search.google.com/search-console/settings?resource_id=sc-domain%3Ablot.im)
+Google Drive API 	
+Google Drive Activity API
 
-[Domain verification for API use](https://console.cloud.google.com/apis/credentials/domainverification?organizationId=683828060430&project=quickstart-1585441405190)
+3. Create a service account
 
-[Console for redirect URIs](https://console.cloud.google.com/apis/credentials/oauthclient/32772360147-pnntpgr8pjnlem4m6s1perkju3ghce3b.apps.googleusercontent.com?project=quickstart-1585441405190&pli=1)
+Service account name: Blot
+Service account ID: drive-a
 
-[Console for managing API permissions](https://console.developers.google.com/apis/credentials/oauthclient/32772360147-pnntpgr8pjnlem4m6s1perkju3ghce3b.apps.googleusercontent.com?project=quickstart-1585441405190)
+Do not grant any permissions (skip, skip)
 
-[Downloading files google drive](https://stackoverflow.com/questions/62476413/google-drive-api-downloading-file-nodejs)
+4. Create a key
 
-[Downloading files google drive](https://developers.google.com/drive/api/v3/manage-downloads)
+Add key > Create new key > JSON
 
-[Link to remove connection during testing](https://myaccount.google.com/permissions?pli=1)
+Download the JSON and then run:
 
-Documentation:
+node scripts/google-drive/convertCredentialJSON <path to credentials.json>
 
-[nodejs-client authentication-and-authorization](https://github.com/googleapis/google-api-nodejs-client#authentication-and-authorization)
+This script produces a new env variable. Copy/paste the output into the env file:
+- in development: ~/Projects/blot/.env
+- in production: /etc/blot/secrets.env
 
-[quickstart](https://developers.google.com/drive/api/v3/quickstart/nodejs)
+5. Reload the server
 
-Actions to test:
-- Mass rename -> mass move
-- Mass move -> mass rename
-- Delete -> Restore -> Delete
-- Move file from outside folder into folder
-- Move file from inside folder out of folder
+## New update from Google:
+
+Previously, Google Cloud IAM service accounts had access to 15 GB of Google Workspace Storage. However, because they aren't directly managed by administrators, any new service accounts created after April 15, 2025, won't receive this storage. Existing service accounts created before this date will retain their storage.

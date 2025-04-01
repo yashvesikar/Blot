@@ -117,7 +117,6 @@ module.exports = function main(blog, callback) {
                 folder.log(item.relative_path, "Updating path");
                 folder.update(
                   item.relative_path,
-                  { name: item.name, pathDisplay: item.path_display },
                   function (err) {
                     // We don't want an error here to block other
                     // changes from being applied.
@@ -235,7 +234,7 @@ function Apply(client, blogFolder, log, status) {
       });
     }
 
-    // Item.path_lower is the full path to the item
+    // Item.path_display is the full path to the item
     // in the user's Dropbox. Don't confuse it with the
     // relative path to an item, since the root of the
     // Dropbox folder might not be the root of the blog.
@@ -257,7 +256,7 @@ function Apply(client, blogFolder, log, status) {
         );
         Download(
           client,
-          item.path_lower,
+          item.path_display,
           join(blogFolder, item.relative_path),
           function (err) {
             if (err) {

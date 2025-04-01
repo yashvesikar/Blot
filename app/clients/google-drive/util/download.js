@@ -2,22 +2,26 @@ const fs = require("fs-extra");
 const localPath = require("helper/localPath");
 const colors = require("colors/safe");
 const join = require("path").join;
-const debug = require("debug")("blot:clients:google-drive:sync");
+const debug = require("debug")("blot:clients:google-drive:download");
 const tempDir = require("helper/tempDir")();
 const guid = require("helper/guid");
 const computeMd5Checksum = require("../util/md5Checksum");
 
-module.exports = async (blogID, drive, path, file) => {
+module.exports = async (
+  blogID,
+  drive,
+  path,
+  { id, md5Checksum, mimeType, modifiedTime }
+) => {
   return new Promise(async function (resolve, reject) {
     let pathOnBlot = localPath(blogID, path);
     const tempPath = join(tempDir, guid());
-    const { id, md5Checksum, mimeType, modifiedTime } = file;
     try {
       if (mimeType === "application/vnd.google-apps.folder") {
         await fs.ensureDir(pathOnBlot);
         debug("MKDIR folder");
         debug("   to:", colors.green(pathOnBlot));
-        return resolve();
+        return resolve(false);
       }
 
       const existingMd5Checksum = await computeMd5Checksum(pathOnBlot);
@@ -27,7 +31,7 @@ module.exports = async (blogID, drive, path, file) => {
         debug("      path:", path);
         debug("   locally:", existingMd5Checksum);
         debug("    remote:", md5Checksum);
-        return resolve();
+        return resolve(false);
       }
 
       debug("DOWNLOAD file");
@@ -40,7 +44,6 @@ module.exports = async (blogID, drive, path, file) => {
 
       // if the file is a google doc, then add the gdoc extension to pathOnBlot
       if (mimeType === "application/vnd.google-apps.document") {
-        console.log('we are here! with google doc');
         const res = await drive.files.export(
           {
             fileId: id,
@@ -68,7 +71,7 @@ module.exports = async (blogID, drive, path, file) => {
           }
 
           try {
-            debug("Setting mtime for file", pathOnBlot);
+            debug("Setting mtime for file", pathOnBlot, "to", modifiedTime);
             debug("mtime before:", (await fs.stat(pathOnBlot)).mtime);
             const mtime = new Date(modifiedTime);
             debug("mtime to set:", mtime);
@@ -79,7 +82,7 @@ module.exports = async (blogID, drive, path, file) => {
           }
 
           debug("DOWNLOAD file SUCCEEDED");
-          resolve();
+          resolve(true);
         })
         .on("error", reject)
         .pipe(dest);

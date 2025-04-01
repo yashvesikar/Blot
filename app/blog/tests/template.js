@@ -1,14 +1,13 @@
 describe("template engine", function () {
-  
   require("./util/setup")();
 
   it("lists entries in reverse chronological", async function () {
-    await this.write({path: "/first.txt", content: "Foo"});
-    await this.write({path: "/second.txt", content: "Bar"});
+    await this.write({ path: "/first.txt", content: "Foo" });
+    await this.write({ path: "/second.txt", content: "Bar" });
 
     await this.template({
       "entries.html":
-        "{{#entries}}<p><a href='{{{url}}}'>{{title}}</a></p>{{/entries}}"
+        "{{#entries}}<p><a href='{{{url}}}'>{{title}}</a></p>{{/entries}}",
     });
 
     const res = await this.get(`/`);
@@ -19,12 +18,12 @@ describe("template engine", function () {
   });
 
   it("renders a list of posts with a given tag", async function () {
-    await this.write({path: "/[Foo]/first.txt", content: "Foo"});
-    await this.write({path: "/[Foo]/second.txt", content: "Bar"});
+    await this.write({ path: "/[Foo]/first.txt", content: "Foo" });
+    await this.write({ path: "/[Foo]/second.txt", content: "Bar" });
 
     await this.template({
       "tagged.html":
-        "{{#tagged}}{{#entries}}<p><a href='{{{url}}}'>{{title}}</a></p>{{/entries}}{{/tagged}}"
+        "{{#tagged}}{{#entries}}<p><a href='{{{url}}}'>{{title}}</a></p>{{/entries}}{{/tagged}}",
     });
 
     const res = await this.get(`/tagged/foo`);
@@ -35,8 +34,11 @@ describe("template engine", function () {
   });
 
   it("augments entry.next and entry.previous", async function () {
-    await this.write({path: "/first.txt", content: "Link: first\n\nFoo"});
-    await this.write({path: "/second.txt", content: "Tags: foo\nLink: second\n\nSecond"});
+    await this.write({ path: "/first.txt", content: "Link: first\n\nFoo" });
+    await this.write({
+      path: "/second.txt",
+      content: "Tags: foo\nLink: second\n\nSecond",
+    });
 
     await this.template({
       "entry.html": `
@@ -48,11 +50,48 @@ describe("template engine", function () {
           {{/next}}
           {{/next.tagged.foo}}
         {{/entry}}
-      `
+      `,
     });
 
     const res = await this.get(`/first`);
 
     expect(await res.text()).not.toContain("<a href='/second'>");
+  });
+
+  it("embeds the HTML for a given post as a partial template, including lowercase", async function () {
+    await this.write({ path: "/hello.txt", content: "Foo" });
+
+    // We're interested in testing lowercase because the Dropbox client
+    // stores all files in lowercase.
+    await this.template({
+      "entries.html": "{{> /Hello.txt}} {{> /hello.txt}}",
+    });
+
+    const res = await this.get(`/`);
+
+    expect((await res.text()).trim().toLowerCase()).toEqual(
+      "<p>foo</p><p>foo</p>"
+    );
+  });
+
+  it("exposes the url query to the template view", async function () {
+    await this.template({
+      "foo.html": `{{request.query.bar}}`,
+    });
+
+    const res = await this.get(`/foo.html?bar=baz`);
+
+    expect(await res.text()).toEqual("baz");
+  });
+
+  it("renders the query object", async function () {
+    // this previously triggered a bug with the template engine
+    await this.template({
+      "foo.html": "{{query}}",
+    });
+
+    const res1 = await this.get(`/foo.html`);
+
+    expect((await res1.text()).trim()).toEqual("");
   });
 });
