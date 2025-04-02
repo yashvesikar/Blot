@@ -13,6 +13,7 @@
 		action="{{{base}}}/source-code/{{view.name}}/edit"
 	>
 		<input type="hidden" name="content" value="{{content}}" />
+		<input type="hidden" name="_csrf" value="{{csrftoken}}" />
 		<button
 			id="save"
 			class="button disabled small"
