@@ -42,7 +42,9 @@ checkboxes.forEach(function(checkbox) {
     xhr.onerror = function() {
       // error callback
     };
-    xhr.send(new FormData(form));
+    var formdata = new FormData(form);
+    console.log('formdata', formdata);
+    xhr.send(formdata);
   });
 });
 

@@ -109,8 +109,8 @@ async function getStat(blogFolder, path) {
   } catch (e) {}
 
   try {
-    resolvedPath = await caseSensitivePath(blogFolder, path);
-    resolvedRelativePath = resolvedPath.slice(blogFolder.length);
+    const resolvedPath = await caseSensitivePath(blogFolder, path);
+    const resolvedRelativePath = resolvedPath.slice(blogFolder.length);
     stat = await fs.stat(resolvedPath);
     return { stat, path: resolvedRelativePath };
   } catch (e) {}

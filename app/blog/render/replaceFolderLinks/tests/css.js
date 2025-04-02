@@ -58,7 +58,7 @@ describe("replaceCssUrls", function () {
     expect(result).toMatch(cdnRegex("/images/test.jpg"));
   });
 
-  it("should handle multiple URLs in the same rule", async function () {
+  it("should handle multiple URLs in the same rule across multiple requests", async function () {
     await this.write({ path: "/img1.jpg", content: "image1" });
     await this.write({ path: "/img2.jpg", content: "image2" });
     await this.template({
@@ -72,10 +72,14 @@ describe("replaceCssUrls", function () {
     const res = await this.get("/style.css");
     const result = await res.text();
 
-    const matches = result.match(
-      new RegExp(`${config.cdn.origin}/folder/v-[a-f0-9]{8}`, "g")
-    );
-    expect(matches.length).toEqual(2);
+    expect(result).toMatch(cdnRegex("/img1.jpg"));
+    expect(result).toMatch(cdnRegex("/img2.jpg"));
+
+    const res2 = await this.get("/style.css");
+    const result2 = await res2.text();
+
+    expect(result2).toMatch(cdnRegex("/img1.jpg"));
+    expect(result2).toMatch(cdnRegex("/img2.jpg"));
   });
 
   it("should not modify external URLs", async function () {
@@ -86,6 +90,55 @@ describe("replaceCssUrls", function () {
     const result = await res.text();
 
     expect(result).toEqual(css);
+  });
+
+  it("should handle font-face rules with incorrect case", async function () {
+    const trioCSS = `    
+    @font-face {
+      font-family: 'Trio Grotesk';
+      font-weight: 400;
+      font-style: normal;
+      src: url('/templates/fonts/trio.grotesk/triogrotesk-regular.otf') format('opentype'); 
+    }
+    
+    @font-face {
+      font-family: 'Trio Grotesk';
+      font-weight: 400;
+      font-style: italic;
+      src: url('/templates/fonts/trio.grotesk/triogrotesk-italic.otf') format('opentype'); 
+    }`;
+
+    await this.template({
+      "style.css": trioCSS,
+    });
+
+    await this.write({
+      path: "/Templates/Fonts/trio.grotesk/triogrotesk-regular.otf",
+      content: "fake font data",
+    });
+    await this.write({
+      path: "/Templates/Fonts/trio.grotesk/triogrotesk-italic.otf",
+      content: "fake font data",
+    });
+
+    const res = await this.get("/style.css");
+
+    const result = await res.text();
+    expect(result).toMatch(
+      cdnRegex("/Templates/Fonts/trio.grotesk/triogrotesk-regular.otf")
+    );
+    expect(result).toMatch(
+      cdnRegex("/Templates/Fonts/trio.grotesk/triogrotesk-italic.otf")
+    );
+
+    const res2 = await this.get("/style.css");
+    const result2 = await res2.text();
+    expect(result2).toMatch(
+      cdnRegex("/Templates/Fonts/trio.grotesk/triogrotesk-regular.otf")
+    );
+    expect(result2).toMatch(
+      cdnRegex("/Templates/Fonts/trio.grotesk/triogrotesk-italic.otf")
+    );
   });
 
   it("should not modify data URLs", async function () {
@@ -428,8 +481,7 @@ describe("replaceCssUrls", function () {
     });
 
     await fs.outputFile(
-      config.blot_directory +
-        "/app/blog/static/plugins/katex.woff2",
+      config.blot_directory + "/app/blog/static/plugins/katex.woff2",
       "fake image data"
     );
 
@@ -440,13 +492,10 @@ describe("replaceCssUrls", function () {
     // First request
     const result1 = await this.text("/style.css");
 
-    expect(result1).toMatch(
-      globalStaticFileRegex("/plugins/katex.woff2")
-    );
-    
+    expect(result1).toMatch(globalStaticFileRegex("/plugins/katex.woff2"));
+
     expect(fs.stat).toHaveBeenCalledWith(
-      config.blot_directory +
-        "/app/blog/static/plugins/katex.woff2"
+      config.blot_directory + "/app/blog/static/plugins/katex.woff2"
     );
     expect(fs.stat.calls.count()).toBe(1);
 
@@ -461,8 +510,7 @@ describe("replaceCssUrls", function () {
     fs.stat = origStat;
 
     await fs.remove(
-      config.blot_directory +
-        "/app/blog/static/plugins/katex.woff2"
+      config.blot_directory + "/app/blog/static/plugins/katex.woff2"
     );
   });
 });
