@@ -7,9 +7,6 @@ const sse = require("helper/sse")({ channel: (req) => `sync:status:${req.blog.id
 
 site
   .post("/",
-    trace("parsing form"),
-    save.parse,
-    trace("parsed form"),
     save.redirects,
     trace("saved redirects"),
     save.format,
