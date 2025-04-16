@@ -19,7 +19,7 @@ const config = require("config");
 const flush = require("documentation/tools/flush-cache");
 
 Questions.use(
-  ["/ask", "/:id/edit", "/:id/new"],
+  ["/ask", "/:id"],
   require("dashboard/util/session"),
   require("dashboard/util/parse"),
   cookieParser(),

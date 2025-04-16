@@ -1,6 +1,6 @@
 <h2 class="template-heading">{{label}}</h2>
 <form method="post">
-
+  <input type="hidden" name="_csrf" value="{{csrftoken}}" />
   <label for="{{key}}-toggle">
     {{#value}}
       {{#name}}
