@@ -1,5 +1,17 @@
+Fix sync issue with [Ryan's customer site template](https://mail.google.com/mail/u/0/#inbox)
+
+Add support for webp to thumbnail generator and [tell Chris](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzcNCQHDqDskxfBVvcDfLxvV)
+
+Make [changes to Chris' site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzcNCQHDqDskxfBVvcDfLxvV)
+
+Fix broken images on Bjorn site: issue is with [image_cache](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSKzRQHdxTTQdKGRDPWWCxJ)
+
+Add deploy button to GitHub so I can deploy code while away!
+
 Investigate why thumbnail generator is failing for posts on Chris' site
 - it's to do with 304 responses in transformer - handle these properly
+
+Get arq backup working again
 
 ---
 
