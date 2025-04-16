@@ -290,12 +290,8 @@ Array.from(document.querySelectorAll('form[id^="font_picker"]')).forEach(functio
 // boolean inputs
 
 document.querySelectorAll('form.boolean').forEach(function(form){
-	console.log('boolean form', form);
     form.querySelectorAll('input').forEach(function(node){
-		console.log('boolean input', node);
       node.addEventListener('change',  (event) => {
-
-		console.log('FIRED!');;
         // construct the body based on the single input or button that was clicked
         const body = new URLSearchParams();
 
@@ -305,8 +301,6 @@ document.querySelectorAll('form.boolean').forEach(function(form){
 		// append the csrf token
 		body.append('_csrf', form.querySelector('input[name="_csrf"]').value)
 		;
-
-		console.log(body);
 
         fetch(window.location.href, { method: "post", body }).then(function (response) {
           document.getElementById("full_size_preview").src += "";
@@ -322,18 +316,9 @@ document.querySelectorAll('form.boolean').forEach(function(form){
   document.querySelectorAll('#dateSettings').forEach(function(form){
     form.querySelectorAll('input, select').forEach(function(node){
       node.addEventListener('change',  (event) => {
-		// construct the body based on the single input or button that was clicked
-		const body = new URLSearchParams();
-
-		body.append(node.name, node.value);
-
-		// append the csrf token
-		body.append('_csrf', form.querySelector('input[name="_csrf"]').value)
-
-		fetch(window.location.href, { method: "post", body }).then(function (response) {
-		  document.getElementById("full_size_preview").src += "";
-		});
-
+		// trigger the form submission, e.g. $('#dateSettings').submit();
+		// don't use jquery or fetch or xhr, just use the form submission
+		form.submit();
 		event.preventDefault();
 		return false;
 	  })
