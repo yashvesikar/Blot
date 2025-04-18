@@ -1,4 +1,4 @@
-Add support for webp to thumbnail generator and [tell Chris](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzcNCQHDqDskxfBVvcDfLxvV)
+Add tests for webp thumbnails and document for next newsletter
 
 Fix broken images on Bjorn site: issue is with [image_cache](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSKzRQHdxTTQdKGRDPWWCxJ)
 
