@@ -1,6 +1,7 @@
 
   <form method='post' class="dashboard-form" style="padding: 0;margin: 0;">
 
+    <input type="hidden" name="_csrf" value="{{csrftoken}}">
 
   <p>The folder for <b>{{blog.title}}</b> syncs with <b>{{client.display_name}}</b>. You can choose another way and Blot will transfer the contents of your folder automatically so you can pick up where you left off.
   </p>
@@ -25,8 +26,6 @@
   
   
   {{#clients}}
-  
-    <input type="hidden" name="_csrf" value="{{csrftoken}}">
   
     <button type="submit" name="client" value="{{name}}">
       <img width="16" height="16" src="{{#cdn}}/images/sync/{{name}}.svg{{/cdn}}" style="position: relative;top:1px;margin-right: 4px;" />
