@@ -14,11 +14,12 @@ dashboard.use(trace("loaded session information"));
 const multiparty = require("multiparty");
 
 var tempDir = require("helper/tempDir")();
-var MAX_SIZE = 4 * 1024 * 1024;
+
+const maxFilesSize = 30 * 1024 * 1024; // 30mb
+
 var FORM_OPTIONS = {
   uploadDir: tempDir,
-  maxFieldsSize: MAX_SIZE,
-  maxFilesSize: MAX_SIZE,
+  maxFilesSize
 };
 
 // Middleware to parse multipart forms and regular forms
