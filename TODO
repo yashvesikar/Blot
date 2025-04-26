@@ -1,10 +1,6 @@
-Get this URL working: https://linevariation.blot.im/_assets/1ca047d106ef91cdd23c3fffaddf1a80/media/image2.jpeg
-
 Fix bug with Bruce's local template, [possibly related to Ryan's issue](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrKgBjjDKTqMbltHHhplfZsr). The template switches from 3 to 2 after each sync.
 
 Add tests for webp thumbnails and document for next newsletter
-
-Fix broken images on Bjorn site: issue is with [image_cache](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSKzRQHdxTTQdKGRDPWWCxJ)
 
 Investigate why thumbnail generator is failing for posts on Chris' site
 - it's to do with 304 responses in transformer - handle these properly
