@@ -72,7 +72,7 @@ assets.get("/layout.css", (req, res) => {
 assets.use(BLOG_STATIC_PATHS, async (req, res, next) => {
   try {
     const filePath =
-      config.blog_folder_dir + "/" + req.blog.id + decodeURIComponent(req.path);
+      config.blog_static_files_dir + "/" + req.blog.id + req.baseUrl + decodeURIComponent(req.path);
     await sendFile(filePath, {
       req,
       res,

@@ -91,7 +91,7 @@ describe("asset middleware", function () {
     for (const path of paths) {
       const content = global.test.fake.file();
       contents[path] = content;
-      await this.write({ path, content });
+      await fs.outputFile(config.blog_static_files_dir + "/" + this.blog.id + path, content);
     }
 
     for (const path of paths) {
