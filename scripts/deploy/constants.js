@@ -15,9 +15,9 @@ const siteConfig = {
 // also the esbuild process which is much lighter so the
 // gap between memory and maxOldSpaceSize can be smaller.
 const blogsConfig = {
-  cpus: 1,
-  memory: "1g",
-  maxOldSpaceSize: 900,
+  cpus: 2,
+  memory: "2g",
+  maxOldSpaceSize: 1500,
 };
 
 module.exports = {
@@ -52,16 +52,10 @@ module.exports = {
       ...siteConfig,
     },
 
-    // Blog servers (previews, published blogs)
+    // Blog server (previews, published blogs)
     YELLOW: {
       name: "blot-container-yellow",
       port: 8090,
-      ...blogsConfig,
-    },
-
-    PURPLE: {
-      name: "blot-container-purple",
-      port: 8091,
       ...blogsConfig,
     },
   },
