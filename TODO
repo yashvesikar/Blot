@@ -2,12 +2,16 @@ Fix issue with template settings and tell [Dirt](https://mail.google.com/mail/u/
 
 Add per request resource monitoring, e.g. heap size before/after
 
+Fix various performance issues with archives page and sitemap
+- highlighted by `https://niksethi.blot.im/blog-posts.html`
+
 Implement mac server screenshot endpoint
 - Remove weird fake screenshot code from template editor
 
 Implement limit for allentries, sitemap, etc.
 
-Write script which takes in log files from blue server and works out which requests triggered the OOM bug
+Set long-timeout for git client requests on reverse proxy
+- prevent request retry for non
 
 Fix bug with Bruce's local template, [possibly related to Ryan's issue](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrKgBjjDKTqMbltHHhplfZsr). The template switches from 3 to 2 after each sync.
 - Also affecting [Chris](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrRbHMFllcTBGXPJBNKBcLjr)
