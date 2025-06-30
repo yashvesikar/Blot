@@ -1,11 +1,20 @@
 Fix issue with template settings and tell [Dirt](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrQRPKNbMkwscffXLqSLGqjr)
 
+Add per request resource monitoring, e.g. heap size before/after
+
+Implement mac server screenshot endpoint
+- Remove weird fake screenshot code from template editor
+
+Implement limit for allentries, sitemap, etc.
+
 Write script which takes in log files from blue server and works out which requests triggered the OOM bug
 
 Fix bug with Bruce's local template, [possibly related to Ryan's issue](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrKgBjjDKTqMbltHHhplfZsr). The template switches from 3 to 2 after each sync.
 - Also affecting [Chris](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrRbHMFllcTBGXPJBNKBcLjr)
 
 Investigate iCloud bugs
+- What happens when you rename a folder connected to iCloud client?
+  - does this explain why there are unrenamed folders in the mac server icloud drive?
 - Fix subfolder sync issue with iCloud images and tell [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq)
 - Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
 - Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
