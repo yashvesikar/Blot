@@ -4,6 +4,7 @@ Add per request resource monitoring, e.g. heap size before/after
 
 Fix various performance issues with archives page and sitemap
 - highlighted by `https://niksethi.blot.im/blog-posts.html`
+- also by `https://salocin.blot.im`
 
 Implement mac server screenshot endpoint
 - Remove weird fake screenshot code from template editor
