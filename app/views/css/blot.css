@@ -75,10 +75,11 @@ body {
 }
 
 .navbar {
+  display: flex;
   flex-grow: 0;
   flex-shrink: 0;
   width: 240px;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.25rem;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -939,8 +940,7 @@ ul.pill-navigation {
 
 .navigation .minor a span {
   font-size: 15px;
-  margin-right: 0.8rem;
-  margin-left: 0.1rem;
+  margin-right: 0.7rem;
   color: var(--medium-text-color)
 }
 
