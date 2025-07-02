@@ -1,3 +1,18 @@
+Investigate iCloud bugs
+- Repeat issue with files in sub folders...
+- What happens when you rename a folder connected to iCloud client?
+  - does this explain why there are unrenamed folders in the mac server icloud drive?
+- Fix subfolder sync issue with iCloud images and tell [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr)
+- Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
+- Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
+- remove all keys related to icloud client for blog_e74c2a93cXXXX
+
+Why isn't the WAV file in this footnote being properly replaced with a CDN URL?
+- `https://diwank.space/field-notes-from-shipping-real-code-with-claude`
+
+Get a handle on data egress from AWS – block bots?
+- Check in on [this chart](https://us-east-1.console.aws.amazon.com/costmanagement/home#/cost-explorer?chartStyle=LINE&costAggregate=unBlendedCost&endDate=2025-06-30&excludeForecasting=false&filter=%5B%7B%22dimension%22:%7B%22id%22:%22UsageTypeGroup%22,%22displayValue%22:%22Usage%20type%20group%22%7D,%22operator%22:%22INCLUDES%22,%22values%22:%5B%7B%22value%22:%22EC2:%20Data%20Transfer%20-%20Internet%20(Out)%22,%22displayValue%22:%22EC2:%20Data%20Transfer%20-%20Internet%20(Out)%22%7D%5D%7D%5D&futureRelativeRange=CUSTOM&granularity=Daily&groupBy=%5B%22Service%22%5D&historicalRelativeRange=LAST_6_MONTHS&isDefault=true&reportMode=STANDARD&reportName=New%20cost%20and%20usage%20report&showOnlyUncategorized=false&showOnlyUntagged=false&startDate=2025-01-01&usageAggregate=usageQuantity&useNormalizedUnits=false)
+
 Fix issue with template settings and tell [Dirt](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrQRPKNbMkwscffXLqSLGqjr)
 
 Add per request resource monitoring, e.g. heap size before/after
@@ -16,15 +31,6 @@ Set long-timeout for git client requests on reverse proxy
 
 Fix bug with Bruce's local template, [possibly related to Ryan's issue](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrKgBjjDKTqMbltHHhplfZsr). The template switches from 3 to 2 after each sync.
 - Also affecting [Chris](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrRbHMFllcTBGXPJBNKBcLjr)
-
-Investigate iCloud bugs
-- Repeat issue with files in sub folders...
-- What happens when you rename a folder connected to iCloud client?
-  - does this explain why there are unrenamed folders in the mac server icloud drive?
-- Fix subfolder sync issue with iCloud images and tell [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr)
-- Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
-- Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
-- remove all keys related to icloud client for blog_e74c2a93cXXXX
 
 Fix accessibility issue with menu links reordering and tell [Grace](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfBpBkKCLVRWBGxzDDDkhSXfl)
 
