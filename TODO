@@ -10,6 +10,7 @@ Investigate iCloud bugs
 Fix bug with [navigation on blog template on mobile](https://blot.im/questions/3137)
 
 Why isn't the WAV file in this footnote being properly replaced with a CDN URL?
+- it's because it contains URL-encoded chars – replace 
 - `https://diwank.space/field-notes-from-shipping-real-code-with-claude`
 
 Get a handle on data egress from AWS – block bots?
@@ -19,9 +20,10 @@ Fix issue with template settings and tell [Dirt](https://mail.google.com/mail/u/
 
 Add per request resource monitoring, e.g. heap size before/after
 
+Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
+
 Fix various performance issues with archives page and sitemap
-- highlighted by `https://niksethi.blot.im/blog-posts.html`
-- also by `https://salocin.blot.im`
+- highlighted by `https://salocin.blot.im` and `https://salocin.blot.im/archives`
 
 Implement mac server screenshot endpoint
 - Remove weird fake screenshot code from template editor
