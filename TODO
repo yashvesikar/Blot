@@ -1,3 +1,6 @@
+Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
+- highlighted by `https://salocin.blot.im` and `https://salocin.blot.im/archives` and  sitemap
+
 Why aren't etags working properly?
 
 Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjSpDQzr) that photo posts are dated at the time they appear in Blot. I'll consider adding an option to use the image taken date?
@@ -32,9 +35,6 @@ Fix issue with template settings and tell [Dirt](https://mail.google.com/mail/u/
 Add per request resource monitoring, e.g. heap size before/after
 
 Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
-
-Fix various performance issues with archives page and sitemap
-- highlighted by `https://salocin.blot.im` and `https://salocin.blot.im/archives`
 
 Implement mac server screenshot endpoint
 - Remove weird fake screenshot code from template editor
