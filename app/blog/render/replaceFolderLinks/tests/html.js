@@ -227,6 +227,32 @@ describe("replaceFolderLinks", function () {
     expect(result).toMatch(cdnRegex("/c.jpg"));
   });
 
+
+  it("should handle spaces and url-encoded chars", async function () {
+    await this.write({ path: "/image with space.jpg", content: "image" });
+    await this.template({
+      "entries.html": '<img src="/image%20with%20space.jpg">',
+    });
+
+    const res = await this.get("/");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/image with space.jpg"));
+  });
+
+
+  it("should handle file names with percent signs", async function () {
+    await this.write({ path: "/100% luck.jpg", content: "image" });
+    await this.template({
+      "entries.html": '<img src="/100% luck.jpg">',
+    });
+
+    const res = await this.get("/");
+    const result = await res.text();
+
+    expect(result).toMatch(cdnRegex("/100% luck.jpg"));
+  });
+
   it("should handle query strings", async function () {
     await this.write({ path: "/image.jpg", content: "image" });
     await this.template({
