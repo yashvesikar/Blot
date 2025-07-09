@@ -8,6 +8,12 @@ let rolling_total = 0;
 
 each(
   function (user, next) {
+
+    if (!user) {
+      console.log("No user found, exiting.");
+      return next();
+    }
+
     if (
       user.isDisabled ||  (user.subscription && user.subscription.status === "unpaid")) {
 
