@@ -10,6 +10,7 @@ Investigate iCloud bugs
 - remove all keys related to icloud client for blog_e74c2a93cXXXX
 
 Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
+- basically, we need to modify the template engine to save the properties of each entry requested, then use this in entry.get, then update entry to use a hash rather than a json blob.
 - highlighted by `https://salocin.blot.im` and `https://salocin.blot.im/archives` and  sitemap
 - why is the feed so huge? are we compressing feeds?
 - we need to modify the template engine to extract which properties of the entry are used, then pass this into entry.get to reduce memory usage significantly for large sites.
