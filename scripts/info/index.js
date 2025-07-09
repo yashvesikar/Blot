@@ -108,7 +108,7 @@ function showUser(user, callback) {
   }
 
   if (user.subscription && user.subscription.plan) {
-    subscriptionMessage =
+    subscriptionMessage = subscriptionMessage +
       user.subscription.quantity +
       " x " +
       prettyPrice(user.subscription.plan.amount) +
