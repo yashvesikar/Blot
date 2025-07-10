@@ -1,5 +1,3 @@
-Detect and remove long-overdue sites
-
 Investigate iCloud bugs
 - Intermittent 'iCloud Server down' notifications
 - Repeat issue with files in sub folders...
@@ -22,6 +20,8 @@ Add [preload=none](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/E
 Why aren't etags working properly?
 
 Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjSpDQzr) that photo posts are dated at the time they appear in Blot. I'll consider adding an option to use the image taken date?
+
+Automate the detection and removal of long-overdue sites (> 1 year)
 
 Google Drive blockquotes and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxlDlqnPKgVbvfQpzhqBGPdF)
 
