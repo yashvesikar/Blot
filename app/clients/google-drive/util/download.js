@@ -42,16 +42,24 @@ module.exports = async (
       debug("getting file from Drive");
       let data;
 
-      // if the file is a google doc, then add the gdoc extension to pathOnBlot
+      // e.g. google docs, sheets, slides
       if (mimeType.startsWith("application/vnd.google-apps.")) {
-        const res = await drive.files.export(
-          {
-            fileId: id,
-            mimeType: "text/html",
-          },
-          { responseType: "stream" }
-        );
+        
+        const params = {
+          fileId: id,
+        };
+        
+        // If it's a Google Doc, export as HTML
+        if (mimeType === "application/vnd.google-apps.document") {
+          params.mimeType = "text/html";
+        }
+        
+        const res = await drive.files.export(params, {
+          responseType: "stream",
+        });
+
         data = res.data;
+        
       } else {
         const res = await drive.files.get(
           { fileId: id, alt: "media" },
