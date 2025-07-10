@@ -1,6 +1,7 @@
 Detect and remove long-overdue sites
 
 Investigate iCloud bugs
+- Intermittent 'iCloud Server down' notifications
 - Repeat issue with files in sub folders...
 - What happens when you rename a folder connected to iCloud client?
   - does this explain why there are unrenamed folders in the mac server icloud drive?
