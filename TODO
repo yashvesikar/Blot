@@ -17,7 +17,7 @@ Fix various performance issues with archives page and sitemap on large sites - m
 
 Add [preload=none](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio#preload) to all audio and video tags without it defined or maybe preload="metadata"? 
 
-Why aren't etags working properly?
+Why aren't etags working properly? They seem to be flaky... can we compute these ourselves?
 
 Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjSpDQzr) that photo posts are dated at the time they appear in Blot. I'll consider adding an option to use the image taken date?
 
