@@ -24,6 +24,20 @@ module.exports = async (
         return resolve(false);
       }
 
+      // create an empty placeholder file for Google App files
+      // which are not Documents, e.g. Google Sheets, Slides, etc.
+      // this is to avoid downloading them, which would fail
+      // because they are not downloadable in the same way as regular files
+      if (
+        mimeType.startsWith("application/vnd.google-apps.") &&
+        mimeType !== "application/vnd.google-apps.document"
+      ) {
+        await fs.ensureFile(pathOnBlot);
+        debug("SKIP download of file because it is a Google App file type", mimeType);
+        debug("   created empty file at:", colors.green(pathOnBlot));
+        return resolve(false);
+      }
+
       const existingMd5Checksum = await computeMd5Checksum(pathOnBlot);
 
       if (existingMd5Checksum && md5Checksum === existingMd5Checksum) {
@@ -43,23 +57,18 @@ module.exports = async (
       let data;
 
       // e.g. google docs, sheets, slides
-      if (mimeType.startsWith("application/vnd.google-apps.")) {
-        
-        const params = {
-          fileId: id,
-        };
-        
-        // If it's a Google Doc, export as HTML
-        if (mimeType === "application/vnd.google-apps.document") {
-          params.mimeType = "text/html";
-        }
-        
-        const res = await drive.files.export(params, {
-          responseType: "stream",
-        });
+      if (mimeType === "application/vnd.google-apps.document") {
+        const res = await drive.files.export(
+          {
+            fileId: id,
+            mimeType: "text/html",
+          },
+          {
+            responseType: "stream",
+          }
+        );
 
         data = res.data;
-        
       } else {
         const res = await drive.files.get(
           { fileId: id, alt: "media" },
