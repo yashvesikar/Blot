@@ -43,7 +43,7 @@ module.exports = async (
       let data;
 
       // if the file is a google doc, then add the gdoc extension to pathOnBlot
-      if (mimeType === "application/vnd.google-apps.document") {
+      if (mimeType.startsWith("application/vnd.google-apps.")) {
         const res = await drive.files.export(
           {
             fileId: id,
