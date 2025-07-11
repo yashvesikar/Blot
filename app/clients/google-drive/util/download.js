@@ -33,7 +33,20 @@ module.exports = async (
         mimeType !== "application/vnd.google-apps.document"
       ) {
         await fs.ensureFile(pathOnBlot);
-        debug("SKIP download of file because it is a Google App file type", mimeType);
+        try {
+          debug("Setting mtime for file", pathOnBlot, "to", modifiedTime);
+          debug("mtime before:", (await fs.stat(pathOnBlot)).mtime);
+          const mtime = new Date(modifiedTime);
+          debug("mtime to set:", mtime);
+          await fs.utimes(pathOnBlot, mtime, mtime);
+          debug("mtime after:", (await fs.stat(pathOnBlot)).mtime);
+        } catch (e) {
+          debug("Error setting mtime", e);
+        }
+        debug(
+          "SKIP download of file because it is a Google App file type",
+          mimeType
+        );
         debug("   created empty file at:", colors.green(pathOnBlot));
         return resolve(false);
       }
