@@ -156,7 +156,6 @@ color:var(--medium-text-color)
 }
 p code, td code, li code {
 border: 1px solid var(--border-color);
-border: 1px solid #eeeeec;
   border-radius: 4px;
   overflow-x: auto;
   background: #fbfbfb;
