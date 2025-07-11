@@ -1,3 +1,6 @@
+Fix google drive client so it doesn't continuously re-download sheets files
+- to reproduce, add google sheet to folder in dev env, then resync.
+
 Investigate iCloud bugs
 - Intermittent 'iCloud Server down' notifications
 - Repeat issue with files in sub folders...
