@@ -33,6 +33,8 @@ module.exports = async (
         mimeType !== "application/vnd.google-apps.document"
       ) {
         await fs.ensureFile(pathOnBlot);
+        // We update the date-modified time of the file to match the remote file
+        // to prevent Blot re-downloading by ensuring the file is not considered stale
         try {
           debug("Setting mtime for file", pathOnBlot, "to", modifiedTime);
           debug("mtime before:", (await fs.stat(pathOnBlot)).mtime);
