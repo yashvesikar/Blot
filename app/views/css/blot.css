@@ -892,6 +892,10 @@ ul.pill-navigation {
   margin-bottom: 0;
 }
 
+.navigation {
+  display: flex;flex-grow:1;flex-direction: column;justify-content: space-between;
+}
+
 .navigation ul {
   list-style: none;
   padding: 0;
