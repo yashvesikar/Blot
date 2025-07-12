@@ -88,16 +88,24 @@
 
 
 <div class="inset">
+  
   <p>
-    <img width="16" height="16" src="{{#cdn}}/images/sync/google-drive.svg{{/cdn}}" style="position: relative;top:2px;margin-right: 4px;width:16px" />
-    Google Drive
-  </p>  
+  Sync the folder with <strong>Google Drive</strong> 
+</p>
+<ul>
+  <li>Blot will ask you to share a folder in Google Drive for this site.</li>
+  <li>Blot will only have access to this folder.</li>
+  <li>You can switch from Google Drive to another sync method at any time.</li>
+</ul>
+
+<p>Please enter the email address for your Google Drive account:</p>
+
   <form class="dashboard-form" action="{{{base}}}/set-up-folder" method="post">
     <input type="hidden" name="_csrf" value="{{csrftoken}}">
-    <label for="email">Your email address on Google Drive:</label>
+    <label for="email">Google account email address:</label>
     <input type="text" name="email" value="{{user.email}}">
     <div class="buttons">
-      <button type="submit">Save email</button> 
+      <button type="submit">Sync with Google Drive</button> 
       <button type="submit" name="cancel" value="true">Cancel</button> 
     </div>
   </form>

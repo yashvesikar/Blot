@@ -57,10 +57,16 @@
 
 {{^account}}
 <div class="inset">
+  
   <p>
-    <img width="16" height="16" src="{{#cdn}}/images/sync/icloud.svg{{/cdn}}" style="position: relative;top:2px;margin-right: 4px;width:16px" />
-    iCloud
-  </p>  
+  Sync the folder with <strong>iCloud Drive</strong> 
+</p>
+<ul>
+  <li>Blot will ask you to share a folder in iCloud for this site.</li>
+  <li>Blot will only have access to this folder.</li>
+  <li>You can switch from iCloud Drive to another sync method at any time.</li>
+</ul> 
+<p>Please follow these steps:</p>
   <ol>
     <li>Create a new folder in your iCloud Drive.</li>
     <li>Right-click the folder, select ‘<b>Share</b>’, then choose ‘<b>Invite with Link</b>.  
@@ -79,7 +85,7 @@
     <label for="email">iCloud folder sharing link:</label>
     <input type="text" name="sharingLink" value="">
     <div class="buttons">
-      <button type="submit">Submit link</button> 
+      <button type="submit">Sync with iCloud</button> 
       <button type="submit" name="cancel" value="true">Cancel</button> 
     </div>
   </form>
