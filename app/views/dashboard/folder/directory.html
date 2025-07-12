@@ -5,7 +5,7 @@
     <a class="line" href="{{{base}}}/client{{#blog.client}}/{{client.name}}{{/blog.client}}">
       <span class="label">Folder</span>
       {{^blog.client}}
-      <span class="link">Sync this folder</span>
+      <span class="link">Sync the folder</span>
       {{/blog.client}}
       {{#blog.client}}
       <span class="center">
@@ -39,7 +39,7 @@
               text-align: center;{{#directory}}min-height: 300px;{{/directory}}
               color: var(--light-text-color);justify-content: center;">  
                 <span style="align-self: center; text-align: center;display: block;">
-                  {{#root}}This folder is empty.<br>{{^blog.client}}<a style="display: inline;" href="{{{base}}}/client">Sync this folder</a>{{/blog.client}}{{/root}}
+                  {{#root}}This folder is empty.<br>{{^blog.client}}<a style="display: inline;" href="{{{base}}}/client">Sync the folder</a>{{/blog.client}}{{/root}}
                   {{^root}}There is nothing here.{{/root}}
                 </span>
               </small>
