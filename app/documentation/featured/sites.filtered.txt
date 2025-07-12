@@ -65,3 +65,4 @@
 #000000 www.amirsharif.com Amir Sharif, is an engineer
 #000000 www.spakhm.com Slava Akhmechet, is an engineer
 #000000 www.hayalpozanti.com Hayal Pozanti, is an artist
+#000000 www.rossrichardson.com Ross Richardson, is a cinematographer

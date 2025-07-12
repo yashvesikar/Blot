@@ -538,6 +538,14 @@
       "bio": "is an artist",
       "x": 384,
       "y": 96
+    },
+    {
+      "link": "https://www.rossrichardson.com",
+      "host": "www.rossrichardson.com",
+      "name": "Ross Richardson",
+      "bio": "is a cinematographer",
+      "x": 384,
+      "y": 144
     }
   ],
   "thumbnail_width": 48
