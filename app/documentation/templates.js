@@ -17,20 +17,46 @@ const NAME_MAP = {
 
 const categories = [
   {
-    name: "Blog",
-    slug: "blog",
+    name: "Blogging",
+    slug: "blogging",
     templates: [
       "blog",
-      "blank",
+      "magazine",
       "isola",
-      "marfa"
+      "rosa",
+      "manifesto",
+      "index",
+    ]
+  },
+  {
+    name: "Photography",
+    slug: "photography",
+    templates: [
+      "portfolio",
+      "reference",
+      "illustrator",
+      "painter",
+      "photographer",
+      "grid",
+      "photo",
+      "photo-old"
     ]
   },
   {
     name: "Personal & CV",
     slug: "personal",
     templates: [
-      "portfolio",
+      "cv",
+      "painter",
+      "marfa"
+    ]
+  },
+  {
+    name: "Organizations",
+    slug: "organizations",
+    templates: [
+      "event",
+      "forty"
     ]
   }
 ];

@@ -799,11 +799,17 @@ ul.pill-navigation {
   transition-timing-function: ease;
 }
 
-.pill-navigation a.selected,
 .pill-navigation a:hover {
   color: var(--accent-color);
   background-color:  #e8ecf9;
 }
+
+
+.pill-navigation a.selected {
+  color: var(--background-color);
+  background-color: var(--accent-color);
+}
+
 
 /* A list of bordered links */
 .tool-list {
