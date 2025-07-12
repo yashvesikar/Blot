@@ -39,7 +39,7 @@
               text-align: center;{{#directory}}min-height: 300px;{{/directory}}
               color: var(--light-text-color);justify-content: center;">  
                 <span style="align-self: center; text-align: center;display: block;">
-                  {{#root}}This folder is empty.<br>{{^blog.client}}<a style="display: inline;" href="{{{base}}}/client">Sync the folder</a>{{/blog.client}}{{/root}}
+                  {{#root}}The folder is empty.<br>{{^blog.client}}<a style="display: inline;" href="{{{base}}}/client">Sync the folder</a>{{/blog.client}}{{/root}}
                   {{^root}}There is nothing here.{{/root}}
                 </span>
               </small>
@@ -115,7 +115,7 @@
             var index = Array.from(header.parentNode.children).indexOf(header);
             var rows = Array.from(table.querySelectorAll('tbody tr'));
 
-            if (rows.length === 1 && rows[0].querySelector('td').textContent.trim() === 'This folder is empty.') {
+            if (rows.length === 1 && rows[0].querySelector('td').textContent.trim() === 'The folder is empty.') {
               document.querySelector('.directory-list').classList.add('empty');
             } else {
               document.querySelector('.directory-list').classList.remove('empty');

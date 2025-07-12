@@ -26,7 +26,16 @@ client_routes
   .route("/switch")
 
   .get(load.clients, function (req, res) {
+    
+    // filter current client from list of clients
+    res.locals.clients = JSON.parse(
+      JSON.stringify(res.locals.clients)).filter((client) => {
+        return client.name !== req.blog.client;
+      }
+    );
+
     res.locals.breadcrumbs.add("Switch", "switch");
+
     res.render("dashboard/clients/switch", {
       title: "Switch to another client",
     });

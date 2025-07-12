@@ -9,7 +9,7 @@ const TMP_DIRECTORY = config.tmp_directory;
 module.exports = async function generateThumbnail(from, to) {
     if (from.includes(".mobile.")) return;
 
-    const options = { width: 160 };
+    const options = { width: 320 };
     const hash = await hashFile(from);
     const optionsHash = hashString(Object.entries(options).map(([key, value]) => `${key}-${value}`).join("-"));
     const cachedFilePath = join(TMP_DIRECTORY, `documentation-thumbs/${hash}-${optionsHash}.jpg`);
