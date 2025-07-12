@@ -253,9 +253,6 @@
   background-color: transparent;
 }
 
-.directory-list thead {
-  background-color: #fbfbfb;
-}
 
 
 .directory-list th.sorted, .directory-list th.sorted.reverse {
