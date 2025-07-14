@@ -1,3 +1,8 @@
+Fix bug with Documentation template and the setting 'Adds zoom to large images' and [tell customer](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB)
+
+Fix bug with incorrect date of files by path and follow up with [Ashish](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGBfxXGrhsDPbNJfnbZVCW)
+- `/posts/2021/Dec 2021/12-01 - Snow envy/Snow envy.txt` isn't dated correctly (should be first of december rather than january 12th)
+
 Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
 - highlighted by `https://salocin.blot.im` and `https://salocin.blot.im/archives` and  sitemap
 
@@ -23,7 +28,7 @@ Investigate iCloud bugs
 - remove all keys related to icloud client for blog_e74c2a93cXXXX
 
 Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
-- highlighted by `https://jimhardy-datascience.com/search?q=2026`
+- highlighted by `https://jimhardy-datascience.com/search?q=2026` and `https://www.nitinpai.in/archives`
 - basically, we need to modify the template engine to save the properties of each entry requested, then use this in entry.get, then update entry to use a hash rather than a json blob.
 - highlighted by `https://salocin.blot.im` and `https://salocin.blot.im/archives` and  sitemap
 - why is the feed so huge? are we compressing feeds?
