@@ -20,6 +20,7 @@ const featuredTemplates = [
   "blog",
   "portfolio",
   "event",
+  "documentation",
   "magazine",
   "painter",
   "photographer",
@@ -70,7 +71,8 @@ const categories = [
     slug: "organizations",
     templates: [
       "event",
-      "forty"
+      "forty",
+      "documentation",
     ]
   }
 ];
