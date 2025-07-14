@@ -1,7 +1,7 @@
 <div style="padding:2rem 3rem">
 <!-- <h1 style="padding:0">{{name}}</h1> -->
 
-<div style="border-bottom: 1px solid var(--border-color);padding: 0 0 1em;margin-top: 0;display: flex;">
+<div style="padding: 0 0 1em;margin-top: 0;display: flex;">
 
 	<div style="flex-grow: 0.25;">
 	{{> breadcrumbs}}
@@ -25,7 +25,7 @@
 </a>
 <a href="{{{preview}}}" target="_blank" class="template-button">
 	<span class="icon-zoom"></span>&thinsp;
-	Expand preview
+	View demo site
 </a>
 
 </div>
@@ -71,14 +71,15 @@ a.bordered-button {
 </style>
 
 <div style="display: flex">
-<p class="sc" style="flex-basis: 75%">	<a target="_blank" style="text-decoration: none;cursor: zoom-in;" href="{{{preview}}}/"
+<p class="sc" style="max-width:900px;margin:0 auto;flex-basis: 100%">	<a target="_blank" style="text-decoration: none;cursor: zoom-in;" href="{{{preview}}}/"
 		>
-		<span class="browser"><img src="{{#cdn}}/images/examples/{{slug}}/0.png{{/cdn}}"
-	/></span></a>
+		<img style="border-radius:12px;box-shadow: inset 0 1px 0 #f5f4f5,0 -1px 0 rgba(0,0,0,.11),0 1px 0 rgba(0,0,0,.26),-1px 0 0 rgba(0,0,0,.13),1px 0 0 rgba(0,0,0,.13);" src="{{#cdn}}/images/examples/{{slug}}/0.png{{/cdn}}"
+	/></a>
 </p>
-<p class="sc" style="flex-basis: 25%;margin-left: 2rem">		<a target="_blank" style="text-decoration: none;cursor: zoom-in;" href="{{{preview}}}/"
+<!-- <p class="sc" style="flex-basis: 25%;margin-left: 2rem">		<a target="_blank" style="text-decoration: none;cursor: zoom-in;" href="{{{preview}}}/"
 		>
 		<span class="browser mobile"><img src="{{#cdn}}/images/examples/{{slug}}/0.mobile.png{{/cdn}}"
 	/></span></a>
-</p></div>
+</p></div> -->
+</div>	
 </div>

@@ -15,6 +15,20 @@ const NAME_MAP = {
   'cv': 'CV',
 };
 
+const featuredTemplates = [
+  "cv",
+  "blog",
+  "portfolio",
+  "event",
+  "magazine",
+  "painter",
+  "photographer",
+  "rosa",
+  "reference",
+  "isola",
+  "manifesto",
+];
+
 const categories = [
   {
     name: "Blogging",
@@ -112,13 +126,22 @@ const loadTemplates = async () => {
     folder => !templates.some(template => template.demo_folder === folder.slug)
   );
 
-  return folders.concat(templates.filter(i => i));
+  const all = folders.concat(templates.filter(i => i));
+
+  const featured = all.filter(t => featuredTemplates.includes(t.slug)).sort((a, b) => {
+    return featuredTemplates.indexOf(a.slug) - featuredTemplates.indexOf(b.slug);
+  });
+
+  const sortedTemplates = featured.concat(
+    all.filter(t => !featuredTemplates.includes(t.slug))
+  );
+
+  return sortedTemplates;
 };
 
 // Middleware function
 module.exports = async (req, res, next) => {
   try {
-
     res.locals.categories = categories.slice(0).map(category => {
       category.selected = category.slug === req.params.type ? 'selected' : '';
       return category;

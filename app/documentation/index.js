@@ -115,9 +115,7 @@ documentation.get(
   "/templates/for-:type",
   require("./templates.js"),
   (req, res, next) => {
-    // fix the label of the last breadcrumb from 'For blog' to 'Blog'
-    res.locals.breadcrumbs[res.locals.breadcrumbs.length - 1].label =
-      req.params.type[0].toUpperCase() + req.params.type.slice(1);
+    res.locals.hidebreadcrumbs = true;
     res.render("templates");
   }
 );
