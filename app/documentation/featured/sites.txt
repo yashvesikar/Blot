@@ -3,8 +3,8 @@
 #dc1c8e hannautkin.com Hanna Utkin, is a filmmaker
 #7a8aa8 keywords.oxus.net Kerim Friedman, is an anthropologist
 #b59681 discombobulated.co.nz Jessica Nickelsen, is a writer
-#1b6cb5 rebeccakukshtel.com Rebecca Kukshtel, is an engineer
-#d790c0 blog.aurynn.com Aurynn Shaw, is an engineer
+#1b6cb5 rebeccakukshtel.com Rebecca Kukshtel, is a software engineer
+#d790c0 blog.aurynn.com Aurynn Shaw, is a software engineer
 #a5a374 john.pavlusoffice.com John Pavlus, is a writer
 #702225 rachelpietraszek.com Rachel Pietraszek, is a lawyer
 #a0aab9 iiiiiiiii.in Ishtaarth Dalmia, is a writer
@@ -12,11 +12,11 @@
 #ab4548 mrfrisby.com Stuart Frisby, is a designer
 #696e66 vaughntan.org Vaughn Tan, is a writer
 #c56d64 blog.pixelswithin.com Diana Lopez, is a designer
-#e2c556 eli.li Eli Mellen, is a web developer
+#e2c556 eli.li Eli Mellen, is a software engineer
 #d08573 paul.af Paul Esch-Laurent, is a software engineer
 #9e826d diary.craigwhite.nyc Craig White, is an artist
 #44679d mariusmasalar.me Marius Masalar, is a photographer
-#4c919c www.ishshah.me Ish Shah, is a software developer
+#4c919c www.ishshah.me Ish Shah, is a software engineer
 #5177a4 www.chrbutler.com Christopher Butler, is a designer
 #576c50 benlog.net Ben Greenberg, is a journalist
 #111111 www.letterspace.org Robert van Vliet, is a writer
@@ -48,10 +48,9 @@
 #000000 bgreen.lol Brandon Lucas Green, is a musician
 #000000 meredithgran.com Meredith Gran, is a cartoonist
 #000000 ellanew.com Ellane W, is a designer
-#000000 raw.taisukemino.com Taisuke Mino, is a programmer
 #000000 alongtheray.com Raymond Hines, is a writer
 #000000 matthiaszeeb.net Matthias Zeeb, is an economist
-#000000 simonuvarov.com Simon Uvarov, is a programmer
+#000000 simonuvarov.com Simon Uvarov, is a software engineer
 #000000 karaman.is Georgios Karamanis, is a designer
 #000000 www.carsonteuscher.com Carson Teuscher, is a historian
 #000000 erinkissane.com Erin Kissane, is a writer
@@ -64,7 +63,8 @@
 #000000 www.caitlinmrivers.com Caitlin Rivers, is an epidemiologist
 #000000 jbeau.info Jeremy Beaudry, is an artist
 #000000 www.audunberdal.no Audun Berdal, is a designer
-#000000 www.amirsharif.com Amir Sharif, is an engineer
-#000000 www.spakhm.com Slava Akhmechet, is an engineer
+#000000 www.amirsharif.com Amir Sharif, is a software engineer
+#000000 www.spakhm.com Slava Akhmechet, is a software engineer
 #000000 www.hayalpozanti.com Hayal Pozanti, is an artist
 #000000 www.rossrichardson.com Ross Richardson, is a cinematographer
+#000000 alineleynen.com Aline Leynen, is a jeweller
