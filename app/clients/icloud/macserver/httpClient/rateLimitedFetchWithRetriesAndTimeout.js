@@ -1,4 +1,5 @@
 const Bottleneck = require("bottleneck");
+const fetch = require("node-fetch");
 
 // Global rate limiter configuration
 const limiter = new Bottleneck({
@@ -32,14 +33,14 @@ const fetchWithRetriesAndTimeout = async (url, options = {}) => {
 
       // Handle timeout or other fetch errors
       if (error.name === "AbortError") {
-        console.error(`Request timed out (attempt ${attempt} of ${retries})`);
+        console.error(`Request timed out (attempt ${attempt} of ${retries}): ${url}`);
       } else {
         console.error(`Request failed: ${url} ${error.message} (attempt ${attempt}/${retries})`);
       }
 
       // If all retries fail, throw the error
       if (attempt === retries) {
-        throw new Error(`Request failed after ${retries} retries: ${error.message}`);
+        throw new Error(`Request failed after ${retries} retries: ${error.message} ${url}`);
       }
     }
   }

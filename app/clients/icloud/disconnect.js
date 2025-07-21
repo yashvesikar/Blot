@@ -1,6 +1,6 @@
 const Blog = require("models/blog");
 const database = require("./database");
-
+const fetch = require("node-fetch");
 const config = require("config");
 
 const MACSERVER_URL = config.icloud.server_address; // The Macserver base URL from config

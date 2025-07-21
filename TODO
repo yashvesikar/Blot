@@ -22,7 +22,7 @@ Investigate iCloud bugs
 - Repeat issue with files in sub folders...
 - What happens when you rename a folder connected to iCloud client?
   - does this explain why there are unrenamed folders in the mac server icloud drive?
-- Fix subfolder sync issue with iCloud images and tell [Xu](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB), [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr)
+- Fix subfolder sync issue with iCloud images and tell [Xu](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB), [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr) and [Anders](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJRsLKLXhmKSfZgjJczmKCpl) and [Dustin](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZLNjFVkmfGpQldxbrHNnD) and [Emmanuel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZBlfrLmBGGPpzvZxbRNvZ)
 - Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
 - Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
 - remove all keys related to icloud client for blog_e74c2a93cXXXX
