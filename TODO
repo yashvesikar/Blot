@@ -13,6 +13,8 @@ Why aren't etags working properly?
 Fix the way the photos load on this site
 - `https://krislarsphotos.blot.im`
 
+Make it possible to reset password when logged in (perhaps after forgetting it) in the change password flow
+
 Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjSpDQzr) that photo posts are dated at the time they appear in Blot. I'll consider adding an option to use the image taken date?
 
 Google Drive blockquotes and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxlDlqnPKgVbvfQpzhqBGPdF)
@@ -22,7 +24,8 @@ Investigate iCloud bugs
 - Repeat issue with files in sub folders...
 - What happens when you rename a folder connected to iCloud client?
   - does this explain why there are unrenamed folders in the mac server icloud drive?
-- Fix subfolder sync issue with iCloud images and tell [Xu](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB), [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr) and [Anders](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJRsLKLXhmKSfZgjJczmKCpl) and [Dustin](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZLNjFVkmfGpQldxbrHNnD) and [Emmanuel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZBlfrLmBGGPpzvZxbRNvZ)
+- Fix subfolder sync issue with iCloud images and tell [Xu](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB), [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr) and [Anders](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJRsLKLXhmKSfZgjJczmKCpl) and [Dustin](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZLNjFVkmfGpQldxbrHNnD) and [Emmanuel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZBlfrLmBGGPpzvZxbRNvZ) and [Adam](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRjhQKJDPXWPzDVSRjKgJRpk) and [Nick](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRjhZdPgVWPhHbKSCpFqQBKq) and [Miguel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRkqJXKZLkNqlKnWXjTWvbbZ) and [Jack](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRvFFgPbLtNmgHTKLKhNmpst)
+
 - Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
 - Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
 - remove all keys related to icloud client for blog_e74c2a93cXXXX
@@ -97,6 +100,10 @@ Work out issue with initial transfer and [Michael's folder](https://mail.google.
 Move folder lock location to instance ssd for improved reliability and performance (non-networked drive...) – could be inside the cache
 
 ---
+
+Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
+
+Pandoc doesn't support autolinking for Chrome's copy link to highlight feature – should we make this work? e.g. `https://stackoverflow.com/questions/71806679/how-to-copy-link-to-highlight-using-chrome-api#:~:text=How%20to%20copy%20link%20to%20highlight`
 
 Improve replaceFolderLinks to handle situation where people include their own domain in image links –> parse this out
 - fix issue with discombobulated
@@ -1200,6 +1207,7 @@ Write new clients to sync blog folders
   - Tell [Anders](https://mail.google.com/mail/u/0/#inbox/FMfcgxwKkRFxsDShhsHGNcdRqwHFMmJM) 
   - Tell [Tim](https://mail.google.com/mail/u/0/#inbox/FMfcgzGlkZCjPBbnKtcXvrMQnxSwHBzk)
   - Tell [JMN](https://mail.google.com/mail/u/0/#inbox/FMfcgzGpGwtXQsVFFTcnTJdBTNdkMmXv)
+  - Tell [Rodney](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcKkJLVFLvfBwTcRdlrzwHXr)
 - Dropmark
   - Tell [Rado](https://mail.google.com/mail/u/0/#inbox/FMfcgxwGDDjrKSQVTXqvgFRGrhMSFvrR)
 - Proton Drive
@@ -1230,6 +1238,8 @@ Improvements to teaser generator
 - Add hasBreakpoint property to entry to allow greater control over display of {{{teaser}}} and tell [Pratik](https://mail.google.com/mail/u/0/#inbox/FMfcgxwBTsfMTHqWMQFmprMcjNpdBQzp)
 - Fix [issue with teaser generator](https://github.com/davidmerfield/Blot/issues/15) that locks up a build process, sometimes for 10+ seconds.
 - Make it [possible for users to select length of teasers](https://blot.im/questions/823) and [Leo](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqQJdjwTLkHkRZvZTQvfSzSFTq)
+
+Make it possible to [disable draft preview files](https://blot.im/questions/3193)
 
 Performance improvements
 - Consider switching redis client, perhaps to ioredis?
