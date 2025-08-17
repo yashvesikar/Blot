@@ -1,5 +1,5 @@
 {{> form-header}}
-<input type="hidden" name="redirect" value="{{{base}}}/typography" />
+<input type="hidden" name="redirect" value="{{{base}}}/publishing" />
 
 {{#categories.Images}}
 {{> plugin-row}}
@@ -25,6 +25,8 @@ checkboxes.forEach(function(checkbox) {
     var form = this.closest('form');
     var el = this;
 
+    // if this el is inside .pluginOptions then do not edit the checked state
+    if (!el.closest('.pluginOptions')) {
     // do nothing
     // if the checkbox was checked, add the checked class to the parent div which has the class 'plugin'
     // otherwise remove it
@@ -32,6 +34,7 @@ checkboxes.forEach(function(checkbox) {
       el.closest('.plugin').classList.add('checked');
     } else {
       el.closest('.plugin').classList.remove('checked');
+    }
     }
 
     var xhr = new XMLHttpRequest();
