@@ -11,16 +11,16 @@
 	<div class="sites">
 		{{#blogs}}
 		<div class="site">
-			<a href="/sites/{{handle}}" class="blog-link">
+			<a href="/sites/{{handle}}" class="blog-link" style="padding-left: 1rem;">
 				<span class="text-info">
 					<span class="title truncate">{{pretty.label}}</span>
 					<span class="truncate url">{{pretty.url}}</span>
 				</span>
 				<span class="icon-chevron"></span>
 			</a>
-			<div class="preview-holder">
+			<!-- <div class="preview-holder">
 				<div class="site-preview" data-url="{{{previewURL}}}" data-cache-id="{{cacheID}}"></div>
-			</div>
+			</div> -->
 		</div>
 		{{/blogs}}
 	</div>
