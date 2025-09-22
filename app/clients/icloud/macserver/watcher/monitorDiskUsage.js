@@ -10,6 +10,9 @@ const MAX_DISK_USAGE_BYTES = 5 * 1024 * 1024 * 1024; // 5 GB
 const largestFilesMap = new Map();
 const blogUpdateTimes = new Map(); // Tracks the last update time for each blog
 
+// We don't use ../exec because it can't tolerate stderr or non-zero exit codes
+// which happens when there is a file in someone's folder with a name that's too
+// long and produces du:  File name too long 
 const getDiskUsage = () => {
   return new Promise((resolve, reject) => {
     // Run du -sk <dir> with stderr redirected to /dev/null

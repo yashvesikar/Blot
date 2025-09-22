@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 const { join } = require("path");
 const { iCloudDriveDirectory } = require("../config");
-const exec = require("../exec");
+const { ls } = require("../brctl");
 
 module.exports = async (req, res) => {
   const blogID = req.header("blogID");
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
   // you can use brctl monitor -p [path] to force iCloud to sync the directory
   // listing (this will not download the files, just the list of contents)
   try {
-    await exec("ls", ["-la1", dirPath]);
+    await ls(dirPath);
   } catch (error) {
     console.error("Error listing directory:", dirPath, error);
   }
