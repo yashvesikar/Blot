@@ -49,14 +49,15 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
     }
 
     try {
+      // we need to try to download the directory first
+      console.log(`Directory not downloaded, downloading: ${dirPath}`);
+      await exec("brctl", ["download", dirPath]);
+      // wait a moment for the download to complete
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log(`Downloaded directory: ${dirPath}`);
 
-    // we need to try to download the directory first
-    console.log(`Directory not downloaded, downloading: ${dirPath}`);
-    await exec("brctl", ["download", dirPath]);
-    console.log(`Downloaded directory: ${dirPath}`);
-
-    // re-attempt the ls
-    const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
+      // re-attempt the ls
+      const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
       if (stderr) {
         throw new Error(`Error listing directory ${dirPath}: ${stderr}`);
       }
