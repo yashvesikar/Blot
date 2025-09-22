@@ -32,27 +32,44 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
 
   console.log(`ls: ${dirPath}`);
 
+  let contents;
+
   try {
     const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
+    if (stderr) {
+      throw new Error(`Error listing directory ${dirPath}: ${stderr}`);
+    }
+    contents = stdout;
+  } catch (error) {
+    // this error is expected if the directory is not downloaded
+    if (error && !error.message.includes("Resource deadlock avoided")) {
+      return console.error(
+        `Error listing directory ${dirPath}: ${error.message}`
+      );
+    }
 
-    let contents = stdout;
+    try {
 
-    if (stderr && stderr.includes("fts_read: Resource deadlock avoided")) {
-      // we need to try to download the directory first
-      console.log(`Directory not downloaded, downloading: ${dirPath}`);
-      await exec("brctl", ["download", dirPath]);
-      console.log(`Downloaded directory: ${dirPath}`);
-      // re-attempt the ls
-      const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
+    // we need to try to download the directory first
+    console.log(`Directory not downloaded, downloading: ${dirPath}`);
+    await exec("brctl", ["download", dirPath]);
+    console.log(`Downloaded directory: ${dirPath}`);
+
+    // re-attempt the ls
+    const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
       if (stderr) {
         throw new Error(`Error listing directory ${dirPath}: ${stderr}`);
       }
       contents = stdout;
-    } else if (stderr) {
-      throw new Error(`Error listing directory ${dirPath}: ${stderr}`);
+    } catch (error) {
+      return console.error(
+        `Error listing directory ${dirPath} after download: ${error.message}`
+      );
     }
+  }
 
-    const dirs = stdout
+  try {
+    const dirs = contents
       .split("\n")
       .filter((line) => line.endsWith("/")) // Only dirs end with /
       .map((line) => line.slice(0, -1)) // Remove trailing /
@@ -64,12 +81,7 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
       await recursiveList(subDir, depth + 1);
     }
   } catch (error) {
-    console.error(
-      "Error processing directory",
-      dirPath,
-      "depth=" + depth,
-      error
-    );
+    console.error("Error processing contents of directory", dirPath, error);
   }
 });
 
