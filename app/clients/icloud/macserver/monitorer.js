@@ -46,7 +46,7 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
       .filter((name) => !name.startsWith(".")) // Skip anything starting with . (e.g. . and .. and .Trash)
       .map((name) => path.join(dirPath, name)); // Full path
 
-    await Promise.all(dirs.map((subdir) => recursiveListLimited(subdir, depth + 1)));
+    await Promise.all(dirs.map((subdir) => recursiveList(subdir, depth + 1)));
   } catch (error) {
     console.error(
       "Error processing directory",
@@ -60,7 +60,7 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
 
 module.exports = () => {
   function startMonitor() {
-    const monitorProcess = spawn("brctl", ["monitor", iCloudDriveDirectory]);
+    const monitorProcess = spawn("brctl", ["monitor", "-i", iCloudDriveDirectory]);
 
     const rl = readline.createInterface({
       input: monitorProcess.stdout,
