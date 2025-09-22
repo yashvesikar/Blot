@@ -177,7 +177,8 @@ const watch = async (blogID) => {
     .on("ready", () => {
       console.log(`Initial scan complete for blog folder: ${blogID}`);
       initialScanComplete = true; // Mark the initial scan as complete
-    });
+    })
+    .on('error', (error) => log(`Watcher error: ${error}`));
 
   blogWatchers.set(blogID, watcher);
 };
