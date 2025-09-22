@@ -9,6 +9,7 @@ const MAX_DEPTH = 1000;
 
 const limiter = new Bottleneck({
   maxConcurrent: 5,
+  minTime: 10, // 10ms between each call
 });
 
 // The purpose of this module is to keep iCloud Drive in sync
@@ -29,7 +30,7 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
     return;
   }
 
-  console.log(`MONITORER: listing path: ${dirPath} (depth: ${depth})`);
+  console.log(`ls: ${dirPath}`);
 
   try {
     const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
@@ -42,10 +43,10 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
       .split("\n")
       .filter((line) => line.endsWith("/")) // Only dirs end with /
       .map((line) => line.slice(0, -1)) // Remove trailing /
-      .filter((name) => name !== "." && name !== "..") // Skip . and ..
+      .filter((name) => !name.startsWith(".")) // Skip anything starting with . (e.g. . and .. and .Trash)
       .map((name) => path.join(dirPath, name)); // Full path
 
-    await Promise.all(dirs.map((subdir) => recursiveList(subdir, depth + 1)));
+    await Promise.all(dirs.map((subdir) => recursiveListLimited(subdir, depth + 1)));
   } catch (error) {
     console.error(
       "Error processing directory",
@@ -70,7 +71,7 @@ module.exports = () => {
       const match = line.match(/blog_[a-fA-F0-9]+/);
       if (match) {
         const blogId = match[0];
-        console.log("Detected blog ID:", blogId);
+        console.log("Recursively listing contents of:", blogId);
         recursiveListLimited(`${iCloudDriveDirectory}/${blogId}`, 0).catch(
           (error) => {
             console.error(
