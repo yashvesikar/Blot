@@ -46,7 +46,11 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
       .filter((name) => !name.startsWith(".")) // Skip anything starting with . (e.g. . and .. and .Trash)
       .map((name) => path.join(dirPath, name)); // Full path
 
-    await Promise.all(dirs.map((subdir) => recursiveList(subdir, depth + 1)));
+    // Recurse into subdirectories in series
+    for (const subDir of dirs) {
+      await recursiveList(subDir, depth + 1);
+    }
+
   } catch (error) {
     console.error(
       "Error processing directory",
