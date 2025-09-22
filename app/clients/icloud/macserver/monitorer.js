@@ -35,7 +35,20 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
   try {
     const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
 
-    if (stderr) {
+    let contents = stdout;
+
+    if (stderr && stderr.includes("fts_read: Resource deadlock avoided")) {
+      // we need to try to download the directory first
+      console.log(`Directory not downloaded, downloading: ${dirPath}`);
+      await exec("brctl", ["download", dirPath]);
+      console.log(`Downloaded directory: ${dirPath}`);
+      // re-attempt the ls
+      const { stdout, stderr } = await exec("ls", ["-la1F", dirPath]);
+      if (stderr) {
+        throw new Error(`Error listing directory ${dirPath}: ${stderr}`);
+      }
+      contents = stdout;
+    } else if (stderr) {
       throw new Error(`Error listing directory ${dirPath}: ${stderr}`);
     }
 
@@ -50,7 +63,6 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
     for (const subDir of dirs) {
       await recursiveList(subDir, depth + 1);
     }
-
   } catch (error) {
     console.error(
       "Error processing directory",
@@ -61,10 +73,13 @@ const recursiveListLimited = limiter.wrap(async function recursiveList(
   }
 });
 
-
 module.exports = () => {
   function startMonitor() {
-    const monitorProcess = spawn("brctl", ["monitor", "-i", iCloudDriveDirectory]);
+    const monitorProcess = spawn("brctl", [
+      "monitor",
+      "-i",
+      iCloudDriveDirectory,
+    ]);
 
     const rl = readline.createInterface({
       input: monitorProcess.stdout,
