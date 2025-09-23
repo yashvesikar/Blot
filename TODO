@@ -1,10 +1,14 @@
+Fix bug with site export and [contact Ryan](https://mail.google.com/mail/u/1/#inbox/FMfcgzQXJtGgnQWMWxjBnHlvMSPFJjnJ)
+
 Fix bug with search for 'genkit' on [Chris' site and follow up](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpTNbgKXThNTBRlQfLxmQMKDv)
+
+Preserve single line breaks in Google Docs and Word Docs for poetry and [tell Isabel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpKhwFRpStFNWhztKGPqQJfsq)
 
 Translate [Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
-Use the title tag as the alt tag for images in Google Docs and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpTDNfsqFJLMGRBFRcrqKZLzr)
+---
 
-Preserve single line breaks in Google Docs and Word Docs for poetry and [tell Isabel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpKhwFRpStFNWhztKGPqQJfsq)
+Use the title tag as the alt tag for images in Google Docs and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpTDNfsqFJLMGRBFRcrqKZLzr)
 
 Fix bug with Documentation template and the setting 'Adds zoom to large images' and [tell customer](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB)
 
@@ -32,8 +36,6 @@ Investigate iCloud bugs
 - Repeat issue with files in sub folders...
 - What happens when you rename a folder connected to iCloud client?
   - does this explain why there are unrenamed folders in the mac server icloud drive?
-- Fix subfolder sync issue with iCloud images and tell [Xu](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB), [James](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfpDNkPmjwQfMMqcnSsFcxPsq) and [Shawn](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxgcVvTlZhGCqDGgggfdgvrT) and [Cameron](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxdHZrltGGkWQdJQncqSPgKr) and [Anders](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJRsLKLXhmKSfZgjJczmKCpl) and [Dustin](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZLNjFVkmfGpQldxbrHNnD) and [Emmanuel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJPZBlfrLmBGGPpzvZxbRNvZ) and [Adam](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRjhQKJDPXWPzDVSRjKgJRpk) and [Nick](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRjhZdPgVWPhHbKSCpFqQBKq) and [Miguel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRkqJXKZLkNqlKnWXjTWvbbZ) and [Jack](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRvFFgPbLtNmgHTKLKhNmpst) and  [Stewart](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpTMRnMGxrKztLxfpRqWhCKdF)
-
 - Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
 - Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
 - remove all keys related to icloud client for blog_e74c2a93cXXXX
@@ -429,7 +431,6 @@ Surface Blot client sync errors on dashboard, add email notifications for errors
 
 Fix bug with magic text in posts which breaks backend and tell [Victor](https://mail.google.com/mail/u/1/#inbox/FMfcgzQVxRMzjBtRWVwLWtlBcFGsSVCQ)
 
-Fix bug with site export and [contact Ryan](https://mail.google.com/mail/u/1/#inbox/FMfcgzQXJtGgnQWMWxjBnHlvMSPFJjnJ)
 
 Fix bug with Git client and Obsidian then tell levelsi
   
