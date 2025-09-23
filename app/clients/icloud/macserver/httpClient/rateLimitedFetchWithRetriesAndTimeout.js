@@ -36,6 +36,26 @@ const fetchWithRetriesAndTimeout = async (url, options = {}) => {
         console.error(`Request timed out (attempt ${attempt} of ${retries}): ${url}`);
       } else {
         console.error(`Request failed: ${url} ${error.message} (attempt ${attempt}/${retries})`);
+        
+        if (options && options.headers && options.headers.blogID) {
+          console.error(`- blog id: ${options.headers.blogID}`);
+        }
+
+        if (options && options.headers && options.headers.pathBase64) {
+          console.error(`- path: ${Buffer.from(options.headers.pathBase64, 'base64').toString('utf8')}`);
+        } 
+
+        if (options && options.body) {
+          console.error(`- body size: ${options.body.length} bytes`);
+        }
+
+        // log if the abort signal was triggered for any reason
+        if (signal.aborted) {
+          console.error(`- abort signal was triggered`);
+        } else {
+          console.error(`- abort signal was not triggered`);
+        }
+        
       }
 
       // If all retries fail, throw the error
