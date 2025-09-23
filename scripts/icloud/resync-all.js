@@ -3,11 +3,19 @@ const each = require("../each/blog");
 const async = require("async");
 const fromiCloud = require("clients/icloud/sync/fromiCloud");
 const establishSyncLock = require("clients/icloud/util/establishSyncLock");
+const database = require("clients/icloud/database");
 
 async function sync(blog) {
   console.log("Syncing", blog.title, blog.id, new Date(blog.cacheID));
 
   try {
+    const account = await database.get(blog.id);
+
+    if (account.setupComplete !== true) {
+      console.log("SKIP Blog not setupComplete", blog.id);
+      return;
+    }
+
     const { done, folder } = await establishSyncLock(blog.id);
 
     await fromiCloud(blog.id, folder.status, folder.update);
