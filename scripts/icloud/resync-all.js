@@ -7,11 +7,15 @@ const establishSyncLock = require("clients/icloud/util/establishSyncLock");
 async function sync(blog) {
   console.log("Syncing", blog.title, blog.id, new Date(blog.cacheID));
 
-  const { done, folder } = await establishSyncLock(blog.id);
+  try {
+    const { done, folder } = await establishSyncLock(blog.id);
 
-  await fromiCloud(blog.id, folder.status, folder.update);
+    await fromiCloud(blog.id, folder.status, folder.update);
 
-  done();
+    done();
+  } catch (err) {
+    console.error("Error syncing", blog.title, blog.id, err);
+  }
 
   console.log("Done syncing", blog.title, blog.id);
 }
