@@ -38,10 +38,12 @@ Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjS
 Google Drive blockquotes and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxlDlqnPKgVbvfQpzhqBGPdF)
 
 Investigate iCloud bugs
+- Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
 - Investigate the 500 timeout errors – are these caused by pending syncs / folder locks?
   - tail -n 1000000 /var/instance-ssd/logs/access.log | grep " 500 " | grep "/clients/icloud"
 - Why are there unrenamed folders in the mac server icloud drive?
-- Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
+  - partial incomplete setup? sharing a non-empty folder? 
+- Smooth over setup process, add guidance for 'mode' of share panel (e.g. copy vs. collaborate) and maybe a screenshot
 
 Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
 - highlighted by `https://jimhardy-datascience.com/search?q=2026` and `https://www.nitinpai.in/archives`
