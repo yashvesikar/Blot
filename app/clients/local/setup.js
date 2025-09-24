@@ -65,6 +65,7 @@ function watch(blogID) {
     // To stop this watcher, call watcher.close();
     const watcher = chokidar.watch(localPath(blogID, "/"), {
       cwd: localPath(blogID, "/"),
+      ignoreInitial: true,
     });
 
     watcher.on("all", (event, path) => {
