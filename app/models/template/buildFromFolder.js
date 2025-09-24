@@ -30,10 +30,12 @@ module.exports = function (blogID, callback) {
 
             var dir = templateDir + "/" + template;
 
+            console.log('Blog:', blogID, 'Reading template from folder:', dir);
             readFromFolder(blogID, dir, function (err) {
               if (err) {
                 // we need to expose this error
                 // on the design page!
+                console.log('Blog:', blogID, 'Failed to read template from folder:', dir, err);
               }
 
               templatesInFolder.push(template);
@@ -45,6 +47,8 @@ module.exports = function (blogID, callback) {
       });
     },
     function (err) {
+      console.log('Blog:', blogID, 'Templates in folder:', templatesInFolder);
+      console.log('Blog:', blogID, 'Removing local templates not in folder');
       getTemplateList(blogID, function (err, templates) {
 
         if (err) {
