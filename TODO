@@ -1,3 +1,10 @@
+Fix issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,blog_93718f16de384e2983a9436f500a8e1f,blog_32307ab68b65424a83319863b89b5946
+- this seems to trigger a folder sync lock issue
+- folders are all full-folder permissions via dropbox
+- issue with sync locks apparently, and template building takes a long time for blog_a076707d10f6472c97b1e3b19d8c1349, could not reproduce in local
+
+---
+
 Fix bug with site export and [contact Ryan](https://mail.google.com/mail/u/1/#inbox/FMfcgzQXJtGgnQWMWxjBnHlvMSPFJjnJ)
 
 Fix bug with search for 'genkit' on [Chris' site and follow up](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpTNbgKXThNTBRlQfLxmQMKDv)

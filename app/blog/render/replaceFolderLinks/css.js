@@ -6,7 +6,7 @@ const fileExtRegex = /[^/]*\.[^/]*$/;
 // Strict regex that requires matching quotes and parentheses
 const urlRegex = /url\((?:([^'"()]+)|['"]([^'"]+)['"]) *\)/gi;
 
-module.exports = async function replaceCssUrls(blog, css) {
+module.exports = async function replaceCssUrls(blog, css, log = () => {}) {
   try {
     const blogID = blog.id;
     const cacheID = blog.cacheID;
@@ -70,6 +70,9 @@ module.exports = async function replaceCssUrls(blog, css) {
         if (cdnUrl && cdnUrl !== "ENOENT") {
           // Store the original URL (with or without host) as the key
           processedUrls.set(match[1] || match[2], cdnUrl);
+          log(`Replacing ${url} with ${cdnUrl}`);
+        } else {
+          log(`No file found in folder: ${url}`);
         }
       })
     );

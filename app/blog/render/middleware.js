@@ -156,11 +156,11 @@ module.exports = function (req, res, _next) {
 
             if (viewType === "text/html") {
               req.log("Replacing folder links with CDN links");
-              output = await replaceFolderLinks(blog, output);
+              output = await replaceFolderLinks(blog, output, req.log);
               req.log("Replaced folder links with CDN links");
             } else if (viewType === "text/css") {
               req.log("Replacing folder links with CDN links");
-              output = await replaceFolderLinksCSS(blog, output);
+              output = await replaceFolderLinksCSS(blog, output, req.log);
               req.log("Replaced folder links with CDN links");
             }
 

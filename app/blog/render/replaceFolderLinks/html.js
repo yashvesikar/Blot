@@ -6,7 +6,7 @@ const fileExtRegex = /[^/]*\.[^/]*$/;
 const lookupFile = require("./lookupFile");
 const config = require("config");
 
-module.exports = async function replaceFolderLinks(blog, html) {
+module.exports = async function replaceFolderLinks(blog, html, log = () => {}) {
   try {
     const blogID = blog.id;
     const cacheID = blog.cacheID;
@@ -73,11 +73,11 @@ module.exports = async function replaceFolderLinks(blog, html) {
                 const result = await lookupFile(blogID, cacheID, value);
 
                 if (result === "ENOENT") {
-                  console.log(`File not found: ${value}`);
+                  log(`No file found in folder: ${value}`);
                   return;
                 }
 
-                console.log(`Replacing ${attr.value} with ${result}`);
+                log(`Replacing ${attr.value} with ${result}`);
                 attr.value = result;
                 changes++;
               })()
