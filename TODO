@@ -3,6 +3,12 @@ Fix issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,blog_93718f1
 - folders are all full-folder permissions via dropbox
 - issue with sync locks apparently, and template building takes a long time for blog_a076707d10f6472c97b1e3b19d8c1349, could not reproduce in local
 
+Performance improvements:
+- Add pagination to /tagged
+- Remove entries property from popular_tags and all_tags (just list the tags)
+
+Identify and block repeat 404 offenders over long timeframe
+
 ---
 
 Fix bug with site export and [contact Ryan](https://mail.google.com/mail/u/1/#inbox/FMfcgzQXJtGgnQWMWxjBnHlvMSPFJjnJ)
