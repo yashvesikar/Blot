@@ -25,6 +25,12 @@ async function recursiveList(dirPath, depth = 0) {
 
   try {
     const contents = await ls(dirPath);
+
+    if (!contents || contents.trim() === "") {
+        console.warn(`No contents for directory: ${dirPath}`);
+        return;
+    }
+
     const dirs = contents
       .split("\n")
       .filter((line) => line.endsWith("/")) // Only dirs end with /
@@ -36,6 +42,7 @@ async function recursiveList(dirPath, depth = 0) {
     for (const subDir of dirs) {
       await recursiveList(subDir, depth + 1);
     }
+    
   } catch (error) {
     console.error("Error processing directory", dirPath, error);
   }

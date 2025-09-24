@@ -6,6 +6,12 @@ Preserve single line breaks in Google Docs and Word Docs for poetry and [tell Is
 
 Translate [Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
+Automate deployment of fail2ban config
+- ensure everything that's on the server is checked into version control
+
+Check in on banned IPs (maybe set up alert?)
+- we don't want to ban legitimate activity
+
 ---
 
 Use the title tag as the alt tag for images in Google Docs and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpTDNfsqFJLMGRBFRcrqKZLzr)
