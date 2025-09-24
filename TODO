@@ -40,8 +40,7 @@ Google Drive blockquotes and tell [Chuck](https://mail.google.com/mail/u/0/#inbo
 Investigate iCloud bugs
 - Investigate the 500 timeout errors – are these caused by pending syncs / folder locks?
   - tail -n 1000000 /var/instance-ssd/logs/access.log | grep " 500 " | grep "/clients/icloud"
-- What happens when you rename a folder connected to iCloud client?
-- does this explain why there are unrenamed folders in the mac server icloud drive?
+- Why are there unrenamed folders in the mac server icloud drive?
 - Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
 
 Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
