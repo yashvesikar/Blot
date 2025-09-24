@@ -38,13 +38,11 @@ Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjS
 Google Drive blockquotes and tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxlDlqnPKgVbvfQpzhqBGPdF)
 
 Investigate iCloud bugs
-- Intermittent 'iCloud Server down' notifications
-- Repeat issue with files in sub folders...
+- Investigate the 500 timeout errors – are these caused by pending syncs / folder locks?
+  - tail -n 1000000 /var/instance-ssd/logs/access.log | grep " 500 " | grep "/clients/icloud"
 - What happens when you rename a folder connected to iCloud client?
-  - does this explain why there are unrenamed folders in the mac server icloud drive?
-- Download Haikun's folder and [fix issue with iCloud](https://mail.google.com/mail/u/0/#inbox/QgrcJHsNjpqZNqVQPXjThqrdMVGWNfdqkjG)
+- does this explain why there are unrenamed folders in the mac server icloud drive?
 - Work out issue with iCloud disconnect / setup with [Florian's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzSJsxwwRTMNxWTMrGCQXTlh)
-- remove all keys related to icloud client for blog_e74c2a93cXXXX
 
 Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
 - highlighted by `https://jimhardy-datascience.com/search?q=2026` and `https://www.nitinpai.in/archives`
