@@ -9,8 +9,8 @@ const get = promisify((blogID, entryIDs, callback) =>
 
 const zscan = promisify(client.zscan).bind(client);
 const TIMEOUT = 8000;
-const MAX_RESULTS = 50;
-const CHUNK_SIZE = 100;
+const MAX_RESULTS = 25;
+const CHUNK_SIZE = 200;
 
 function buildSearchText(entry) {
   return [
