@@ -199,12 +199,12 @@ describe("entry.search", function () {
     done();
   });
 
-  it("returns a maximum of 50 results", async function (done) {
+  it("returns a maximum of 25 results", async function (done) {
     for (let i = 0; i < 100; i++) {
       await this.set(`/post${i}.txt`, `Hello, world ${i}!`);
     }
 
-    expect((await this.search("Hello")).length).toEqual(50);
+    expect((await this.search("Hello")).length).toEqual(25);
 
     done();
   });
@@ -219,7 +219,7 @@ describe("entry.search", function () {
     const duration = Date.now() - startTime;
   
     expect(duration).toBeLessThanOrEqual(4100);
-    expect(results.length).toEqual(50);
+    expect(results.length).toEqual(25);
   
     done();
   });
