@@ -56,7 +56,46 @@ module.exports = async function (blogID, query, callback) {
         return callback(null, results);
       }
 
-      const [nextCursor, reply] = await zscan("blog:" + blogID + ":all", cursor, 'COUNT', CHUNK_SIZE);
+      // we use the entries list rather than the 'all' list to skip deleted entries
+      // this can badly affect performance if there are a lot of deleted entries
+      const [nextCursor, reply] = await zscan("blog:" + blogID + ":entries", cursor, 'COUNT', CHUNK_SIZE);
+      cursor = nextCursor;
+      
+      const ids = reply.filter((_, i) => i % 2 === 0);
+      if (!ids.length) continue;
+
+      const entries = await get(blogID, ids);
+
+      for (const entry of entries) {
+        if (!isSearchable(entry)) continue;
+
+        const text = buildSearchText(entry);
+        
+        const matches = terms.length === 1 
+          ? text.includes(terms[0])
+          : terms.every(term => text.includes(term));
+
+        if (matches) {
+          results.push(entry);
+          if (results.length >= MAX_RESULTS) {
+            return callback(null, results);
+          }
+        }
+
+        if (Date.now() - startTime > TIMEOUT) {
+          return callback(null, results);
+        }
+      }
+    } while (cursor !== '0');
+
+
+    // now  we check the 'pages' list for any pages which might be searchable
+    do {
+      if (Date.now() - startTime > TIMEOUT) {
+        return callback(null, results);
+      }
+
+      const [nextCursor, reply] = await zscan("blog:" + blogID + ":pages", cursor, 'COUNT', CHUNK_SIZE);
       cursor = nextCursor;
       
       const ids = reply.filter((_, i) => i % 2 === 0);
