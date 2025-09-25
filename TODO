@@ -1,8 +1,3 @@
-Fix issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,blog_93718f16de384e2983a9436f500a8e1f,blog_32307ab68b65424a83319863b89b5946
-- this seems to trigger a folder sync lock issue
-- folders are all full-folder permissions via dropbox
-- issue with sync locks apparently, and template building takes a long time for blog_a076707d10f6472c97b1e3b19d8c1349, could not reproduce in local
-
 Performance improvements:
 - Add pagination to /tagged
 - Remove entries property from popular_tags and all_tags (just list the tags)
@@ -24,6 +19,11 @@ Automate deployment of fail2ban config
 
 Check in on banned IPs (maybe set up alert?)
 - we don't want to ban legitimate activity
+
+Keep an eye on issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,blog_93718f16de384e2983a9436f500a8e1f,blog_32307ab68b65424a83319863b89b5946
+- this seems to trigger a folder sync lock issue
+- folders are all full-folder permissions via dropbox
+- issue with sync locks apparently, and template building takes a long time for blog_a076707d10f6472c97b1e3b19d8c1349, could not reproduce in local...
 
 ---
 
@@ -249,13 +249,36 @@ Speed up templates.build
 - Try and be more selective about which blog model updates trigger blog.flushCache
 - Write now sync updates (e.g. checking /) all trigger blogs to flush cache
 
-Move data dir to s3
+Move from EBS to s3
+- Goal is cost reduction and improved scalability
+  - no more charges for unused GB disk space
+  - lower cost of S3 vs EBS
+  - no issue of 'running out of space' which has taken down service multiple times
+- General considerations:
+  - what s3 category to use? standard? 1 zone express? latency is important for some use-cases, e.g. blog folder
+  - the static files (e.g. thumbnails) are more long term infrequent access though (because of CDN)
+  - do we re-organize how files are stored? one bucket per site?
+  - make sure s3 versioning is disabled?
+  - how to back up? maybe have a special bucket for blog folder data? everything else is downstream of the folder
 - Come up with plan for static files directory
-  - abstract write / read from static files directory
+  - rewrite docx, odt, clients to use a temp dir, then
+  - create an abstract helper function which can be used to write files to static directory
+    - make this file also upload to s3
+    - write script to sync existing static files to s3
+  - we probably don't need a caching layer for static files since static files will end up in CDN storage after first request
 - Come up with plan for blog files directory
  - abstract write / read from blog directory
-- If we can come up with a git client plan that works, this is a go
-  - Git S3: https://news.ycombinator.com/item?id=41887004
+ - we probably need a caching layer using instance SSD as LRU cache of say 10GB
+  - when we rebuild all files on a site, we'll probably want to download all the folder? or maybe just have a SSD LRU caching layer built in that can adapt.
+- Rewrite git client as follows:
+  - Store bare repos (e.g. blog.git) on s3 as source of truth
+  - On push, fetch bare repo from s3 and store it on instance SSD in 'cache' 
+  - After push, resync bare repo to s3
+  - Compare diff on bare repo to identify changed files
+  - For new or modified files, check out those files only to a tmp folder and then copy across to blog folder dir directly and trigger folder.update
+  - Remove the live repo from the blog folder dir
+  - Other ideas which I decided against:
+    - I thought about using an s3fs but it seems risky and likely too slow
 
 Fix bad links (e.g. incorrect case) in files at build-time rather than run-time so we can avoid the expensive disk lookups in blog/assets.js
 
