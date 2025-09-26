@@ -799,11 +799,6 @@ Finish site and dashboard
     - Think about mtimes, metadata as well as file contents
 - The top right button 'your sites' should remember the last page of the dashboard you were on so you can switch from docs to dashboard quickly
 
-Come up with OKRs for Blot
-- Churn rate
-
-Light mode/dark mode videos
-
 Windows video + windows finder.css
 
 Rewrite broken link tests
@@ -853,10 +848,6 @@ Can we support google docs even from Dropbox? if the doc is public?
 Investigate why [changes made to app/scheduler/daily/revenue.js increased the number of active blogs](https://github.com/davidmerfield/Blot/blob/494900a5dda1d916569c925adfbb6e68606c99bd/app/scheduler/daily/revenue.js#L21-L29) in my email
 
 Ensure that overdue PayPal subscription webhooks map to notification emails
-
-Final polish on stats dashboard
-- Add monitor the root disk usage of both servers to stats
-- Tie in daily update stats to stats dashboard
 
 Purge old docs CSS and JS from CDN storage cache
 
@@ -1101,9 +1092,7 @@ Support larger files on DB client and tell [Marco](https://mail.google.com/mail/
 Add support for new formats:
 - jupyter notebooks (via pandoc) and tell [questioner](https://blot.im/questions/2297)
 
-
 ---
-
 
 Explain that the git client uses the master branch and repos from github will use main in the docs and on the dashboard then tell [N](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqPzKcnQKsQQNkzcRpvCWpWKTr)
 
@@ -1125,9 +1114,6 @@ Improve backlink's tolerance
 Add support for 2FA (Two factor authentication) then tell [Luke](https://mail.google.com/mail/u/0/#inbox/163993b0f8499ab3), [Max](https://mail.google.com/mail/u/0/#inbox/1641e9bd104c5b77), [Chaz](https://mail.google.com/mail/u/0/#inbox/165b726aa900158a), [Prathamesh](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqQmWhhpCVSlbhdvlvWdmdtJWQ) and [Tom](https://mail.google.com/mail/u/0/#inbox/FMfcgxwDqnpZncgBDbDskMZdPMXkgGCN).
 
 Add support for SSO then tell [Prathamesh](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqQmWhhpCVSlbhdvlvWdmdtJWQ)
-
-Make retreiving files from server case-insentive
-- i.e. add resolve case insensitive path to file to blog/asset.js
 
 Prevent full disk from affecting access to people's blogs. 
 - switch into a read-only mode?
