@@ -2,7 +2,9 @@ Use the title tag as the alt tag for images in Google Docs and tell [Chuck](http
 
 Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbfxjtskbRgHNBvJSTTjSpDQzr) that photo posts are dated at the time they appear in Blot. I'll consider adding an option to use the image taken date?
 
-Preserve single line breaks in Google Docs and Word Docs for poetry and [tell Isabel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpKhwFRpStFNWhztKGPqQJfsq)
+Preserve single line breaks in Google Docs 
+
+Preserve single line breaks in Word Docs for poetry and [tell Isabel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpKhwFRpStFNWhztKGPqQJfsq) and [tell Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzGxTNzPZwwxJPTDlBBBcnbpPcJJ)
 
 Automate deployment of fail2ban config
 - ensure everything that's on the server is checked into version control
@@ -21,6 +23,11 @@ Keep an eye on issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,b
 - issue with sync locks apparently, and template building takes a long time for blog_a076707d10f6472c97b1e3b19d8c1349, could not reproduce in local...
 
 ---
+
+Fix major bug with disks on server restart:
+- sudo chown ec2-user:ec2-user /var/instance-ssd/tmp
+- sudo chown ec2-user:ec2-user /var/instance-ssd/logs/app.log
+- mkfs -t xfs -f /dev/XXXXXXXX
 
 Fix bug with site export and [contact Ryan](https://mail.google.com/mail/u/0/#inbox/FMfcgzQXJtGgnQWMWxjBnHlvMSPFJjnJ)
 
@@ -136,6 +143,10 @@ Fix bug which prevents the CDN url replacer working for drafts
 - Refactor so the draft route relies more on the middleware function
 - At the moment, drafts bypass a lot of the code – many template features won't work
 
+Fix bug with git client which occurs when you change your username with the git client
+
+Fix bug issue with switching from Dropbox client to Git client, in production which affected Nat
+
 Fix bug with template error causing server to go down (issue with folder rebuild)
     reproduce bug with chinese template?
 
@@ -177,6 +188,8 @@ Fix the way the photos load on this site
 Fix bug with pages not appearing in backlinks and [tell questioner](https://blot.im/questions/2913)
 
 Fix bug with magic text in posts which breaks backend and tell [Victor](https://mail.google.com/mail/u/0/#inbox/FMfcgzQVxRMzjBtRWVwLWtlBcFGsSVCQ)
+
+Fix bug [issue with teaser generator](https://github.com/davidmerfield/Blot/issues/15) that locks up a build process, sometimes for 10+ seconds.
 
 Fix bug with Git client and Obsidian then tell levelsi
   
@@ -363,9 +376,6 @@ Blot's account page doesn't calculate the date of next bill for PayPal subscribe
 
 Pandoc doesn't support autolinking for Chrome's copy link to highlight feature – should we make this work? e.g. `https://stackoverflow.com/questions/71806679/how-to-copy-link-to-highlight-using-chrome-api#:~:text=How%20to%20copy%20link%20to%20highlight`
 
-Improve replaceFolderLinks to handle situation where people include their own domain in image links –> parse this out
-- fix issue with discombobulated
-
 Run dropbox reset as ec2-user not root
 - run chown on all data files...
 
@@ -513,14 +523,11 @@ Move from EBS to s3
   - Other ideas which I decided against:
     - I thought about using an s3fs but it seems risky and likely too slow
 
-Fix bad links (e.g. incorrect case) in files at build-time rather than run-time so we can avoid the expensive disk lookups in blog/assets.js
+Resolve bad links (e.g. incorrect case) in files at build-time rather than run-time so we can avoid the expensive disk lookups in blog/assets.js
 
 Add local multi container setup to mirror production
 
 Create a folder{watch} equivalent so we don't have to run a seperate process for development
-
-Fix image profile retention not working in production and tell [Simon](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwJchvfhDcWNkrZtNJqlLmLfsx)
-- maybe a caching issue and actually works?
 
 Use tinify free api to compress some of the folder images
 - maybe consider building this into the main product? it might pay for itself
@@ -541,8 +548,6 @@ Run image analysis on all images in post
 - use something to identify related images
 
 Improve tools section
-
-Fix hammering of github api for commit history for news page – cache locally to data directory
 
 Improvements to questions section:
 - Add 'blue dot' notifications icon to updates and questions based on last post
@@ -616,11 +621,6 @@ Add more efficient popular_tags method
 - add new properties to underlying model
 
 Surface recently edited posts on the sites tab of the dashboard
-
-Fix issue with server restart:
-- sudo chown ec2-user:ec2-user /var/instance-ssd/tmp
-- sudo chown ec2-user:ec2-user /var/instance-ssd/logs/app.log
-- mkfs -t xfs -f /dev/XXXXXXXX
 
 Right now changes to documentation CSS do not make it into production:
 - stale servers serve the old CSS 
@@ -752,8 +752,6 @@ Merge comment and disqus into single comments plugin
 
 Totally remove twemoji and emoticons plugin
 
-Fix single line break handling in Word Documents and [tell Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzGxTNzPZwwxJPTDlBBBcnbpPcJJ)
-
 Make the 404 page more useful (see Netlify site)
 
 Clamp the max length of blot usernames and custom domains
@@ -790,11 +788,10 @@ Add [textbundle support](http://textbundle.org/spec/) and tell [questioner](http
 Document image zoom disable feature ?zoom=false and tell [questioner](https://blot.im/questions/2236)
 
 Add way to import directly
-- Add/fix micro.blog import to dashboard and tell [Gabriel](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwJRvfgrRhXwqDNDlxbpXmRlbd]
+- Add micro.blog import to dashboard and tell [Gabriel](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwJRvfgrRhXwqDNDlxbpXmRlbd]
 - And recurring import from elsewhere 
 
 Finish site and dashboard
-- Fix live stream of folder sync status
 - The site CSS persists in the browser cache
 - Make sure folders are zipped when site builds, and delivered through CDN
 - Make sure blot resyncs folders with their associated sites when pulled
@@ -823,7 +820,6 @@ Add support for INI files and tell [Frank](https://mail.google.com/mail/u/0/#inb
 Add {{#posts-without-:tag}} and [tell steve](https://mail.google.com/mail/u/0/#inbox/FMfcgzGxSRHnwcVVlqvwLFzwRQbsqsnK)
 
 Improvements to website:
-- Fix broken link checker
 - Create material in docs with title 'Turn X into website' where X is:
   - Dropbox, Google Drive, etc.
   - Word Document, Google Doc, etc.
@@ -914,9 +910,9 @@ Eventually configure cloud watch reboot sequence then test it
 
 Investigate if we can rewrite git client so we don't need to store double the data - right now we have 48GB duped.
 
-Fix auto titles of 'screenshot at 12:22pm' and make sure the date parser can handle them
+Adjust auto titles of 'screenshot at 12:22pm' and make sure the date parser can handle them
 
-Fix title generator so h2 titles within the file dont become the title of the post – this is helpful for obsidian
+Adjust title generator so h2 titles within the file dont become the title of the post – this is helpful for obsidian
 
 Get to bottom of issues with questions/tests/list and re-enable disable test suite
 
@@ -995,7 +991,7 @@ Improvements to server
 - [ ] Use [Lory](http://loryjs.github.io/lory/) to add a slider to the homepage
 
 Improvements to sync/reset scripts:
-- [ ] Fix should produce a report which I get email
+- [ ] reset should produce a report which I get email
 - [ ] Resync should produce a report which I get via email
 - [ ] dropbox reset TO BLOT should handle removed folder
 - [ ] dropbox reset FROM BLOT should handle removed folder
@@ -1115,13 +1111,6 @@ Send out cancellation confirmation emails with option to give feedback
 - auto-refund people who immediately close their account after signing up
 
 Get to the bottom of the slow cloudflare issue and follow up with [Wen](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqPzBWZcLJcwtWTXTbQjMbVrZB)
-
-
-Git client improvements:
-- Fix issue which occurs when you change your username with the git client
-- Fix issue with switching from Dropbox client to Git client, in production which affected Nat
-
---
 
 Add tag to iterate over all images in a folder and tell [Laurel](https://mail.google.com/mail/u/0/#inbox/FMfcgzGmvBwZtktzGVFtcfDWbGZKhsfh)
 
@@ -1247,7 +1236,6 @@ Improvements to teaser generator
 - Add {{small}} and {{long}} versions of teaser?
 - Internal links (e.g. #section) in {{{teaser}}} should be resolved against the entry's permalink.
 - Add hasBreakpoint property to entry to allow greater control over display of {{{teaser}}} and tell [Pratik](https://mail.google.com/mail/u/0/#inbox/FMfcgxwBTsfMTHqWMQFmprMcjNpdBQzp)
-- Fix [issue with teaser generator](https://github.com/davidmerfield/Blot/issues/15) that locks up a build process, sometimes for 10+ seconds.
 - Make it [possible for users to select length of teasers](https://blot.im/questions/823) and [Leo](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqQJdjwTLkHkRZvZTQvfSzSFTq)
 
 Make it possible to [disable draft preview files](https://blot.im/questions/3193)
@@ -1294,12 +1282,6 @@ Improve wikilinks lookup algorithm:
 
 Support Obsidian-style media embedding and tell [questioners](https://blot.im/questions/746)
 
-Improvements to simple local server (npm run local):
-- Consider using [redis-mock](https://github.com/yeahoffline/redis-mock) and [mockery](https://github.com/mfncooper/mockery) 
--  Persist data somehow? import/export from local folder .blot?
--  Fix 'Visit' link on dashboard
--  Can we expand this to a simple self-hosting process ('npx blot-server')?
-
 ---
 
 Fetch dimensions of images even if optimize and cache is disable, so that image zoom can work. Tell [Joshua](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsmhMtGvPcwxlSHSSTFVpJVbd)
@@ -1310,7 +1292,7 @@ Add action to lint code with jshint and eslint
   
 Improvements to metadata extractor:
 - Improve date parser to use time from file creation date if it's within the same day as the date specified in metadata and follow up with [Nicolas](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsShbhKRcvhWJlKRPHPctMnWM)
-- Fix summary generator such that a subtitle is used for summary text (i.e. an h2 directly following an h1) We still want to prevent the scenario in which a later h2 becomes the summary, though. Notify [Jessica and rebuild Jessica's site](https://mail.google.com/mail/u/0/#inbox/KtbxLwghhxtxrtdGHFqBRMcDGkGWtxvSdq)
+- Adjust summary generator such that a subtitle is used for summary text (i.e. an h2 directly following an h1) We still want to prevent the scenario in which a later h2 becomes the summary, though. Notify [Jessica and rebuild Jessica's site](https://mail.google.com/mail/u/0/#inbox/KtbxLwghhxtxrtdGHFqBRMcDGkGWtxvSdq)
 - Add support for entry property with escaped double quotes, tell [Jay](https://mail.google.com/mail/u/0/#inbox/15e396dbd8350972)
 
 Reduce image compression settings and tell [Joshua](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsmhMtGvPcwxlSHSSTFVpJVbd)
@@ -1357,7 +1339,7 @@ Improvements to entry builder
 - If entries share publish date, sort them by blot creation date
 
 Improvements to dashboard
-- Fix missing error messages on overdue subscription payment form
+- Add error messages on overdue subscription payment form
 - Use \<select\> optgroup on timezone select dropdown to subdivide zones by current time, and steal the presentation format used by basecamp.
 - Add a broken link checker
 - Indicate that some posts' permalink will not change (if metadata) on the dashboard when setting the blog's permalink format. Tell Chet.
@@ -1499,8 +1481,6 @@ When the customer's blog does not have a client, client.write and client.remove 
 
 Client.write does not propogate sync errors... to demonstrate this, revoke dropbox token then try to enable local editing.
 
-Re-enable image minifier and fix the bugs it creates
-
 Reconsider default slug length or add new short slug property and tell [Josh](https://mail.google.com/mail/u/0/#inbox/FMfcgxwBTjxhZStzKhchtwjXbWxDbdfh)
 
 Self-hosting:
@@ -1532,7 +1512,7 @@ Add option to sort posts by filename alphabetically and tell [Steve](https://mai
 Make it possible to reset password when logged in (perhaps after forgetting it) in the change password flow
 
 Hidden posts:
-- Fix _ entries to true public files, tell john & other folks who depend on the menu: yes, page: no side effect
+- Ensure _ entries are true public files, tell john & other folks who depend on the menu: yes, page: no side effect
 - Warn customers that underscore will not work for hidden pages
 - Tell [Rodrigo](https://mail.google.com/mail/u/0/#inbox/1564a13991197f63) don't write previews for _ posts
 
@@ -1554,7 +1534,7 @@ Improvements to reverse proxy:
 - Add support for IPv6 and tell [Raul](https://mail.google.com/mail/u/0/#inbox/167083384282a5df)
 
 Plugins
-- Fix image caption plugin to be semantic using <figure>
+- Adjust image caption plugin to be semantic using <figure>
 - Ensure Youtube plugin still functions if apis fails
 
 ---
