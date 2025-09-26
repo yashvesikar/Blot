@@ -14,6 +14,8 @@ Translate [Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcN
 
 ---
 
+Fix bug viewing files with hashes '#' in their name on the dashboard
+
 Fix major bug with disks on server restart:
 - sudo chown ec2-user:ec2-user /var/instance-ssd/tmp
 - sudo chown ec2-user:ec2-user /var/instance-ssd/logs/app.log
