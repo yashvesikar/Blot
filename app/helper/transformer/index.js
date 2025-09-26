@@ -155,6 +155,24 @@ function Transformer(blogID, name) {
           }
         );
       });
+
+      // then URI-decoded and case-insensitively
+      if (decodedURI)
+        tasks.push(function (next) {
+          var backslashPath = decodedURI.split("\\").join("/");
+          debug(
+            "attempting backslash URI-decoded path case-insensitively",
+            backslashPath
+          );
+          caseSensitivePath(
+            localPath(blogID, "/"),
+            backslashPath,
+            function (err, fullLocalPath) {
+              if (err) return next(err);
+              fromPath(fullLocalPath, transform, next);
+            }
+          );
+        });
     }
 
     // Will work down the list of paths. If one of the paths
