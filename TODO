@@ -182,9 +182,6 @@ Fix bug with image minification which produces larger file than source file and 
 
 Fix bug parsing ISO8601 date format and tell [Thomas](https://mail.google.com/mail/u/0/#inbox/1625012def221a8f)
 
-Fix the way the photos load on this site
-- `https://krislarsphotos.blot.im`
-
 Fix bug with pages not appearing in backlinks and [tell questioner](https://blot.im/questions/2913)
 
 Fix bug with magic text in posts which breaks backend and tell [Victor](https://mail.google.com/mail/u/0/#inbox/FMfcgzQVxRMzjBtRWVwLWtlBcFGsSVCQ)
