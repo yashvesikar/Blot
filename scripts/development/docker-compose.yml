@@ -2,6 +2,10 @@ name: blot
 services:
   node-app:
     image: blot
+    # even though the os.cpu stats don't reflect this, it does seem capable
+    # of throttling the performance of the node.js service, somehow! 
+    # useful to simulate real-life server resources
+    cpus: 0.75
     build:
       context: ../../
       dockerfile: Dockerfile
