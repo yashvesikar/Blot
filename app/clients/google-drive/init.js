@@ -23,7 +23,6 @@ const main = async (initial = false) => {
       console.log(prefix(), "Fetching storage usage of service account");
       await fetchStorageInfo(serviceAccountId, drive);
 
-      console.log(prefix(), "Ensuring service account is watching for changes");
       await watchChanges(serviceAccountId, drive);
 
       // We only want to set up polling once, when the service account is first initialized

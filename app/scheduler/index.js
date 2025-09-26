@@ -106,6 +106,8 @@ module.exports = function () {
         clfdate(),
         "[STATS]",
         "cpuuse=" + pretty(loadavg / totalCPUs),
+        "totalmem=" + stats.MemTotal,
+        "totalcpus=" + totalCPUs,
         "memuse=" + pretty((totalmem - freemem) / totalmem)
       );
     });

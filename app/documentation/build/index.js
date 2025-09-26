@@ -5,6 +5,7 @@ const chokidar = require("chokidar");
 const html = require("./html");
 const favicon = require("./favicon");
 const recursiveReadDir = require("../../helper/recursiveReadDirSync");
+const clfdate = require("helper/clfdate");
 
 const SOURCE_DIRECTORY = join(__dirname, "../../views");
 const DESTINATION_DIRECTORY = config.views_directory;
@@ -77,7 +78,7 @@ const handle =
   };
 
 module.exports = async ({ watch = false, skipZip = false } = {}) => {
-  console.time("build");
+  const now = Date.now();
 
   // we only reset the destination directory in production
   if (config.environment !== "development") {
@@ -108,9 +109,9 @@ module.exports = async ({ watch = false, skipZip = false } = {}) => {
   await buildJS();
 
   try {
-    console.log("Generating list of recent activity for the news page");
+    console.log(clfdate(), "Generating list of recent activity for the news page");
     await gitCommits();
-    console.log("Generated list of recent activity for the news page");
+    console.log(clfdate(), "Generated list of recent activity for the news page");
   } catch (e) {
     console.error(
       "Failed to generate list of recent activity for the news page"
@@ -118,7 +119,7 @@ module.exports = async ({ watch = false, skipZip = false } = {}) => {
     console.error(e);
   }
 
-  console.timeEnd("build");
+  console.log(clfdate(), "Build completed in", (Date.now() - now) / 1000, "seconds");
 
   if (watch) {
     const handler = handle();
