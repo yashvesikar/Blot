@@ -1,14 +1,18 @@
-Automate deployment of fail2ban config
-- ensure everything that's on the server is checked into version control
-- Identify and block repeat 404 offenders over long timeframe
-- Check in on banned IPs (maybe set up alert?)
-- Persist permanent IP bans in iptables somewhere?
-
 Keep an eye on issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,blog_93718f16de384e2983a9436f500a8e1f,blog_32307ab68b65424a83319863b89b5946
 - this seems to trigger a folder sync lock issue
 - issue when lots of webhooks from dropbox arrive... maybe we can fix by not running all three syncs in parallel?
 - folders are all full-folder permissions via dropbox
 - issue with sync locks apparently, and template building takes a long time for blog_a076707d10f6472c97b1e3b19d8c1349, could not reproduce in local...
+- try and reproduce with all three local, connected to Dropbox full folder, or hammer with webhooks
+
+Debounce and rate-limit the refresh rate of the folder via status when fetching changes to the displayed page on the dashboard
+- I believe this triggered 429s for rapid changes during a sync, e.g. sync 50 files –> page gets reloaded 50+ times
+
+Automate deployment of fail2ban config
+- ensure everything that's on the server is checked into version control
+- Identify and block repeat 404 offenders over long timeframe
+- Check in on banned IPs (maybe set up alert?)
+- Persist permanent IP bans in iptables somewhere?
 
 Translate [Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
@@ -231,6 +235,7 @@ Fix bug with thumbnail generator for posts on Chris' site
 Improvements to template engine
 - Performance improvements
   - Add pagination to /tagged
+    - should resolve issue with `https://eli.li/tagged/og`
   - Remove entries property from popular_tags and all_tags (just list the tags)
 - Fix various performance issues with archives page and sitemap on large sites - maybe allEntries only retrieves some properties and paginates through rather than a single request?
   - highlighted by `https://jimhardy-datascience.com/search?q=2026` and `https://www.nitinpai.in/archives`
