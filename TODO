@@ -8,6 +8,8 @@ Keep an eye on issue with syncing blogs: blog_a076707d10f6472c97b1e3b19d8c1349,b
 Debounce and rate-limit the refresh rate of the folder via status when fetching changes to the displayed page on the dashboard
 - I believe this triggered 429s for rapid changes during a sync, e.g. sync 50 files –> page gets reloaded 50+ times
 
+Fix issue with broken links to images on a page triggering 429s – just go slow first for a long time before 429-ing
+
 Automate deployment of fail2ban config
 - ensure everything that's on the server is checked into version control
 - Identify and block repeat 404 offenders over long timeframe
