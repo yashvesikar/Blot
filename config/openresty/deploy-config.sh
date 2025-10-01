@@ -48,5 +48,32 @@ ssh -i $SSH_KEY ec2-user@$PUBLIC_IP "sudo openresty -t"
 ssh -i $SSH_KEY ec2-user@$PUBLIC_IP "sudo openresty -s reload"
 echo "Reload complete."
 
+#########################################################
+# Begin Fail2Ban deployment section
+#########################################################
+
+FAIL2BAN_LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/fail2ban"
+
+# Upload filters
+for filter in "$FAIL2BAN_LOCAL_DIR"/filter.d/*.conf; do
+  filter_name=$(basename "$filter")
+  echo "Uploading filter $filter_name to $PUBLIC_IP:/etc/fail2ban/filter.d/"
+  scp -i "$SSH_KEY" "$filter" ec2-user@$PUBLIC_IP:/tmp/"$filter_name"
+  ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo mv /tmp/$filter_name /etc/fail2ban/filter.d/$filter_name && sudo chown root:root /etc/fail2ban/filter.d/$filter_name"
+done
+
+# Upload jail.local
+echo "Uploading jail.local to $PUBLIC_IP:/etc/fail2ban/jail.local"
+scp -i "$SSH_KEY" "$FAIL2BAN_LOCAL_DIR/jail.local" ec2-user@$PUBLIC_IP:/tmp/jail.local
+ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo mv /tmp/jail.local /etc/fail2ban/jail.local && sudo chown root:root /etc/fail2ban/jail.local"
+
+# Restart fail2ban
+echo "Restarting fail2ban on $PUBLIC_IP"
+ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo systemctl restart fail2ban"
+
+echo "Fail2Ban deployment complete."
+#########################################################
+
+
 echo "Deploy complete. To connect to the openresty server, run:"
 echo "ssh -i $SSH_KEY ec2-user@$PUBLIC_IP"

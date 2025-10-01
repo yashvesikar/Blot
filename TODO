@@ -1,12 +1,6 @@
 Debounce and rate-limit the refresh rate of the folder via status when fetching changes to the displayed page on the dashboard
 - I believe this triggered 429s for rapid changes during a sync, e.g. sync 50 files –> page gets reloaded 50+ times
 
-Automate deployment of fail2ban config
-- ensure everything that's on the server is checked into version control
-- Identify and block repeat 404 offenders over long timeframe
-- Check in on banned IPs (maybe set up alert?)
-- Persist permanent IP bans in iptables somewhere?
-
 Translate [Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 ---
@@ -227,6 +221,7 @@ Fix bug with thumbnail generator for posts on Chris' site
 
 Improvements to template engine
 - Performance improvements
+  - Limit number of posts in rss feed to 15 (modify recent entries?)
   - Add pagination to /tagged
     - should resolve issue with `https://eli.li/tagged/og`
   - Remove entries property from popular_tags and all_tags (just list the tags)
@@ -398,9 +393,6 @@ Why do posts on blog_eddd8e5 take so long to set, let alone rebuild?
 Clean out all but the neccessary information from deleted entries to save redis space
 
 We should use the helper/transformer to speed up screenshot re-generation
-
-Watch the logs for requests to files in blog folder which aren't passed to CDN
-- add some logging to blog/assets.js
 
 Make iCloud site routes blocking so the mac server waits for the main server to finish building before sending the next sync update? But consider timeout
 
@@ -814,8 +806,6 @@ Make it possible to ask a question without logging in
 
 Improve webloc converter:
 - If the bookmark file points to a google doc, can we support google docs even from Dropbox? if the doc is public?
-
-Investigate why [changes made to app/scheduler/daily/revenue.js increased the number of active blogs](https://github.com/davidmerfield/Blot/blob/494900a5dda1d916569c925adfbb6e68606c99bd/app/scheduler/daily/revenue.js#L21-L29) in my email
 
 Ensure that overdue PayPal subscription webhooks map to notification emails
 
