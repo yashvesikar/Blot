@@ -94,6 +94,7 @@ const addTemplate = async (templateID, archive) => {
 
             // Add the views to the archive
             for (const view in views) {
+                if (!views[view].content) continue;
                 archive.append(views[view].content, { name: 'templates/' + template.slug + '/' + view });
             }
     
