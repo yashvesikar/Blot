@@ -6,8 +6,6 @@ Fix major bug with disks on server restart:
 - mkfs -t xfs -f /dev/XXXXXXXX
 - Issue is caused by mount-disk scripts swapping /var/instance-ssd and /var/www/blot/data
 
-Fix bug with site export and [contact Ryan](https://mail.google.com/mail/u/0/#inbox/FMfcgzQXJtGgnQWMWxjBnHlvMSPFJjnJ)
-
 Fix bug with Documentation template and the setting 'Adds zoom to large images' and [tell customer](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB)
 
 Fix bug with incorrect date of files by path and follow up with [Ashish](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGBfxXGrhsDPbNJfnbZVCW)
