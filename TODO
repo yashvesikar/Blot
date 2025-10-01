@@ -1,7 +1,3 @@
-Translate [Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
-
----
-
 Fix bug viewing files with hashes '#' in their name on the dashboard
 
 Fix major bug with disks on server restart:
@@ -16,6 +12,8 @@ Fix bug with Documentation template and the setting 'Adds zoom to large images' 
 
 Fix bug with incorrect date of files by path and follow up with [Ashish](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGBfxXGrhsDPbNJfnbZVCW)
 - `/posts/2021/Dec 2021/12-01 - Snow envy/Snow envy.txt` isn't dated correctly (should be first of december rather than january 12th)
+
+Fix bug with Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
 
 Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
 
@@ -178,6 +176,8 @@ Fix bug [issue with teaser generator](https://github.com/davidmerfield/Blot/issu
 Fix bug with Google Drive client and [Stephen's large blog](https://mail.google.com/mail/u/0/#inbox/QgrcJHsBsbkNkMkkkMmLWBxRfnGnWPVwLHl)
   - It also seems like server crashes when a massive google drive folder is synced, with a directory containing 6772 items
 
+Fix bug with some blogs are accessible after deletion
+
 Fix bug with Git client and Obsidian then tell levelsi
   
   1. create two files
@@ -316,7 +316,6 @@ com/mail/u/0/#inbox/1588e3df7489b554)
 - Add support for fetching only some properties of an entry (ideally only those that are used). prevent some properties from being fetched in some lists (html, for example in all_entries). Would be a good candidate for hgetall or hget?
 - Incorporate some of [notebook](https://github.com/WesleyAC/notebook)'s features in a template
 
-
 Add [preload=none](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio#preload) to all audio and video tags without it defined or maybe preload="metadata"? 
 
 Automate the detection and removal of long-overdue sites (> 1 year)
@@ -347,15 +346,10 @@ Add tests for webp thumbnails
 
 Add deploy button to GitHub so I can deploy code while away
 
----
-
 Add a related entry list and tell [David](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrPGTsMcvgWpNsNtmrkWRzDz) and [Thomas](https://mail.google.com/mail/u/0/#inbox/156dbe97153fab61) and [questioner](https://blot.im/questions/1484) and [questioner](https://blot.im/questions/3123)
 
 Move folder lock location to instance ssd for improved reliability and performance (non-networked drive...) – could be inside the cache
 
----
-
-Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
 
 Pandoc doesn't support autolinking for Chrome's copy link to highlight feature – should we make this work? e.g. `https://stackoverflow.com/questions/71806679/how-to-copy-link-to-highlight-using-chrome-api#:~:text=How%20to%20copy%20link%20to%20highlight`
 
@@ -643,10 +637,6 @@ Improvements to Google Drive client
 
 Improve design of default error page
 - https://kristianhjelle.com/
-
-Investigate issues using git in production
-
-Investigate why some blogs are accessible after deletion
 
 Make templates/folders build less busy and then re-enable it in app/setup
 - consider using git? use local client in smarter way?
