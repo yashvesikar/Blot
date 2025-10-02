@@ -252,6 +252,7 @@ Improvements to template engine
 - why is the feed so huge? are we compressing feeds? so slow for nginx?
 - we need to modify the template engine to extract which properties of the entry are used, then pass this into entry.get to reduce memory usage significantly for large sites.
 - maybe write tool to check before/after for lots of test sites? real life sites on blot? error if diff, or offer chance to test?
+- Add a related entry list and tell [David](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrPGTsMcvgWpNsNtmrkWRzDz) and [Thomas](https://mail.google.com/mail/u/0/#inbox/156dbe97153fab61) and [questioner](https://blot.im/questions/1484) and [questioner](https://blot.im/questions/3123)
 - Consider adding support for nested page structure - generate nested menu items from nested folders in /pages
 - Make it possible to query recent entries by tag and tell [Peter](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTMPKDrgrtVnjTnLtMZNHldvZ)
 - Assign guid template IDs
@@ -355,6 +356,7 @@ Add per request resource monitoring, e.g. heap size before/after
 Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
 
 Implement mac server screenshot endpoint
+- We should use the helper/transformer to speed up screenshot re-generation
 
 Implement limit for allentries, sitemap, etc.
 
@@ -365,10 +367,8 @@ Add tests for webp thumbnails
 
 Add deploy button to GitHub so I can deploy code while away
 
-Add a related entry list and tell [David](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrPGTsMcvgWpNsNtmrkWRzDz) and [Thomas](https://mail.google.com/mail/u/0/#inbox/156dbe97153fab61) and [questioner](https://blot.im/questions/1484) and [questioner](https://blot.im/questions/3123)
 
 Move folder lock location to instance ssd for improved reliability and performance (non-networked drive...) – could be inside the cache
-
 
 Pandoc doesn't support autolinking for Chrome's copy link to highlight feature – should we make this work? e.g. `https://stackoverflow.com/questions/71806679/how-to-copy-link-to-highlight-using-chrome-api#:~:text=How%20to%20copy%20link%20to%20highlight`
 
@@ -401,8 +401,6 @@ How to fix menu links with incorrect case IDs?
 Why do posts on blog_eddd8e5 take so long to set, let alone rebuild?
 
 Clean out all but the neccessary information from deleted entries to save redis space
-
-We should use the helper/transformer to speed up screenshot re-generation
 
 Make iCloud site routes blocking so the mac server waits for the main server to finish building before sending the next sync update? But consider timeout
 
@@ -451,16 +449,6 @@ Write unit tests for database models which have no tests subdirectory
 - e.g. models/404, models/entries, models/redirects
 
 Improve [sidebar blog template navigation on small screens](https://blot.im/questions/3137)
-
-Improve screenshot utility:
-- handle / detect pupeteer browser crash and restart
-- add global timeout top-level screenshot function for individual invocations
-- improve fonts if possible? 
-- the source code for the screenshot is in helper/screenshot and it's only used in app/build/
-- improve and extend tests for resilience, buggy webpages – verify 100% test coverage
-- Log sites which cause screenshot function to error or timeout
-  - sapiens.org
-  - harpers.org
 
 Clamp length of password and email address in log in and sign up and reset forms
 - ensure the forms have tight max-bodies
@@ -595,8 +583,6 @@ We should have a plan to switch CDN from Bunny to Cloudfront in an emergency
 - Should be a simple DNS change
 
 Can we support white-label cdn subdomain so there are no Blot CDN links?
-
-Refactor helper/screenshot to use a persistently open browser
 
 Change dashboard cookies: Set-Cookie: mycookie=value; Path=/; SameSite=Lax; Secure;
 
