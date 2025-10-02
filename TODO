@@ -1,4 +1,6 @@
 Fix bug with recursive partials which took down server
+- seems possible in local templates
+- possibly on web templates too
 
 Fix bug viewing files with hashes '#' in their name on the dashboard
 
