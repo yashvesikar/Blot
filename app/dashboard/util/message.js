@@ -64,6 +64,7 @@ function middleware(req, res, next) {
 }
 
 function errorHandler(err, req, res, next) {
+
   if (!req.body) {
     return next(err);
   }
@@ -81,7 +82,18 @@ function errorHandler(err, req, res, next) {
   if (type(err, "object"))
     for (var i in err) if (type(err[i], "string")) message = err[i];
 
-  res.message(redirect, new Error(message));
+  // if this is a post request and the redirect is different
+  // from the current URL then redirect to it with a message
+  // otherwise just display the error on the current page
+  // if you don't check this you can get stuck in a redirect loop
+  if (
+    req.method.toLowerCase() === "post" &&
+    normalize(redirect) !== normalize(req.baseUrl + req.path)
+  ) {
+    return res.message(redirect, new Error(message));
+  }
+
+  next(err);
 }
 
 module.exports = { middleware, errorHandler };

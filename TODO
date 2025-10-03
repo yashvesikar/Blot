@@ -1,4 +1,6 @@
-Fix redirect bug for 404 page on dashboard / other errors
+Clamp max length of title on dashboard (maybe 200 chars)
+
+Fix bug with entering invalid domain (message 'domain removed') instead of error
 
 Fix bug with folder viewer which crashes server for large number of entries
 - add pagination
