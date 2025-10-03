@@ -1,5 +1,11 @@
 Clamp max length of title on dashboard (maybe 200 chars)
 
+Fix bug with Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
+
+Fix bug with overdue subscription payment form not working
+- Possible bug introduced by recent stripe upgrade
+- Migrate [Stripe library to v7](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7)
+
 Fix bug with entering invalid domain (message 'domain removed') instead of error
 
 Fix bug with folder viewer which crashes server for large number of entries
@@ -9,10 +15,6 @@ Fix bug with recursive partials which took down server
 - seems possible in local templates
 - possibly on web templates too
 
-Fix bug with overdue subscription payment form not working
-- Possible bug introduced by recent stripe upgrade
-- Migrate [Stripe library to v7](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7)
-
 Fix bug where changes to documentation CSS do not make it into production:
 - stale servers serve the old CSS 
 - purge bunny after deployment complete?
@@ -21,8 +23,6 @@ Fix bug with Documentation template and the setting 'Adds zoom to large images' 
 
 Fix bug with incorrect date of files by path and follow up with [Ashish](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGBfxXGrhsDPbNJfnbZVCW)
 - `/posts/2021/Dec 2021/12-01 - Snow envy/Snow envy.txt` isn't dated correctly (should be first of december rather than january 12th)
-
-Fix bug with Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
 
 Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
 
@@ -42,7 +42,7 @@ Fix bugs with git client
 - Pipe custom message when you change a blog's handle (breaking repo url)
 - Tell [Koen](https://mail.google.com/mail/u/0/#inbox/1670f516115ef9bd) about the broken repo URL fix
 
-Fix bug so that script fix is able to remove tag items without posts
+Fix bug so that script 'fix' is able to remove tag items without posts
 - how to reproduce this bug?
 - it seems there is a phanton entry which no longer exists on a tag index
 - can we iterate over all tag keys during fix to detect this?
@@ -52,6 +52,7 @@ Fix bug for 'edit this page' link in production
 Fix bug with images zooming inside footnotes and tell [Nathan](https://mail.google.com/mail/u/0/#inbox/FMfcgzGtwWCBmtldhMfQRgZjHDpFvSGb)
 
 Fix bug with menu which occur when multiple pages are added at once Menu needs concurrency or atomic operations (so we can build posts in parallel)
+- move menu into its own model (it's possible to add thousands of entries to it...)
 
 Fix bug with .emf files in Word Document and follow up with Todd. Can we convert EMFs? Can we pass a flag to pandoc to let them deal with it? Is this just caused by Tiff files? I need a Windows machine to test this.
 
