@@ -1,5 +1,5 @@
 /var/instance-ssd/logs/access.log {
-    size 400M
+    size 150M
     missingok
     notifempty
     compress
