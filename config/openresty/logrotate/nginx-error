@@ -1,5 +1,5 @@
 /var/instance-ssd/logs/error.log {
-    size 100M
+    size 400M
     missingok
     notifempty
     compress
