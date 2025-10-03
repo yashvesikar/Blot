@@ -331,6 +331,7 @@ com/mail/u/0/#inbox/1588e3df7489b554)
 - Add support for fetching only some properties of an entry (ideally only those that are used). prevent some properties from being fetched in some lists (html, for example in all_entries). Would be a good candidate for hgetall or hget?
 - Incorporate some of [notebook](https://github.com/WesleyAC/notebook)'s features in a template
 
+Launch new server and test that the new scripts to mount the instance store and data ebs-disk work
 
 Automate the detection and removal of long-overdue sites (> 1 year)
 - Prevent long-overdue customers from accessing the service, then tell [Matvey](https://mail.google.com/mail/u/0/#inbox/FMfcgxwHNgWvzTkMVZXFrSpjGfcCrWJG)
