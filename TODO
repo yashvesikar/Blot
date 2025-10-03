@@ -1,7 +1,7 @@
 Fix redirect bug for 404 page on dashboard / other errors
 
-Folder viewer
-- add pagination for large folders
+Fix bug with folder viewer which crashes server for large number of entries
+- add pagination
 
 Fix bug with recursive partials which took down server
 - seems possible in local templates
@@ -14,12 +14,6 @@ Fix bug with overdue subscription payment form not working
 Fix bug where changes to documentation CSS do not make it into production:
 - stale servers serve the old CSS 
 - purge bunny after deployment complete?
-
-Fix major bug with disks on server restart:
-- sudo chown ec2-user:ec2-user /var/instance-ssd/tmp
-- sudo chown ec2-user:ec2-user /var/instance-ssd/logs/app.log
-- mkfs -t xfs -f /dev/XXXXXXXX
-- Issue is caused by mount-disk scripts swapping /var/instance-ssd and /var/www/blot/data
 
 Fix bug with Documentation template and the setting 'Adds zoom to large images' and [tell customer](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB)
 
@@ -437,9 +431,6 @@ Improve speed of production build
 - When should folder zipping happen?
 - Can we improve build speed by removing github actions cache and using some base image with dependencies?
 
-Migrate scripts in bashrc into deployment flow
-- run them all inside backup server -blot-blue
-
 Convert callbacks to async/await
 - literally anywhere in the codebase – use util.callbackify to add backwards compatibility
 
@@ -461,6 +452,7 @@ Speed up templates.build
 
 Move from EBS to s3
 - Goal is cost reduction and improved scalability
+  - should lower storage costs + transfer from $200/month to $20/month
   - no more charges for unused GB disk space
   - lower cost of S3 vs EBS
   - no issue of 'running out of space' which has taken down service multiple times
