@@ -74,6 +74,40 @@ ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo systemctl restart fail2ban"
 echo "Fail2Ban deployment complete."
 #########################################################
 
+#########################################################
+# Begin logrotate deployment section
+#########################################################
+
+LOGROTATE_LOCAL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/logrotate"
+
+# Upload logrotate configs
+for file in "$LOGROTATE_LOCAL_DIR"/[!.]*; do
+  config_name=$(basename "$file")
+  echo "Uploading logrotate config $config_name to $PUBLIC_IP:/etc/logrotate.d/"
+  scp -i "$SSH_KEY" "$file" ec2-user@$PUBLIC_IP:/tmp/"$config_name"
+  ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo mv /tmp/$config_name /etc/logrotate.d/$config_name && sudo chown root:root /etc/logrotate.d/$config_name && sudo chmod 644 /etc/logrotate.d/$config_name"
+done
+
+# Optionally, test logrotate config
+echo "Testing logrotate config on $PUBLIC_IP"
+ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo logrotate --debug /etc/logrotate.conf"
+
+echo "logrotate deployment complete."
+#########################################################
+
+#########################################################
+# Begin .bashrc deployment section
+#########################################################
+
+BASHRC_LOCAL_FILE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.bashrc"
+
+echo "Uploading .bashrc to $PUBLIC_IP:/home/ec2-user/.bashrc"
+scp -i "$SSH_KEY" "$BASHRC_LOCAL_FILE" ec2-user@$PUBLIC_IP:/tmp/.bashrc
+ssh -i "$SSH_KEY" ec2-user@$PUBLIC_IP "sudo mv /tmp/.bashrc /home/ec2-user/.bashrc && sudo chown ec2-user:ec2-user /home/ec2-user/.bashrc && sudo chmod 644 /home/ec2-user/.bashrc"
+
+echo ".bashrc deployment complete."
+#########################################################
+
 
 echo "Deploy complete. To connect to the openresty server, run:"
 echo "ssh -i $SSH_KEY ec2-user@$PUBLIC_IP"
