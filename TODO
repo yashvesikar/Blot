@@ -1,7 +1,7 @@
-Fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
-
 Fix bug with acquiring folder lock that throws an error – is the issue ebs?
-- can we reproduce by attempting to acquire 50 locks in parallel in production?
+- I can't reproduce the problem locally.
+- Can we reproduce by attempting to acquire 50 locks in parallel in production?
+- will fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
 
 Clamp max length of title on dashboard (maybe 200 chars)
 
