@@ -11,7 +11,7 @@ const limiter = new Bottleneck({
 const fetchWithRetriesAndTimeout = async (url, options = {}) => {
   // Destructure and set defaults for timeout and retries
   const { timeout = 10000, retries = 3, ...fetchOptions } = options;
-
+    
   for (let attempt = 1; attempt <= retries; attempt++) {
     // Timeout logic
     const controller = new AbortController();

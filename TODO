@@ -1,3 +1,8 @@
+Fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
+
+Fix bug with acquiring folder lock that throws an error – is the issue ebs?
+- can we reproduce by attempting to acquire 50 locks in parallel in production?
+
 Clamp max length of title on dashboard (maybe 200 chars)
 
 Fix bug with Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
