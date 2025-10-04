@@ -79,59 +79,76 @@ logs() {
 function slowest() {
     local logfile="/var/instance-ssd/logs/access.log"
     local lines=1000000
+    local exclude_pattern='^https://blot.im/sites/[^/]+/status|^https://webhooks.blot.im/|/draft/stream/'
 
-    echo "=== 50 Slowest Individual Requests (from last ${lines} entries) ==="
-    tail -n ${lines} "$logfile" | awk '{
-        # Response time is field 5 when considering the space in timestamp
-        time=$5
-        url=$7
-        # Exclude URLs matching the filter patterns
-        if (url ~ /^https:\/\/blot\.im\/sites\/[^\/]+\/status/ || url ~ /^https:\/\/webhooks\.blot\.im\// || url ~ /\/draft\/stream\//) next
-        print time " " $0
-    }' | sort -rn | head -n 50
-
-    echo "=== 50 Slowest Individual Requests (from last ${lines} entries) ==="
-    tail -n ${lines} "$logfile" | awk '{
-        # Response time is field 5 when considering the space in timestamp
-        time=$5
-        url=$7
-        if (url ~ /^https:\/\/blot\.im\/sites\/[^\/]+\/status/ || url ~ /^https:\/\/webhooks\.blot\.im\// || url ~ /\/draft\/stream\//) next
-        print time " " $0
-    }' | sort -rn | head -n 50
-
-    echo -e "\n=== 50 Slowest URLs by Average Response Time (from last ${lines} entries) ==="
-    tail -n ${lines} "$logfile" | awk '{
-        # Response time is field 5, URL is field 7
-        time=$5
-        url=$7
-        if (url ~ /^https:\/\/blot\.im\/sites\/[^\/]+\/status/ || url ~ /^https:\/\/webhooks\.blot\.im\// || url ~ /\/draft\/stream\//) next
-        count[url]++
-        sum[url]+=time
+    function process_logs() {
+        local mode=$1
+        local title=$2
+        local cache_filter=$3
+        local status_filter=$4
+        
+        echo -e "\n=== 50 Slowest $title (from last ${lines} entries) ==="
+        
+        tail -n ${lines} "$logfile" | grep ' lrs=PASSED' | awk -v mode="$mode" \
+                                        -v pattern="$exclude_pattern" \
+                                        -v cache_filter="$cache_filter" \
+                                        -v status_filter="$status_filter" '
+        function process_individual() {
+            print time " " $0
+        }
+        
+        function process_url() {
+            count[url]++
+            sum[url]+=time
+        }
+        
+        function process_domain() {
+            split(url, parts, "/")
+            domain=parts[3]
+            if (domain != "") {
+                count[domain]++
+                sum[domain]+=time
+            }
+        }
+        
+        {
+            time=$5
+            url=$7
+            status=$4
+            cache=$8
+            
+            # Skip excluded URLs
+            if (url ~ pattern) next
+            
+            # Apply cache and status filters if specified
+            if (cache_filter != "" && cache != cache_filter) next
+            if (status_filter != "" && status != status_filter) next
+            
+            if (mode == "individual") {
+                process_individual()
+            } else {
+                if (mode == "domain") {
+                    process_domain()
+                } else {
+                    process_url()
+                }
+            }
+        }
+        
+        END {
+            if (mode != "individual") {
+                for (key in count) {
+                    printf "%.3f %s\n", sum[key]/count[key], key
+                }
+            }
+        }' | sort -rn | head -n 50
     }
-    END {
-        for (url in count) {
-            printf "%.3f %s\n", sum[url]/count[url], url
-        }
-    }' | sort -rn | head -n 50
 
-    echo -e "\n=== 50 Slowest Domains by Average Response Time (from last ${lines} entries) ==="
-    tail -n ${lines} "$logfile" | awk '{
-        # Response time is field 5, URL is field 7
-        time=$5
-        url=$7
-        if (url ~ /^https:\/\/blot\.im\/sites\/[^\/]+\/status/ || url ~ /^https:\/\/webhooks\.blot\.im\// || url ~ /\/draft\/stream\//) next
-        split(url, parts, "/")
-        domain=parts[3]
-        if (domain != "") {
-            count[domain]++
-            sum[domain]+=time
-        }
-    }
-    END {
-        for (domain in count) {
-            printf "%.3f %s\n", sum[domain]/count[domain], domain
-        }
-    }' | sort -rn | head -n 50
+    # Process logs in different modes
+    process_logs "individual" "Individual Requests"
+    process_logs "url" "URLs by Average Response Time"
+    process_logs "domain" "Domains by Average Response Time"
+    process_logs "individual" "Uncached 200 Responses" "cache=MISS" "200"
 }
 
 function biggest() {

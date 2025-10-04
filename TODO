@@ -353,6 +353,15 @@ Add per request resource monitoring, e.g. heap size before/after
 
 Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
 
+Reduce service provider risk:
+- move domain registrar from AWS to Epik?
+- write plan to transition off Bunny if needed
+  - ideally all this should involved is changing some DNS records
+- test plan to transition off Bunny
+- write plan to transition off AWS if needed
+  - ideally all this should involved is changing some DNS records
+- test plan to transition off AWS
+
 Implement mac server screenshot endpoint
 - We should use the helper/transformer to speed up screenshot re-generation
 
