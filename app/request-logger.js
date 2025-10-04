@@ -50,6 +50,8 @@ module.exports = function requestLogger(req, res, next) {
     }
   });
 
+  // this can fire unexpectedly for POST requests with bodies
+  // https://github.com/expressjs/express/issues/6334
   req.on("close", () => {
     if (hasFinished) return;
     try {
