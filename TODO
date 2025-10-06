@@ -4,6 +4,7 @@ Turn google doc 'preserve linebreak' setting into [a feature flag and disable it
 
 Fix bug with acquiring folder lock that throws an error – is the issue ebs?
 - I can't reproduce the problem locally.
+- Problem occurs with all the clients it seems
 - Can we reproduce by attempting to acquire 50 locks in parallel in production?
 - will fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
 
