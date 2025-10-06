@@ -32,7 +32,7 @@ paypal.post("/", parser.json(), async (req, res) => {
       console.log(prefix(), err);
     }
   } else {
-    console.log(prefix(), "Unhandled event type", req.body.event_type);
+    console.log(prefix(), "Unhandled event", req.body);
   }
 
   res.status(200).send("OK");
