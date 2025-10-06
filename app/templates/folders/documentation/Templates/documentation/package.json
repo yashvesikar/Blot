@@ -2,8 +2,7 @@
   "name": "Documentation",
   "locals": {
     "title": "Documentation",
-    "call_to_action": "/tickets",
-    "page_size": 18,
+    "page_size": 100,
     "sort_by": "id",
     "spacing": 1,
     "dark_slides_background": true,

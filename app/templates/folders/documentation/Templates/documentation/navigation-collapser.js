@@ -209,13 +209,15 @@ class SidebarNavigation {
   }
 }
 
+let observer;
+
 // Initialize as soon as sidebar is available
 function initializeSidebar() {
   const sidebar = document.querySelector('.sidebar');
   if (sidebar) {
     const navigation = new SidebarNavigation();
     navigation.init();
-    observer.disconnect(); // Stop observing once initialized
+    if (observer) observer.disconnect(); // Stop observing once initialized
   }
 }
 
@@ -224,7 +226,7 @@ if (document.querySelector('.sidebar')) {
   initializeSidebar();
 } else {
   // If not, observe DOM for sidebar
-  const observer = new MutationObserver((mutations, obs) => {
+   observer = new MutationObserver((mutations, obs) => {
     if (document.querySelector('.sidebar')) {
       initializeSidebar();
     }
