@@ -32,11 +32,6 @@ module.exports = async function (href, callback) {
       return callback(new Error(ERROR_MESSAGE));
     }
 
-    // ensure the tracklist is shown for albums
-    if (src.indexOf("/tracklist=false") !== -1) {
-      src = src.replace("/tracklist=false", "");
-    }
-
     // we prepend a zero-width char because of a weird
     // bug on mobile safari where if the embed is the first child,
     // the video player will not show. This causes issues with
