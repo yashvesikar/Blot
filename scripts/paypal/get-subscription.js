@@ -34,8 +34,8 @@ async function main(user, callback) {
 
   const paypal = await response.json();
 
-  if (!paypal || !paypal.id) {
-    return callback(new Error("No subscription found"));
+  if (!paypal || !paypal.id || paypal.id !== user.paypal.id) {
+    return callback(new Error("No matching subscription found"));
   }
 
   User.set(user.uid, { paypal: paypal }, function (err) {
