@@ -18,8 +18,6 @@ Fix bug with cancelled subscriptions that keeps the account around
   - wipe all keys
 - Automate the deletion of canceled /  failed accounts after a 2 month grace period, with warning emails  
 
-Fix bug with Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
-
 Fix bug with overdue subscription payment form not working
 - Possible bug introduced by recent stripe upgrade
 - Migrate [Stripe library to v7](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7)
@@ -36,6 +34,7 @@ Fix bug with recursive partials which took down server
 Fix bug where changes to documentation CSS do not make it into production:
 - stale servers serve the old CSS 
 - purge bunny after deployment complete?
+- can servers share the tmp dir views directory?
 
 Fix bug with Documentation template and the setting 'Adds zoom to large images' and [tell customer](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB)
 
