@@ -32,13 +32,27 @@ async function main(user, callback) {
     }
   );
 
-  const paypal = await response.json();
+  let paypal;
 
-  if (!paypal || !paypal.id || paypal.id !== user.paypal.id) {
-    return callback(new Error("No matching subscription found"));
+  try {
+    paypal = await response.json();
+  } catch (e) {
+    console.log(e);
   }
 
-  User.set(user.uid, { paypal: paypal }, function (err) {
+  if (!paypal || !paypal.id || paypal.id !== user.paypal.id) {
+    console.log(
+      colors.red(
+        "User:",
+        user.uid,
+        user.email,
+        "does not have a matching PayPal subscription anymore"
+      )
+    );
+    return callback();
+  }
+
+  User.set(user.uid, { paypal }, function (err) {
     if (err) return callback(err);
     console.log(
       colors.green(
