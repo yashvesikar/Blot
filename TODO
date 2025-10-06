@@ -1,8 +1,14 @@
-Resync stripe and paypal overdue customers after failed webhooks
-
 Understand cause of bugginess on site synced with iCloud
 - helenesdigitalgarden
 - resync folder hangs...
+
+Fix bug with acquiring folder lock that throws an error – is the issue ebs?
+- I can't reproduce the problem locally.
+- Problem occurs with all the clients it seems
+- Can we reproduce by attempting to acquire 50 locks in parallel in production?
+  - I tried this and it didn't seem to trigger the bug
+  - Is this correlated with high disk activity?
+- will fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
 
 Fix bug with cancelled subscriptions that keeps the account around
 - finish script to identify long-expired customers with blogs to safely delete and free up space. 
@@ -12,14 +18,6 @@ Fix bug with cancelled subscriptions that keeps the account around
   - wipe static directory
   - wipe all keys
 - Automate the deletion of canceled /  failed accounts after a 2 month grace period, with warning emails  
-
-Fix bug with acquiring folder lock that throws an error – is the issue ebs?
-- I can't reproduce the problem locally.
-- Problem occurs with all the clients it seems
-- Can we reproduce by attempting to acquire 50 locks in parallel in production?
-  - I tried this and it didn't seem to trigger the bug
-  - Is this correlated with high disk activity?
-- will fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
 
 Clamp max length of title on dashboard (maybe 200 chars)
 
