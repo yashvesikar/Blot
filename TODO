@@ -1,11 +1,28 @@
-Fix bug with folder viewer which crashes server for large number of entries
-- add pagination
 
-Fix bug handling large files Dropbox (>150mb) and tell Peter – right now it crashes the server
+Modify slowest function to aggregate by upstream response time
+- amend daily update:
+  - send daily report of slowest URLs 
+  - send daily report of biggest URLs and bandwidth
 
 Fix bug with recursive partials which took down server
 - seems possible in local templates
 - possibly on web templates too
+
+Fix bug handling large files Dropbox (>150mb) and tell Peter – right now it crashes the server
+- add an error state for a single file and proceed? track files pre-and-post sync? only re-attempt once?
+- add a timeout for folder lock process which is solid
+- add abortsignal so we can disconnect seamlessly
+
+Fix bug with crash loop for page rendering issue
+- cache 502 responses in proxy cache for X mins?
+- how to handle this at a high level?
+- ensure doens't break zero downtime deploy
+
+Fix bug with crash loop for entry build
+- add a timeout for entry build process which is solid
+
+Fix bug with folder viewer which crashes server for large number of entries
+- add pagination
 
 Fix bug with 'failed to update folder lock' that throws an error – is the issue ebs?
 - I can't reproduce the problem locally.
