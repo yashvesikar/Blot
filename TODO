@@ -71,9 +71,6 @@ Fix bug with images zooming inside footnotes and tell [Nathan](https://mail.goog
 Fix bug with menu which occur when multiple pages are added at once Menu needs concurrency or atomic operations (so we can build posts in parallel)
 - move menu into its own model (it's possible to add thousands of entries to it...)
 
-Fix bug with bandcamp embeds (they don't work)
-- Tell [Art](https://mail.google.com/mail/u/0/#inbox/FMfcgzGrcXlgNHJbDLkmkkRmrCGqzHJB) when they work in Word Documents
-
 Fix bug with navigation link with blog tempalte and tell [Jason](https://mail.google.com/mail/u/0/#inbox/FMfcgzGrbcCBmkcVhfWTpZbmqndwXQrL)
 
 Fix bug with [date metadata](https://blot.im/questions/936)
