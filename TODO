@@ -1,3 +1,7 @@
+Resync stripe and paypal overdue customers after failed webhooks
+
+Turn google doc 'preserve linebreak' setting into [a feature flag and disable it for Chuck's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqHNBpCzWvTdDnvrFHckTVJWM)
+
 Fix bug with acquiring folder lock that throws an error – is the issue ebs?
 - I can't reproduce the problem locally.
 - Can we reproduce by attempting to acquire 50 locks in parallel in production?
