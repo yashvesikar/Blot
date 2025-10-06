@@ -1,8 +1,7 @@
-Understand cause of bugginess on site synced with iCloud
-- helenesdigitalgarden
-- resync folder hangs...
+Fix bug with iCloud client which doesn't surface / handle removed folder
+- to reproduce, connect to icloud then delete the folder
 
-Fix bug with acquiring folder lock that throws an error – is the issue ebs?
+Fix bug with 'failed to update folder lock' that throws an error – is the issue ebs?
 - I can't reproduce the problem locally.
 - Problem occurs with all the clients it seems
 - Can we reproduce by attempting to acquire 50 locks in parallel in production?
@@ -18,8 +17,6 @@ Fix bug with cancelled subscriptions that keeps the account around
   - wipe static directory
   - wipe all keys
 - Automate the deletion of canceled /  failed accounts after a 2 month grace period, with warning emails  
-
-Clamp max length of title on dashboard (maybe 200 chars)
 
 Fix bug with Blot's account page doesn't calculate the date of next bill for PayPal subscribers properly. Fix and tell [fusion](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgRnJxvGRVhWHMWgtwPclhcxG)
 
