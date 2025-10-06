@@ -4,10 +4,21 @@ Understand cause of bugginess on site synced with iCloud
 - helenesdigitalgarden
 - resync folder hangs...
 
+Fix bug with cancelled subscriptions that keeps the account around
+- finish script to identify long-expired customers with blogs to safely delete and free up space. 
+- Sort by date expired
+- Write script to safely delete blogs
+  - wipe blog folder
+  - wipe static directory
+  - wipe all keys
+- Automate the deletion of canceled /  failed accounts after a 2 month grace period, with warning emails  
+
 Fix bug with acquiring folder lock that throws an error – is the issue ebs?
 - I can't reproduce the problem locally.
 - Problem occurs with all the clients it seems
 - Can we reproduce by attempting to acquire 50 locks in parallel in production?
+  - I tried this and it didn't seem to trigger the bug
+  - Is this correlated with high disk activity?
 - will fix bug with concurrent syncs from iCloud client by enforcing a build timeout in sync/set.js so we can accurately set the upload request timeout for the iCloud client (line 63 of upload.js)
 
 Clamp max length of title on dashboard (maybe 200 chars)
@@ -1285,13 +1296,6 @@ Add password protection for blogs then tell [Ed](https://mail.google.com/mail/u/
 Improve the markdown converter:
 - Extend the Markdown converted to add support for Ulysses highlighting and iAWriter highlighting syntax, using the [example files provided by Marco](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsKFQGTxDTnxNddZQxjsLZJGb). Tell [Marco](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsKFQGTxDTnxNddZQxjsLZJGb)
 
-Finish script to identify long-expired customers with blogs to safely delete and free up space. 
-- Sort by date expired
-- Write script to safely delete blogs
-  - wipe blog folder
-  - wipe static directory
-  - wipe all keys
-  
 ---
 
 Add support for paths to static files with a trailing slash then tell [Sean](https://mail.google.com/mail/u/0/#inbox/FMfcgxwGBwbZsfsWKHCGcbzXXSPhQWXx)
