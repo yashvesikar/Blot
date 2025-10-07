@@ -1,3 +1,9 @@
+#error:not(:empty) {
+  padding: calc(var(--spacing)*0.5) calc(var(--spacing)*0.75);
+  color: var(--error-text-color);
+  background: var(--error-background-color);
+}
+
 input[type="submit"],
 input[type="text"],
 input[type="password"] {
