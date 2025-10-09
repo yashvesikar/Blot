@@ -15,6 +15,8 @@ html {
   --border-color: #EEEEEC;
   --inset-image-border-color: rgba(255,255,255,0.05);
 
+  --warning-text-color: #F6C30F;
+
   --error-text-color: #d53030;
   --error-background-color: #fdf1ed;
 
@@ -976,3 +978,74 @@ ul.pill-navigation {
 .intro {
   max-width: 400px;
 }
+
+
+/* HTML: <div class="loader"></div> */
+.sync-status .loading {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  display: inline-block;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 1;
+  position: relative;
+  top: -1px;
+  margin-right: 8px;
+  background: var(--medium-text-color);
+  animation: l1 1s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes l1 {
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+ul.steps {
+  border-left: 2px solid var(--border-color);
+  padding: 0;
+  margin-left: 6px;
+  list-style: none;
+}
+
+ul.steps li {
+  position: relative;
+  padding-left: 1.5em;
+  margin: 0 0 1.5em 0;
+  box-sizing: border-box;
+}
+
+ul.steps li:after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  display: block;
+  position: absolute;
+  left: -7px;
+  top: 0.35em;
+  background: var(--background-color);
+}
+
+/* cover the border-left above the circle */
+ul.steps li:first-child:before,
+ul.steps li:last-child:before {
+  content: "";
+  width: 2px;
+  height: 0.3em;
+  background: var(--background-color);
+  display: block;
+  position: absolute;
+  left: -2px;
+  top: 0;
+  }
+
+ul.steps li:last-child:before {
+  top: 0.35em;
+  bottom: 0;
+  height: auto;
+}
+
+
