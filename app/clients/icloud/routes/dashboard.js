@@ -19,9 +19,21 @@ dashboard.use(async function (req, res, next) {
 });
 
 dashboard.get("/", function (req, res) {
-  console.log("Rendering dashboard", config.icloud.email);
+  if (!res.locals.account) {
+    return res.redirect(req.baseUrl + "/connect");
+  }
+
   res.locals.blotiCloudAccount = config.icloud.email;
   res.render(VIEWS + "index");
+});
+
+dashboard.route("/connect").get(function (req, res) {
+  res.render(VIEWS + "connect");
+});
+
+dashboard.route("/setup").get(function (req, res) {
+  res.locals.blotiCloudAccount = config.icloud.email;
+  res.render(VIEWS + "setup");
 });
 
 dashboard
@@ -59,9 +71,7 @@ dashboard
 
         await database.store(blogID, { sharingLink, blotiCloudAccount });
       } else {
-        // this allows us to reset the client
-        await database.delete(blogID);
-        return res.redirect(req.baseUrl);
+        return next(new Error("Paste the sharing link into the box"));
       }
 
       // Make the request to the Macserver /setup endpoint
