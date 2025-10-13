@@ -248,10 +248,6 @@ Fix bug accessibility issue with menu links reordering and tell [Grace](https://
 
 Fix bug with accessibility issues with scrolling and code blocks and tell [Eli](https://mail.google.com/mail/u/0/#inbox/FMfcgzGtwqJjjrrGHDWjLPzfxGpnkZTh) if I make any changes
 
-Fix bug with thumbnail generator for posts on Chris' site
-- it's to do with 304 responses in transformer - handle these properly
-- fix issue with 304s for [Fabrice](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbdrKfFnvrTQzDHvtnXPMMlqkB) e.g. on this post: https://www.poirpom.com/bas-les-cloches
-
 ---
 
 Add [preload=none](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio#preload) to all audio and video tags without it defined or maybe preload="metadata"? 
