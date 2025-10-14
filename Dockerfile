@@ -82,6 +82,7 @@ WORKDIR /usr/src/app
 
 # Copy files and set ownership for non-root user
 COPY ./config ./config
+COPY ./scripts ./scripts
 COPY ./app ./app
 COPY ./TODO ./TODO
 
