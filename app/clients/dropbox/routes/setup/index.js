@@ -15,6 +15,7 @@ function setup(account, session, callback) {
 
     const client = new redis();
     const signal = { aborted: false };
+    let abortHandled = false;
     let cleaned = false;
     let finished = false;
 
@@ -48,7 +49,8 @@ function setup(account, session, callback) {
     client.on("message", function (channel, message) {
       if (message !== "Attempting to disconnect from Dropbox") return;
       signal.aborted = true;
-      finish(new Error("Aborted setup"));
+      abortHandled = true;
+      finish(new Error("Dropbox setup aborted"));
     });
 
     try {
@@ -80,10 +82,17 @@ function setup(account, session, callback) {
 
       // upload folder contents to dropbox
       // todo: pass in signal
-      await resetFromBlot(account.blog.id, folder.status);
+      await resetFromBlot(account.blog.id, folder.status, signal);
 
       if (signal.aborted) return;
     } catch (err) {
+      if (err && err.name === "AbortError") {
+        folder.status("Dropbox setup aborted");
+        if (abortHandled) return;
+        cleanup();
+        return done(err, callback);
+      }
+
       folder.status("Error: " + err.message);
       return finish(err);
     }
