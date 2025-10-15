@@ -1,3 +1,5 @@
+Deliver autumn newsletter
+
 The frequency of updates to sync status when setting up the git client can result in 429 errors and an IP ban accidentally
 
 Fix thrashing of 'sync status' blinking icons during mega-syncs (preserve the same node, just update the status message text) by refactoring the sync-status.html partial and sync-status.js
