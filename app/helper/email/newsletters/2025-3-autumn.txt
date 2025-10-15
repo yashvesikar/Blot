@@ -16,6 +16,7 @@ Summer newsletter
 - Vimeo embeds get full size thumbnails, as opposed to the lower resolution thumbnail previously loaded.
 - Links to files in your site's folder are now delivered via our CDN, improving the performance of your site.
 - Blot can now preserve single line breaks in Google Docs.
+- Add preload metadata to audio and video tags by default
 
 **Bug fixes**
 - You can now use YAML fenced metadata in Google Docs.
