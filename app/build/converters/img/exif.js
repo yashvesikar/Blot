@@ -12,9 +12,10 @@ const BASIC_WHITELIST = [
   "FNumber",
   "ISO",
   "FocalLength",
+  "LensMake",
   "LensModel",
-  "ImageDescription",
   "Flash",
+  "ImageDescription",
 ];
 
 const FULL_WHITELIST = [

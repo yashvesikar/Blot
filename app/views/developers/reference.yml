@@ -228,22 +228,19 @@
         Basic mode keys:
           - Make
           - Model
-          - LensMake
-          - LensModel
           - ExposureTime
           - FNumber
           - ISO
           - FocalLength
-          - ExposureCompensation
-          - DateTimeOriginal
+          - LensMake
+          - LensModel
+          - ImageDescription
 
         Full mode also includes:
           - GPSLatitude
-          - GPSLatitudeRef
           - GPSLongitude
-          - GPSLongitudeRef
           - GPSAltitude
-          - GPSAltitudeRef
+          - GPSPosition
 
     - name: name
       type: string
