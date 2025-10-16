@@ -222,7 +222,7 @@
         Sanitized EXIF metadata populated for image-based entries when EXIF preservation is enabled on the blog. Templates can iterate over the object as a context block, for example: `{{#entry.exif}}{{Make}}{{/entry.exif}}`.
       example: |
         {{#entry.exif}}
-        {{Make}} {{Model}} — {{ExposureTime}}s at f/{{FNumber}}, ISO {{ISO}}
+        {{Make}} {{Model}} — {{ExposureTime}}s at ƒ/{{FNumber}}, ISO {{ISO}}
         {{/entry.exif}}
 
         Basic mode keys:
