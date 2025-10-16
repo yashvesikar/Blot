@@ -97,8 +97,24 @@ describe("template engine", function () {
     expect((await res1.text()).trim()).toEqual("");
   });
 
-  it("exposes exif data to the template view", async function () {
 
+  it("does not render the contents of an thumbnail block for posts without thumbnails", async function () {
+    await this.write({
+      path: "/hello.txt",
+      content: "Hello",
+    });
+
+    await this.template({
+      "entries.html":
+        "{{#entries}}SHOULD {{#thumbnail}} NOT{{/thumbnail}}RENDER{{/entries}}",
+    });
+
+    const res = await this.get(`/`);
+
+    expect((await res.text()).trim()).toEqual("SHOULD RENDER");
+  });
+
+  it("exposes exif data to the template view", async function () {
     // {
     //     ImageDescription: "                               ",
     //     Make: "NIKON",
@@ -120,7 +136,8 @@ describe("template engine", function () {
     });
 
     await this.template({
-      "entries.html": "{{#entries}}{{#exif}}{{Make}} {{Model}} {{ExposureTime}} {{FNumber}} {{ISO}} {{Flash}} {{FocalLength}} {{/exif}}{{/entries}}",
+      "entries.html":
+        "{{#entries}}{{#exif}}{{Make}} {{Model}} {{ExposureTime}} {{FNumber}} {{ISO}} {{Flash}} {{FocalLength}} {{/exif}}{{/entries}}",
     });
 
     const res = await this.get(`/`);
@@ -128,5 +145,21 @@ describe("template engine", function () {
     expect((await res.text()).trim()).toEqual(
       "NIKON COOLPIX P6000 1&#x2F;178 4.5 64 Off, Did not fire 6"
     );
+  });
+
+  it("does not render the contents of an exif block for posts without exif data", async function () {
+    await this.write({
+      path: "/hello.txt",
+      content: "Hello",
+    });
+
+    await this.template({
+      "entries.html":
+        "{{#entries}}SHOULD {{#exif}} NOT{{/exif}}RENDER{{/entries}}",
+    });
+
+    const res = await this.get(`/`);
+
+    expect((await res.text()).trim()).toEqual("SHOULD RENDER");
   });
 });

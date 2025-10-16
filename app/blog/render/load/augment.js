@@ -32,6 +32,15 @@ module.exports = function (req, res, entry, callback) {
     delete entry.exif;
   }
 
+  // if the entry thumbnail object is empty, delete it
+  if (
+    entry.thumbnail &&
+    type(entry.thumbnail, "object") &&
+    Object.keys(entry.thumbnail).length === 0
+  ) {
+    delete entry.thumbnail;
+  }
+
   var tags = [];
   var tagged = {};
   var totalTags = entry.tags.length;
