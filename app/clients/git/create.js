@@ -175,7 +175,6 @@ async function addFile(folder, liveRepo, path) {
         if (err) return reject(new Error(err));
         liveRepo.push(["-u", "origin", "master"], function (err) {
           if (err) return reject(new Error(err));
-          folder.status("Added " + relativePath + " to repository");
           resolve();
         });
       });
