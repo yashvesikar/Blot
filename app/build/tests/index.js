@@ -181,7 +181,7 @@ describe("build", function () {
         FNumber: 4.5,
         ISO: 64,
         Flash: "Off, Did not fire",
-        FocalLength: "6.0 mm",
+        FocalLength: 6,
       });
 
       done();

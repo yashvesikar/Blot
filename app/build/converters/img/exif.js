@@ -66,6 +66,17 @@ async function parseExif(filePath, mode = "off") {
       }
     });
 
+    // map FocalLength '50.0 mm' to '50'
+    // you could change the output of exiftool with -n flag
+    // but we like some of the other formatting it does
+    if (result.FocalLength && typeof result.FocalLength === "string") {
+      const parts = result.FocalLength.split(" ");
+      if (parts.length === 2) {
+        const val = parseFloat(parts[0]);
+        if (!isNaN(val)) result.FocalLength = val;
+      }
+    }
+
     return result;
   } catch {
     return {};

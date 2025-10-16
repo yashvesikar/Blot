@@ -45,7 +45,7 @@ describe("img converter", function () {
           FNumber: 4.5,
           ISO: 100,
           Flash: "Off, Did not fire",
-          FocalLength: "55.0 mm",
+          FocalLength: 55,
           LensModel: "FE 55mm F1.8 ZA",
         },
       });
@@ -86,7 +86,7 @@ describe("img converter", function () {
           ExposureTime: "1/178",
           FNumber: 4.5,
           ISO: 64,
-          FocalLength: "6.0 mm",
+          FocalLength: 6,
           Flash: "Off, Did not fire",
         },
       });
@@ -113,7 +113,7 @@ describe("img converter", function () {
           FNumber: 4.5,
           ISO: 64,
           Flash: "Off, Did not fire",
-          FocalLength: "6.0 mm",
+          FocalLength: 6,
           GPSLatitude: `43 deg 28' 1.76" N`,
           GPSLongitude: `11 deg 53' 7.42" E`,
           GPSPosition: `43 deg 28' 1.76" N, 11 deg 53' 7.42" E`,

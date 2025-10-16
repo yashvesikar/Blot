@@ -107,7 +107,7 @@ describe("template engine", function () {
     //     FNumber: 4.5,
     //     ISO: 64,
     //     Flash: "Off, Did not fire",
-    //     FocalLength: "6.0 mm",
+    //     FocalLength: 6,
     //   }
     await this.write({
       path: "/image.jpg",
@@ -126,7 +126,7 @@ describe("template engine", function () {
     const res = await this.get(`/`);
 
     expect((await res.text()).trim()).toEqual(
-      "NIKON COOLPIX P6000 1&#x2F;178 4.5 64 Off, Did not fire 6.0 mm"
+      "NIKON COOLPIX P6000 1&#x2F;178 4.5 64 Off, Did not fire 6"
     );
   });
 });
