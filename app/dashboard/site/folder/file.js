@@ -84,14 +84,6 @@ module.exports = async function (blog, path) {
             .tz(blog.timeZone)
             .format("MMMM Do YYYY, h:mma");
 
-          if (
-            entry.page &&
-            entry.menu === false &&
-            [".txt", ".md", ".html"].indexOf(extname(entry.path)) === -1
-          ) {
-            entry.url = entry.path;
-          }
-
           if (entry.draft) {
             entry.url = "/draft/view" + entry.path;
           }
