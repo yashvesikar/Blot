@@ -406,6 +406,8 @@ Add tests for webp thumbnails
 
 Add deploy button to GitHub so I can deploy code while away
 
+Improve the camera make and model names extracted by exiftool using a third-party library, e.g. SONY ILCE-7M3 -> Sony α7 III
+- [ ] Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/QgrcJHrhvXLmnzQkFJsDwTvsrSbqBFVgtxV)
 
 Move folder lock location to instance ssd for improved reliability and performance (non-networked drive...) – could be inside the cache
 
@@ -616,6 +618,8 @@ Surface recently edited posts on the sites tab of the dashboard
 
 We should have a plan to switch CDN from Bunny to Cloudfront in an emergency
 - Should be a simple DNS change
+
+Add a plugin using OpenSeadragon to add Deep Zoom capabilities for huge megapixel images so you could publish them directly to Blot.
 
 Can we support white-label cdn subdomain so there are no Blot CDN links?
 
