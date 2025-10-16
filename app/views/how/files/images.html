@@ -14,21 +14,6 @@
 <h2>Compression and color profile</h2>
 <p>Blot aims to compress your images as little as possible to preserve its quality. Blot also preserves the color profile of images when publishing them to your site and generating thumbnails.</p>
 
-<h2>Image metadata</h2>
-<p>
-  By default, Blot uses the <strong>Basic</strong> metadata mode for images. Basic
-  retains common descriptive EXIF fields such as camera make and model while
-  stripping sensitive details. Switch to <strong>Full</strong> mode to keep all
-  available EXIF information, including GPS/location data, or choose
-  <strong>Off</strong> to remove metadata entirely.
-</p>
-<p>
-  You can change the metadata setting in <strong>Dashboard → Settings →
-  Publishing</strong>. Any metadata you keep becomes available to templates via
-  <code>entry.exif</code>; GPS coordinates and other location fields are only
-  included when Full mode is enabled.
-</p>
-
 <background class="green">
   <pre class="folder" title="Your site"><code>Apple.jpeg
 Banana.png
@@ -63,4 +48,19 @@ Trip to France
     >image's file name or its path</a
   >
   to set its date.
+</p>
+
+<h2>EXIF</h2>
+<p>
+  By default, Blot extracts selected EXIF metadata from image files that become posts. Your template can display this data if needed. The images served on your site have their EXIF removed to prevent leaking personal information.  
+</p>
+<p>You can change this setting on the <a href="/sites/settings/publishing">publish settings</a> page of your dashboard.</p>
+<p>
+  In <strong>Basic</strong> mode, Blot keeps common photographic fields such as <code>Make</code>, <code>Model</code>, <code>ExposureTime</code>, <code>FNumber</code>, <code>ISO</code>, <code>FocalLength</code>, <code>LensModel</code>, <code>ImageDescription</code>, and <code>Flash</code>.  
+</p>
+<p>
+  In <strong>Full</strong> mode, Blot also retains location-related data, including <code>GPSPosition</code>, <code>GPSLatitude</code>, <code>GPSLongitude</code>, and <code>GPSAltitude</code>.  
+</p>
+<p>
+  Choose <strong>Off</strong> to remove all metadata entirely. 
 </p>
