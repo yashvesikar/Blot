@@ -20,7 +20,7 @@
     <div class="folder-top"></div>
     {{/root}}
 
-    <div class="folder-box {{#root}}root{{/root}} {{#directory}}directory{{/directory}}" style="{{^root}}min-height:60vh{{/root}}">
+    <div class="folder-box {{#root}}root{{/root}} {{#directory}}directory{{/directory}}" style="{{^root}}min-height:calc(100vh - 11rem){{/root}}">
     {{#directory}}
     <table class="directory-list {{^contents.length}}empty{{/contents.length}}">
         <thead style="height: 1.4em;">
@@ -229,7 +229,7 @@
   </div>
 {{#blog.client}}
 {{#directory}}
-<a href="{{{base}}}/client" class="status-link" style="border-radius: 0 0 6px 6px;">
+<a href="{{{base}}}/client" class="status-link" style="{{^root}}border:1px solid var(--border-color);{{/root}}border-radius: 0 0 6px 6px;">
   {{> sync-status}}
 </a>
 {{/directory}}

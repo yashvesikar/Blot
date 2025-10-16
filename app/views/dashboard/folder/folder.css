@@ -18,7 +18,8 @@
   }
 
   .folder-box:not(.root).directory{
-    border-radius:var(--border-radius);overflow:hidden;border:1px solid #eeeeec;
+    border-radius:var(--border-radius) var(--border-radius) 0 0;overflow:hidden;border:1px solid #eeeeec;
+    border-bottom: none;
   }
 
   .status-link {

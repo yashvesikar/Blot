@@ -979,6 +979,21 @@ ul.pill-navigation {
   max-width: 400px;
 }
 
+.sync-status .sync-status-icon > * {
+  display: none;
+}
+
+.sync-status.syncing .sync-status-icon .status-syncing {
+  display: inline-block;
+}
+
+.sync-status.synced .sync-status-icon .status-synced {
+  display: inline-block;
+}
+
+.sync-status.error .sync-status-icon .status-error {
+  display: inline-block;
+}
 
 /* HTML: <div class="loader"></div> */
 .sync-status .loading {
@@ -991,7 +1006,7 @@ ul.pill-navigation {
   opacity: 1;
   position: relative;
   top: -1px;
-  margin-right: 8px;
+  margin-right: 9px;
   background: var(--medium-text-color);
   animation: l1 1s infinite;
   animation-timing-function: ease-in-out;
