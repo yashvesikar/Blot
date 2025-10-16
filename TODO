@@ -654,13 +654,6 @@ Surface Blot client sync errors on dashboard, add email notifications for errors
 
 Preserve single line breaks in Word Docs for poetry and [tell Isabel](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcpKhwFRpStFNWhztKGPqQJfsq) and [tell Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzGxTNzPZwwxJPTDlBBBcnbpPcJJ)
 
-Expose exif data on Photo posts?  [https://github.com/lovell/sharp/issues/285](https://github.com/lovell/sharp/issues/285)
-  See if you can add comments to image metadata and tell [Riley](https://mail.google.com/mail/u/0/sent/164756616df069dd)
-  , also tell [Mike](https://mail.google.com/mail/u/0/#inbox/16423ebe7b027d48)
-  - are the source location and website of an image drag and dropped into finder stored in its exif data somewhere? this could be used to attribute the source of an image for personal image archives
-  - questioner (search exif)
-  - https://github.com/sambecker/exif-photo-blog
-
 Think about migrating to s3 for blog data storage
 - Purge thumbnails and cached images which are no longer in use
 - Abstract methods which read, write and readdir the blog folder? static files folder?
