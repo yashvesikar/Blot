@@ -2,6 +2,7 @@ const fs = require("fs");
 const { dirname, join, basename, normalize } = require("path");
 const localPath = require("helper/localPath");
 const caseSensitivePath = require("helper/caseSensitivePath");
+const debug = require("debug")("blot:entry:build:plugins:wikilinks:byFilename");
 
 module.exports = function byFilename(
   blogID,
@@ -10,12 +11,21 @@ module.exports = function byFilename(
   isLink,
   callback
 ) {
-  if (!href) return callback(new Error("No filename provided"));
+
+  debug("Looking up by filename:", href, "from", pathOfPost);
+
+  if (!href) {
+    debug("No href provided");
+    return callback(new Error("No filename provided"));
+  }
 
   const stripped = href.split("|")[0].trim();
   const targetName = basename(stripped);
 
-  if (!targetName) return callback(new Error("No filename"));
+  if (!targetName) {
+    debug("No filename extracted from href:", href);
+    return callback(new Error("No filename"));
+  }
 
   const root = localPath(blogID, "/");
   const getEntry = require("models/entry").get;
@@ -56,6 +66,9 @@ module.exports = function byFilename(
       absoluteDir,
       { withFileTypes: true },
       function handleDir(err, entries = []) {
+
+        debug("Searching in", current, "for", targetName, "found", entries);
+
         if (!err) {
           entries.forEach((dirent) => {
             if (dirent.isDirectory()) enqueue(join(current, dirent.name));
@@ -69,10 +82,14 @@ module.exports = function byFilename(
             if (!matchErr && matchPath && matchPath.startsWith(root)) {
               const resolvedPath = "/" + matchPath.slice(root.length);
 
+              debug("Found match at", resolvedPath);
+
               return getEntry(blogID, resolvedPath, function (entry) {
                 if (entry) {
+                  debug("Entry found for", resolvedPath);
                   return callback(null, entry);
                 } else {
+                  debug("No entry for", resolvedPath);
                   return callback(null, {
                     url: resolvedPath,
                     title: targetName,
