@@ -86,7 +86,7 @@ module.exports = function byFilename(
 
               return getEntry(blogID, resolvedPath, function (entry) {
                 if (entry) {
-                  debug("Entry found for", resolvedPath);
+                  debug("Entry found for", resolvedPath, entry);
                   return callback(null, entry);
                 } else {
                   debug("No entry for", resolvedPath);
