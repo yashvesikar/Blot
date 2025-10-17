@@ -3,6 +3,8 @@ const makeSlug = require("helper/makeSlug");
 module.exports = function byTitle(blogID, href, done) {
   // there is a circular dependency loop between the entries
   // model and build so this is neccessary for now...
+  // todo: replace this with paginated queries to avoid loading
+  // all entries into memory at once which will crash large blogs
   const { getAll } = require("models/entries");
 
   getAll(blogID, function (allEntries) {

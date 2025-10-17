@@ -50,7 +50,8 @@ module.exports = function byPath(blogID, pathOfPost, href, isLink, callback) {
 
   function exact(blogID, path, done) {
     getEntry(blogID, path, (entry) => {
-      if (!entry) return done(new Error("No entry"));
+      if (!entry || !entry.url || entry.deleted)
+        return done(new Error("No entry"));
       done(null, entry);
     });
   }
@@ -59,7 +60,8 @@ module.exports = function byPath(blogID, pathOfPost, href, isLink, callback) {
     searchForExtension(blogID, path, function (err, finalPath) {
       if (err || !finalPath) return done(new Error("No path"));
       getEntry(blogID, finalPath, (entry) => {
-        if (!entry) return done(new Error("No entry"));
+        if (!entry || !entry.url || entry.deleted)
+          return done(new Error("No entry"));
         done(null, entry);
       });
     });
@@ -72,7 +74,8 @@ module.exports = function byPath(blogID, pathOfPost, href, isLink, callback) {
       const correctPath = join("/", absolutePath.slice(root.length));
 
       getEntry(blogID, correctPath, (entry) => {
-        if (!entry) return done(new Error("No entry"));
+        if (!entry || !entry.url || entry.deleted)
+          return done(new Error("No entry"));
         done(null, entry);
       });
     });
