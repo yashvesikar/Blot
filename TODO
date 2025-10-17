@@ -289,6 +289,7 @@ Improvements to template engine
 - Make syntax highlight dark mode light mode compatible somehow?
 - Work out why rebuilding template from folder clears cache even if the template is not changed
   - stop this
+- Make it possible to source a template from a github repo (live) and tell [Nash](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqQsfKSVWzTCTcMxlJzRWQwpq)
 - Add new template lambdas
   - Whitespace trimming and tell [Chad](https://mail.google.com/mail/u/0/#inbox/FMfcgxwChmTsrnBLkSXfNXKDtXdNFjfk)
   - Number formatting (e.g. add commas to int.) and tell [Chad](https://mail.google.com/mail/u/0/#inbox/FMfcgxwChmTsrnBLkSXfNXKDtXdNFjfk)
