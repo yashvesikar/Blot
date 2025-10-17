@@ -1,11 +1,10 @@
-Deliver autumn newsletter
-
 Fix bug with [post obsidian](https://archive.philpin.com/the-myth-of-maslow) embedding and tell John](https://mail.google.com/mail/u/0/#inbox/FMfcgzGkbDftzhXHGrmzXrjtcMbGrmxM)
 
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Fix bug with ~/gitbug folder during setup
 - surface setup errors with git client
+- handle these errors nicely through sync status
 
 ---
 
