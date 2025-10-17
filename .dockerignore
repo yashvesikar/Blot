@@ -8,13 +8,7 @@
 *.log
 *.rdb
 npm-debug.log*
-yarn-error.log*
 node_modules/
 package-lock.json
 app/views-built/
-blogs/
-cache/
 data/
-scripts/deploy/out/
-static/
-tmp/
