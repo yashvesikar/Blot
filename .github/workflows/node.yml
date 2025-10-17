@@ -49,6 +49,7 @@ jobs:
         with:
           sparse-checkout: |
             Dockerfile
+            .dockerignore
             package.json
             .github/workflows/node.yml
           sparse-checkout-cone-mode: false
@@ -57,7 +58,7 @@ jobs:
         id: hash
         run: |
           # Create a list of files to hash
-          FILES_TO_HASH="Dockerfile package.json .github/workflows/node.yml"
+          FILES_TO_HASH="Dockerfile .dockerignore package.json .github/workflows/node.yml"
           
           echo "Hashing files: $FILES_TO_HASH"
           
