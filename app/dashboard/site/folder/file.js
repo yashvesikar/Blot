@@ -104,6 +104,15 @@ module.exports = async function (blog, path) {
             return { key, value: entry.metadata[key] };
           });
 
+          if (entry.exif && typeof entry.exif === "object") {
+            const exif = entry.exif;
+            entry.exif = Object.keys(exif).map((key) => {
+              return { key, value: exif[key] };
+            });
+          } else {
+            entry.exif = [];
+          }
+
           if (entry.scheduled) {
             entry.url += "?scheduled=true";
             entry.toNow = moment.utc(entry.dateStamp).fromNow();
