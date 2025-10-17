@@ -1,6 +1,7 @@
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Fix bug with 'Home.md' file in botteghe folder on the site navigation
+- Something seems to clobber on the navigation with the existing 'Home' link
 
 Fix bug with ~/gitbug folder during setup
 - surface setup errors with git client
