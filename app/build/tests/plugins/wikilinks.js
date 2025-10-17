@@ -634,7 +634,7 @@ Heading Here
     const imagePath = "/_Images/Image.jpg";
     const imageContent = "BinaryImageContent";
 
-    const html = '<p><img src="/_Images/Image.jpg" title="wikilink" alt="Image.jpg"><span class="caption">wikilink</span></p>';
+    const html = '<p><img src="/_Images/Image.jpg" title="Image.jpg" alt="Image.jpg"><span class="caption">Image.jpg</span></p>';
 
     const files = [
       { path: imagePath, content: imageContent },
@@ -642,6 +642,26 @@ Heading Here
     ];
 
     const entry = { path, html, dependencies: ["/Image.jpg", "/_Images/Image.jpg"] };
+
+    this.syncAndCheck(files, entry, done);
+  });
+
+    // You can embed images by wikilink using only the filename
+  it("turns wikilinks into embedded images using the filename and respects the caption", function (done) {
+    const path = "/contains-image.md";
+    const content = "![[pic.png|Caption text]]";
+
+    const imagePath = "/Files/Pic.png";
+    const imageContent = "BinaryImageContent";
+
+    const html = '<p><img src="/Files/Pic.png" title="Caption text" alt="Caption text"><span class="caption">Caption text</span></p>';
+
+    const files = [
+      { path: imagePath, content: imageContent },
+      { path, content },
+    ];
+
+    const entry = { path, html, dependencies: ["/pic.png", "/Files/Pic.png"] };
 
     this.syncAndCheck(files, entry, done);
   });
