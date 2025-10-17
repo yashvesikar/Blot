@@ -64,7 +64,7 @@ async function deployContainer(container, platform, imageHash) {
     imageHash
   );
 
-  console.log(`Would deploy ${container.name}... with command:`);
+  console.log(`Deploying ${container.name}... with command:`);
   console.log();
   console.log(dockerRunCommand);
   console.log();
