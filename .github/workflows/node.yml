@@ -52,13 +52,14 @@ jobs:
             .dockerignore
             package.json
             .github/workflows/node.yml
+            .github/workflows/build.yml
           sparse-checkout-cone-mode: false
 
       - name: Calculate hash of build-related files
         id: hash
         run: |
           # Create a list of files to hash
-          FILES_TO_HASH="Dockerfile .dockerignore package.json .github/workflows/node.yml"
+          FILES_TO_HASH="Dockerfile .dockerignore package.json .github/workflows/node.yml .github/workflows/build.yml"
           
           echo "Hashing files: $FILES_TO_HASH"
           
