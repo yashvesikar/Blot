@@ -7,6 +7,7 @@ const byTitle = require("./byTitle");
 const byHeadingAnchor = require("./byHeadingAnchor");
 const { decode } = require("he");
 const makeSlug = require("helper/makeSlug");
+const debug = require("debug")("blot:entry:build:plugins:wikilinks");
 
 function render($, callback, { blogID, path }) {
   const wikilinks = $("[title='wikilink']");
@@ -15,19 +16,29 @@ function render($, callback, { blogID, path }) {
   eachOf(
     wikilinks,
     function (node, i, next) {
-      if (!node || !node.name) return next();
+      if (!node || !node.name) {
+        debug("Skipping invalid wikilink node");
+        return next();
+      }
 
       const $node = $(node);
       const isLink = node.name === "a";
       const mediaSource = $node.attr("src");
       const isMedia = !isLink && mediaSource !== undefined;
 
-      if (!isLink && !isMedia) return next();
+      if (!isLink && !isMedia) {
+        debug("Skipping non-link, non-media wikilink node");
+        return next();
+      }
+
 
       const attribute = isLink ? "href" : "src";
       const rawTarget = isLink ? $node.attr(attribute) : mediaSource;
 
-      if (!rawTarget) return next();
+      if (!rawTarget) {
+        debug("Skipping wikilink node with no target");
+        return next();
+      }
 
       // Pandoc encodes certain characters in the
       // wikilink as HTML entities, e.g.
@@ -35,6 +46,8 @@ function render($, callback, { blogID, path }) {
       // This library will decode HTML entities (HE)
       // for us, hopefully safely
       const href = decode(rawTarget);
+
+      debug("Processing wikilink node:", href, isLink ? "[link]" : "[media]");
 
       // Rougly compare the href and text contents of the link
       // if they don't match the user did something like this:
@@ -66,25 +79,29 @@ function render($, callback, { blogID, path }) {
           ];
 
           pathsToWatch.forEach((path) => dependencies.push(path));
+
+          debug("Wikilink target not found for", href);
           return next();
         }
 
         const { url, title, path: linkedPath } = result;
 
         if (isLink) {
-          console.log("Setting link href to", url);
+          debug("Setting link href to", url);
           $node.attr("href", url);
           if (!piped) {
-            console.log("Setting link text to", title || url);
+            debug("Setting link text to", title || url);
             $node.text(title || url);
           }
         } else {
+          debug("Setting media src to", url);
           $node.attr("src", linkedPath);
 
           // if the node is an image, replace the title text with the alt text
           // if the title text is 'wikilink' (which is what pandoc sets it to)
           const altText = $node.attr("alt");
           if (altText && altText.toLowerCase() !== "wikilink") {
+            debug("Setting image title to", altText);
             $node.attr("title", altText);
           }
 
@@ -98,11 +115,13 @@ function render($, callback, { blogID, path }) {
             nextNode.attr("class") === "caption" &&
             nextNode.text().trim() === "wikilink"
           ) {
+            debug("Setting image caption to", altText);
             nextNode.text(altText || "");
           }
         }
 
         if (linkedPath) {
+          debug("Adding dependency on", linkedPath);
           dependencies.push(linkedPath);
         }
 
