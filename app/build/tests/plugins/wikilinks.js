@@ -203,8 +203,8 @@ Heading Here
     expect(entry.html).toContain('<img');
     expect(entry.html).toContain('src="');
 
-    expect(entry.html).toContain('title="wikilink"');
-    expect(entry.html).toContain('Pasted image 2024-01-01');
+    expect(entry.html).toContain('/_image_cache/');
+    expect(entry.html).toContain('alt="Pasted image 2024-01-01.png"');
 
     done();
   });
@@ -227,8 +227,29 @@ Heading Here
     expect(entry.html).toContain('<img');
     expect(entry.html).toContain('src="');
 
-    expect(entry.html).toContain('title="wikilink"');
-    expect(entry.html).toMatch(/assets\/?image\.png/i);
+    expect(entry.html).toContain('alt="Assets/image.png"');
+    expect(entry.html).toContain('/_image_cache/');
+
+    done();
+  });
+
+  it("will process embedded media through the image cache", async function (done) {
+    await this.blog.write({
+      path: "/Assets/photo.png",
+      content: await global.test.fake.pngBuffer()
+    });
+
+    await this.blog.write({
+      path: "/CachedMediaPost.txt",
+      content: "![[Assets/photo.png]]"
+    });
+
+    await this.blog.rebuild();
+
+    const entry = await this.blog.check({ path: "/CachedMediaPost.txt" });
+
+    expect(entry.html).toContain('<img');
+    expect(entry.html).toContain('/_image_cache/');
 
     done();
   });
