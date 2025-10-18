@@ -32,7 +32,7 @@ function render($, callback, options = {}) {
 }
 
 function needsTitle($) {
-  return $("h1, h2, h3, h4").length === 0;
+  return $("h1").length === 0;
 }
 
 function getTitleFromPath(path) {
