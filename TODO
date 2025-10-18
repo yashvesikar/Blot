@@ -518,6 +518,10 @@ Check that Google Drive is staying in sync:
 Write proper tests for clients:
 - Dropbox
 - Google Drive
+    * Build a reusable `nock` helper (e.g., `app/clients/google-drive/tests/nockDrive.js`) that can stub the Drive endpoints used by `sync/sync.js`, `write.js`, `remove.js`, and webhook setup.
+    * Add Jasmine specs that cover edge cases such as folder moves, duplicate file names, MD5 mismatches, and quota errors by exercising the high-level functions and asserting that `database.folder` updates correctly.
+    * Unskip and modernize `serviceAccount/tests/refresh.js`, using the new mock helper to simulate `drive.about.get`, and ensure the suite runs via the existing `scripts/tests/invoke.sh`.
+    * Update the test harness (e.g., by adding the new spec directory to `scripts/tests/invoke.sh` or test globbing) so the Drive client tests execute in CI.
 - iCloud
 
 Make initial health check /health more powerful
@@ -549,6 +553,62 @@ Clamp length of password and email address in log in and sign up and reset forms
 - ensure the forms have tight max-bodies
 - return an error if these are too long
 
+Improve git client
+    1. **Harden sync against transient Git failures**  
+      * Add structured error handling and exponential backoff to the fetch and reset steps in [`sync.js`](./sync.js) so transient network or repository errors do not abort the entire sync.  
+      * Surface actionable messages to `folder.log` when retries are exhausted to aid diagnostics.
+
+    2. **Persist sync progress for crash recovery**  
+      * Introduce a lightweight journal that records in-flight operations in the local blog directory before they execute.  
+      * Extend the startup path to replay or roll back the journal if the process restarts mid-sync, ensuring we do not leave the repo in a partially reset state.  
+      * Cover this behaviour with an automated test that simulates a restart during `git.fetch`/`git.reset` (see existing fixtures under `tests/sync.js`).
+
+    3. **Validate repository state before destructive actions**  
+      * Before running `git.reset --hard origin/master`, verify that the `origin/master` ref exists and that the working tree is clean to avoid losing local edits created outside the client.  
+      * If divergence is detected, fail gracefully with guidance for the user rather than clobbering their changes.  
+      * Document the decision flow in developer docs so operational playbooks account for these safeguards.
+
+    4. **Monitor and alert on repeated sync failures**  
+      * Emit structured metrics (e.g., to StatsD) whenever retries fail or the sync loop exits due to repeated errors.  
+      * Add a dashboard surface or notification hook so operators and customers can see when their Git repo needs manual attention.  
+      * Backfill tests that stub the metrics emitter to ensure the instrumentation does not break the sync flow.
+      
+Improve google drive client
+    ## 1. Harden service-account webhook lifecycle
+    - **Problem**: Changes and files webhooks can expire silently, causing the sync queue to stall until manual intervention. Logs in `serviceAccount/watchChanges.js` and the reset scripts indicate we rely on cron-style resets rather than active monitoring.
+    - **Tasks**:
+      - Add persistent records for each active channel (channel ID, resource ID, expiration) in the database so their state survives restarts.
+      - Create a periodic job to compare expected expirations with Google Drive and renew channels a day before expiry; alert on failures via existing admin email helpers.
+      - Extend teardown logic in `scripts/google-drive/purgeWebhooks.js` to remove entries for channels that were renewed or cancelled.
+
+    ## 2. Improve resilience of initial folder setup
+    - **Problem**: The setup flow in `routes/setup.js` and `init.js` resets on process restarts, which forces users to repeat sharing steps.
+    - **Tasks**:
+      - Persist setup progress in the site's database record (e.g., storing the setup step and timestamps) so workers can resume after restarts.
+      - Add retries around Drive permission propagation (currently a single attempt) with exponential backoff and user-facing status updates.
+      - Write integration tests that simulate restarts by clearing in-memory state while preserving persisted progress.
+
+    ## 3. Detect and repair sync drift automatically
+    - **Problem**: Reports in TODO mention phantom re-downloads and missing deletions after Drive folder renames. These indicate our mapping of Drive file IDs to local paths can fall out of sync.
+    - **Tasks**:
+      - Add a periodic audit job that samples a blog's Drive folder using `sync/sync.js` traversal and compares hashes with local metadata.
+      - When drift is detected (hash mismatch, missing file, duplicate title), queue a targeted resync using existing `resetToDrive` utilities instead of a full rebuild.
+      - Surface audit findings on the dashboard (`routes/dashboard.js`) so users know when a repair was triggered.
+
+    ## 4. Expand automated test coverage with mocked Drive APIs
+    - **Problem**: Failures are often discovered in production because we have limited regression tests (`serviceAccount/tests/refresh.js` is the only automated test).
+    - **Tasks**:
+      - Introduce a reusable `nock`-based mock layer for Drive HTTP requests so tests can simulate API responses, rate limits, and quota errors.
+      - Cover edge cases for file moves, deduplicated names, and quota errors across `sync/index.js`, `write.js`, and `remove.js`.
+      - Integrate these tests into CI to prevent regressions when modifying sync logic.
+
+    ## 5. Enhance observability and alerting
+    - **Problem**: Errors logged with `prefix()` helpers are not aggregated, making it hard to spot failures quickly.
+    - **Tasks**:
+      - Standardize log fields (site ID, service account ID, operation) and ship them to the central logging service.
+      - Add metrics counters for sync successes/failures and webhook renewals, exporting them to the existing monitoring stack.
+      - Configure threshold-based alerts for repeated failures or prolonged absence of successful syncs per site.
+      
 Speed up templates.build 
 - It seems setView already checks for changes
 - Try and be more selective about which blog model updates trigger blog.flushCache
