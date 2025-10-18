@@ -1,29 +1,15 @@
 Document new tag pagination
 - Force retrieve/tagged to use the pagination too
-- Finish implementations in template
+- Finish implementations in templates
 - Tell Chuck
 
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
-
-Fix bug with 'Home.md' file in botteghe folder on the site navigation
-- Something seems to clobber on the navigation with the existing 'Home' link
-
-Fix bug with ~/gitbug folder during setup
-- surface setup errors with git client
-- handle these errors nicely through sync status
-
-Fix bugs with documentation template and tell [Ray](https://blot.im/questions/3233)
 
 ---
 
 Fix possible bug with changing file or folder case in Dropbox 
 
 Fix possible bug with changing folder name in Google Drive from uppercase to lowercase (what happens to file inside?). Is this related to entry lookup for deleted files? How was the missing ghost file undeleteable? the case of one variant was deleted but the other was not. The case of the ID mismatched. The folder lock was stuck.
-
-Modify slowest function to aggregate by upstream response time
-- amend daily update:
-- send daily report of slowest URLs 
-- send daily report of biggest URLs and bandwidth
 
 Fix bug with recursive partials which took down server
 - seems possible in local templates
@@ -39,11 +25,17 @@ Fix bug with crash loop for page rendering issue
 - how to handle this at a high level?
 - ensure doens't break zero downtime deploy
 
+Fix bug with [~/gitbug folder](https://mail.google.com/mail/u/0/#inbox/KtbxLxgKJJfmhMNplLBcTcFCPgBVNlGtHL) during setup
+- surface setup errors with git client
+- handle these errors nicely through sync status
+
 Fix bug with crash loop for entry build
 - add a timeout for entry build process which is solid
 
 Fix bug with folder viewer which crashes server for large number of entries
 - add pagination
+
+Fix bugs with documentation template and tell [Ray](https://blot.im/questions/3233)
 
 Fix bug with 'failed to update folder lock' that throws an error – is the issue ebs?
 - I can't reproduce the problem locally.
@@ -68,6 +60,9 @@ Fix bug with cancelled subscriptions that keeps the account around
 Fix bug with overdue subscription payment form not working
 - Possible bug introduced by recent stripe upgrade
 - Migrate [Stripe library to v7](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7)
+
+Fix bug with ['Home.md' file in botteghe](https://mail.google.com/mail/u/0/#inbox/KtbxLwGgDrgCPfhXfHknhvjPLzzGjMXtnq) folder on the site navigation
+- Something seems to clobber on the navigation with the existing 'Home' link
 
 Fix bugs with custom domain setup
 - Enter invalid domain and get (message 'domain removed') instead of error
@@ -264,6 +259,45 @@ Fix bug with accessibility issues with scrolling and code blocks and tell [Eli](
 
 ---
 
+Identify areas of the codebase which need resource limits to be more secure, e.g. max file size for the image converter, max file size for the docx converter. look across the codebase and create a series of implementation tasks for the most pressing
+
+Modify slowest function to aggregate by upstream response time
+- amend daily update:
+- send daily report of slowest URLs 
+- send daily report of biggest URLs and bandwidth
+
+Build out simple discover page with links to publish in daily email
+
+Think about how to improve the efficieny of the app/views/js/sync_status.js response from the server when loading the new contents of `.live-updates`. perhaps we could intercept send requests and use cheerio to filter out everything except the live update div? or some other method? and once we do that we could then leverage etags for improved performance too
+
+Add screenshot feature to macserver:
+1. Under `app/clients/icloud/macserver/`, introduce a reusable screenshot service (e.g., `screenshot/index.js`) that encapsulates the current Puppeteer workflow from `app/helper/screenshot/index.js` (viewport options, Bottleneck throttling, retry/restart handling). Ensure it accepts `{ url, width?, height?, mobile? }`, returns a PNG buffer, and handles cleanup/restarts just like the existing helper.
+2. Add an authenticated Express route (`routes/screenshot.js`) that validates the request body, invokes the new screenshot service, and streams the PNG bytes with `Content-Type: image/png`. Register it in `macserver/index.js`.
+3. Extend `app/clients/icloud/macserver/package.json` with any new dependencies (`puppeteer`, `bottleneck`, etc.) required by the migrated implementation.
+4. Replace the implementation of `app/helper/screenshot/index.js` so it becomes a thin HTTP client: read `config.icloud.server_address` and `config.icloud.secret`, POST the screenshot request (including optional width/height/mobile) to the macserver endpoint, stream the binary response to the destination path, and keep the existing retry behavior for network errors.
+5. Update the screenshot unit tests to exercise the new HTTP client (spin up a fixture server that mimics the macserver response, assert file output, and keep rate-limit coverage). Adjust any other code paths (e.g., `app/site/tests/util/setup.js`) that import Puppeteer so they either switch to the macserver flow or conditionally skip when Puppeteer is no longer present.
+6. Remove Chromium/Puppeteer-specific setup from `Dockerfile` (package installs, `PUPPETEER_EXECUTABLE_PATH`) and drop the Puppeteer dependency from the root `package.json`, ensuring documentation or deployment scripts (e.g., `scripts/deploy/constants.js` if applicable) reflect that the main container no longer bundles Chromium.
+
+Create abstract models/storage that could be used to eventually migrate blog data folders onto s3:
+- 1. Add `app/storage/index.js` that exposes namespaced helpers (e.g., `storage.blogs.resolve(blogID, relativePath)`, `storage.blogs.readFile`, `storage.static.writeFile`) implemented with `fs-extra` and the existing `config.blog_folder_dir` / `config.blog_static_files_dir`.
+- 2. Move the path normalization logic from `helper/localPath.js` into the new storage module (or have `localPath` call the storage API), keeping existing validations intact.
+- 3. Provide unit coverage mirroring `app/helper/tests/localPath.js` to confirm the new abstraction still resolves paths correctly for typical blog IDs and paths.
+
+Improve server performance by 1. Create `app/build/plugins/folderAssets/index.js` that exports a `render` handler; reuse the logic from `app/blog/render/replaceFolderLinks/html.js` and `lookupFile` so it asynchronously rewrites `<a href>`/`<img src>` etc. during build-time processing to CDN urls, resolving the correct case where needed.
+- 2. Register the plugin in `app/build/plugins/index.js` so it runs for HTML entries (respecting `options.isHTML`) and make it default-enabled for blogs.
+- 3. Add new tests under `app/build/plugins/folderAssets/tests` to confirm the plugin emits CDN URLs and leaves untouched cases alone.
+
+Migrate JSON blob entry into a redis hash:
+- Use hash to store entries rather than a JSON string:
+- app/models/entry/get.js
+- Every time a single entry is fetched we retrieve a full JSON string then JSON parse it.
+- I want to switch to using a redis hash and make it possible to query single entry properties, e.g. html, title
+- Do we have enough space in redis to essentially duplicate every entry?  maybe make it possible to store an entry as both a hash and a string initially (with hash as source of truth in case of conflict). we'll need a script to run to migrate existing entries in the db. once the migration is complete, we can remove some of the doubled code
+- * Extend `app/models/entry/key.js` with a helper that returns the Redis hash key for an entry (e.g., `entryHash(blogID, path)`), keeping the existing string key untouched for backward compatibility.
+* Add a serializer/deserializer utility (new module under `app/models/entry/`, e.g., `format.js`) that can translate between `Entry` objects and hash field payloads (strings stay raw; other types use `JSON.stringify`/`JSON.parse`).
+* Refactor `app/models/entry/get.js` to accept an optional `fields` argument (string or array). Use `multi` to `HMGET`/`HGETALL` from the hash key and fall back to the JSON key when the hash is missing, reusing the serializer to coerce types. Ensure single-field calls return the scalar when only one entry is requested, while preserving existing behaviors for callers expecting full `Entry` objects.
+* Cover the new pathways with unit coverage (or targeted integration coverage) once tests are runnable, verifying full-entry fetches, hash fallback to legacy JSON, and single-field lookups.
+
 Add [preload=none](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio#preload) to all audio and video tags without it defined or maybe preload="metadata"? 
 
 Improvements to template engine
@@ -381,6 +415,32 @@ Improve folder to CDN pipeline
 Add per request resource monitoring, e.g. heap size before/after
 
 Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
+
+Improve iCloud client
+    ## 1. Harden sync pipeline
+    - [ ] Add integration tests covering end-to-end sync flows via `sync/toiCloud.js` and `sync/fromiCloud.js`, including handling of deletions, renames, and empty files.
+    - [ ] Implement retry and backoff logic around mac server HTTP uploads (`macserver/httpClient/upload.js`) and downloads (`macserver/brctl/download.js`) to recover from transient iCloud errors.
+    - [ ] Enforce a configurable timeout and cancellation for build jobs triggered by iCloud sync events to avoid the concurrent sync bug referenced in `sync/set.js`.
+
+    ## 2. Improve failure detection and reporting
+    - [ ] Expand monitoring in `util/monitorMacServerStats.js` to include latency/health metrics for the mac server watcher (`macserver/monitorer.js`).
+    - [ ] Emit structured logs for sync actions with correlation identifiers to aid debugging across the mac server and main server.
+    - [ ] Surface actionable error states on the dashboard (`routes/dashboard.js`) so users know when their iCloud folder is disconnected or low on space.
+
+    ## 3. Safeguard shared folder lifecycle
+    - [ ] Ensure `initialTransfer.js` and `sync/toiCloud.js` gracefully handle folders removed or unshared mid-transfer, surfacing a clear recovery flow.
+    - [ ] Add background reconciliation (`util/resyncRecentlySynced.js`) that re-validates folder permissions and resyncs divergent files on a schedule.
+    - [ ] Extend setup flows (`routes/site/index.js`) to validate sharing links and alert when the mac server cannot access the shared directory.
+
+    ## 4. Resource management on mac server
+    - [ ] Add guardrails in `macserver/watcher/monitorDiskUsage.js` to trigger automated eviction via `macserver/brctl/evict.js` before the quota limit is hit.
+    - [ ] Track iCloud space utilization trends so administrators receive early warnings (leveraging templates in `app/helper/email/admin`).
+    - [ ] Validate file size limits at the edge (`routes/site/index.js`) to prevent oversized uploads from reaching the mac server.
+
+    ## 5. Operational readiness
+    - [ ] Document recovery playbooks for incidents such as `ICLOUD_SERVER_PANIC` and `ICLOUD_SERVER_DOWN`, including SSH commands and validation steps.
+    - [ ] Automate smoke tests that can be run post-deployment to verify critical sync paths and folder permissions.
+    - [ ] Provide a feature flag to disable iCloud sync per-site, allowing rollback without affecting other clients.
 
 Reduce service provider risk:
 - move domain registrar from AWS to Epik?
@@ -856,8 +916,6 @@ Adjust auto titles of 'screenshot at 12:22pm' and make sure the date parser can 
 
 Adjust title generator so h2 titles within the file dont become the title of the post – this is helpful for obsidian
 
-The password check on the delete blog page does not print the error message if the password is incorrect? Or just for admin
-
 ---
 
 Improve image posts
@@ -1240,6 +1298,13 @@ is happening before doing this.
 ---
 
 Add password protection for blogs then tell [Ed](https://mail.google.com/mail/u/0/#inbox/164edd9d46596ec7), [this person](https://mail.google.com/mail/u/0/#inbox/155f01452a3f7231), [this person](https://mail.google.com/mail/u/0/#inbox/1645b6e48dc13281), and [Will](https://mail.google.com/mail/u/0/#inbox/FMfcgzGlkXsdBcCssKznzgvJQPDQpKlh), and [Modomiro](https://twitter.com/modomiro/status/1053345173743329281) and [Julian](https://mail.google.com/mail/u/0/#inbox/FMfcgxwCgpVWqGMHszwgxZRxNTNXRTlX) and [Raph](https://mail.google.com/mail/u/0/#inbox/FMfcgxwCgzFTCKQXQmQqdNMdjMfDFkMW) and [Jeremy](https://mail.google.com/mail/u/0/#inbox/FMfcgzGmvTvDjVMLQQmxvnZHBnnxdRpk) and [Tara](https://mail.google.com/mail/u/0/#sent/FMfcgxwChJlBCNMWSFhSctjMkBcKdpsq) and [Phil](https://mail.google.com/mail/u/0/#inbox/FMfcgxwChSHbCCgQqZqqKQftJbwHRkss) and [Florian](https://mail.google.com/mail/u/0/#inbox/FMfcgxwDrlSVCrQSVMBlFwQcNcGfZLzn) and Roy's friend Tim and [Kaleb](https://mail.google.com/mail/u/0/#inbox/FMfcgxwGDNWPljXXlwQVtswFCCLGFCQV) and [Lotus](https://mail.google.com/mail/u/0/#inbox/FMfcgxwGDNQfSzPBHtqRCQqCDjMTZLCQ) and [Khaled](https://mail.google.com/mail/u/0/#inbox/FMfcgxwHMGBFrctdVXhksCvqXXVPfDWR) and [Noel](https://mail.google.com/mail/u/0/#inbox/FMfcgxwHNMdwcwMqfVjmJPHKBMxzQChR) and [Franz](https://mail.google.com/mail/u/0/#inbox/FMfcgxwJXVMfwXfsWswWjvrpVKrPqpDt) and [Justin](https://mail.google.com/mail/u/0/#inbox/FMfcgxwKjBRFjtljCQvlhsfXsSxrCKdJ) and [Kyle](https://mail.google.com/mail/u/0/#inbox/FMfcgxwKkHZVgwCNwsdlhdzCggRtsRhN) and [Devan](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsJznDjRgbzwPmChbNQdqfnfq) and [John](https://mail.google.com/mail/u/0/?zx=bjx0x027sgct#inbox/FMfcgzGqQvvRpSrnkRNsrhddkzBhMsvf) and [Anita](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLsSWMtCTdmrbscFCFLggctmxH) and [Emerald](https://mail.google.com/mail/u/0/#inbox/FMfcgxwLtkXpvTkdGzkFCLtmmLTlvrJL) and [Ben](https://mail.google.com/mail/u/0/#inbox/FMfcgzGmvBmLLlZwPLbdJdXKQXrwrJnL) and [Giuseppe](https://mail.google.com/mail/u/0/#inbox/FMfcgzGmvBnTWqHgFgdwBvcCDcmzLXGV) and [Annie](https://mail.google.com/mail/u/0/?zx=j8rkxjpin0du#inbox/FMfcgzGqRQCwsXBNDJqLjDnJrjGmctdJ) and [Jan](https://mail.google.com/mail/u/0/?zx=j8rkxjpin0du#inbox/FMfcgzGqRPzfVlDPLLjkqCfnBWqmVqKg)
+- think about how to add simple password (just a string) protection to sites. 
+- we need to consider both the node.js app (app/index) and the openresty reverse proxy (config/openresty), especially the proxy caching behaviour for sites. 
+- perhaps we'll need to handle sessions for sites with password protection in some way at the open resty level? or just use some response header from upstream to always bypass the proxy cache? or some cookie? we don't want to add any extra work in openresty for sites without passwords. perhaps sites with passwords return responses with a header that prevents any proxy caching from taking place?
+- anyway, it would involve:
+- updating the blog model (password: string).
+- adding a simple on/off input button to the dashboard, possibly under a new section. 
+- creating a password form view common to all sites, or able to be overwritten (password.html in a template perhaps).
 
 Add raw-link -> open graph cards/embed function, which would fetch the title, description and thumbnail for a link using <meta> tags. Tell [Robert](https://mail.google.com/mail/u/0/#inbox/FMfcgzGlksJFbBlWtzMHgcxcdBRBhQSJ)
 
@@ -1345,8 +1410,26 @@ Improvements to Dropbox client
 - Can we write to a folder_id instead of a path? It would be nice to be able to move the blog's folder even when writing the initial files to it, for example...
 - This should be simple once we copy the exisiting state of the blog folder across. But right now it doesn't really do much. It resets the local server folder. Then resyncs.
 - Update to latest version of Dropbox client.
-- Make the folder in Dropbox rename automatically when the
-customer changes the username for one of their multiple blogs?
+- Make the folder in Dropbox rename automatically when the customer changes the username for one of their multiple blogs?
+    ## 1. Harden sync lifecycle
+    - [ ] Add a watchdog for long-running sync jobs that restarts or alerts when a job exceeds an expected duration.
+    - [ ] Ensure incomplete setup/sync jobs resume automatically after process restarts by persisting in-progress state and re-queueing tasks on boot.
+    - [ ] Capture and retry transient Dropbox API errors with exponential backoff while surfacing hard failures for manual intervention.
+
+    ## 2. Improve large file handling
+    - [ ] Switch uploads >150 MB to the Dropbox upload session API with chunked transfer and resumable checkpoints.
+    - [ ] Stream downloads to disk instead of buffering entirely in memory to prevent crashes when fetching large assets.
+    - [ ] Provide user-facing warnings when a file exceeds configured limits or fails checksum validation.
+
+    ## 3. Strengthen rename and conflict detection
+    - [ ] Maintain a cache of Dropbox file IDs to correctly map renames without duplicate entries.
+    - [ ] Detect folder-level moves and apply them atomically to avoid partial state during sync.
+    - [ ] Validate content hashes after sync to catch divergence between Dropbox and Blot storage.
+
+    ## 4. Expand observability and support tooling
+    - [ ] Emit structured logs for setup, sync, and error paths so incidents can be correlated across services.
+    - [ ] Surface active sync issues and recovery steps within the dashboard homepage to prompt user action.
+    - [ ] Add automated email/notification templates for rate limit, low storage, and revoked token scenarios.
 
 Add media-query to prevent typeset hanging punctuation on small screens (it looks weird) and tell [Shibel](https://mail.google.com/mail/u/0/#inbox/FMfcgxwCgpXqMzwcBGWgjxgpcpCnMCQW)
 
