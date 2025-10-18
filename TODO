@@ -5,6 +5,9 @@ Document new tag pagination
 
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
+Keep running scripts/blog/sanitize-deleted-entries.js in production
+- maybe work out how to make it skip already sanitized entries?
+
 ---
 
 Fix possible bug with changing file or folder case in Dropbox 
