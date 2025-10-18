@@ -196,4 +196,90 @@ describe("tags work on sites", function () {
     expect(afterReapplyIDs).toEqual(initialIDs);
     expect((await restored.text()).trim().toLowerCase()).toBe("flux");
   });
+
+  it("exposes pagination metadata for tagged routes", async function () {
+    await this.publish({
+      path: "/page-one.txt",
+      content: "Title: Page One\nTags: Paginated\n\nFirst",
+    });
+    await this.publish({
+      path: "/page-two.txt",
+      content: "Title: Page Two\nTags: Paginated\n\nSecond",
+    });
+    await this.publish({
+      path: "/page-three.txt",
+      content: "Title: Page Three\nTags: Paginated\n\nThird",
+    });
+
+    await this.template(
+      {
+        "tagged.html": `
+        {
+            "current": {{pagination.current}},
+            "total": {{pagination.total}},
+            "previous": "{{pagination.previous}}",
+            "next": "{{pagination.next}}",
+            "entries": [
+                {{#entries}}
+                    "{{title}}"{{^last}},{{/last}}
+                {{/entries}}
+            ]
+        }`,
+      },
+      { locals: { page_size: 2 } }
+    );
+
+    const res = await this.get(`/tagged/paginated`);
+    expect(res.status).toBe(200);
+    const text = await res.text();
+    console.log("RESPONSE TEXT:", text);
+    const parsed = JSON.parse(text);
+
+    expect(parsed).toEqual(
+      jasmine.objectContaining({
+        current: 1,
+        total: 2,
+        previous: "",
+        next: "2",
+      })
+    );
+    expect(parsed.entries.map((title) => title.toLowerCase())).toEqual([
+      "page three",
+      "page two",
+    ]);
+
+    // fetch page 2
+    const resPage2 = await this.get(`/tagged/paginated/page/2`);
+    expect(resPage2.status).toBe(200);
+    const textPage2 = await resPage2.text();
+    const parsedPage2 = JSON.parse(textPage2);
+
+    expect(parsedPage2).toEqual(
+      jasmine.objectContaining({
+        current: 2,
+        total: 2,
+        previous: "1",
+        next: "",
+      })
+    );
+    expect(parsedPage2.entries.map((title) => title.toLowerCase())).toEqual([
+      "page one",
+    ]);
+
+    // fetch page beyond total pages
+    const resPage3 = await this.get(`/tagged/paginated/page/3`);
+    expect(resPage3.status).toBe(200);
+    const textPage3 = await resPage3.text();
+    const parsedPage3 = JSON.parse(textPage3);
+
+    expect(parsedPage3).toEqual(
+      jasmine.objectContaining({
+        current: 3,
+        total: 2,
+        previous: "2",
+        next: "",
+      })
+    );
+    expect(parsedPage3.entries).toEqual([]);
+  });
 });
