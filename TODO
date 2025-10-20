@@ -305,6 +305,11 @@ Migrate JSON blob entry into a redis hash:
 
 Add [preload=none](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio#preload) to all audio and video tags without it defined or maybe preload="metadata"? 
 
+Speed up 404s
+- Analyze req trace
+- Remove case insensitive lookup and add path resolution to plugins
+- ensure all dropbox folders are reset and re-synced
+
 Improvements to template engine
 - Performance improvements
   - Limit number of posts in rss feed to 15 (modify recent entries?)
