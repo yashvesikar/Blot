@@ -514,6 +514,8 @@ Make iCloud site routes blocking so the mac server waits for the main server to 
 
 Think about how to purge the old versions of files cached by bunny's permacache
 
+Can we avoid changing cache id for a site after a sync with no changes?
+
 How can we serve template files over CDN?
 - do we have to remap references to other files in stylesheets since we're doing a switcheroo
 
