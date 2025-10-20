@@ -32,27 +32,48 @@ async function getRemoteTempDir() {
 }
 
 async function storeRemoteContainerLogs(containerName, reason) {
-  const timestamp = new Date()
-    .toISOString()
-    .replace(/[:]/g, "-")
-    .replace(/\s+/g, "_");
+  // optional: validate inputs
+  const safeName = (s) => {
+    if (!/^[a-z0-9][a-z0-9_.-]+$/.test(s))
+      throw new Error("Bad container name");
+    return s;
+  };
+  safeName(containerName);
 
+  const timestamp = new Date().toISOString().replace(/[:]/g, "-");
   const remoteTempDir = await getRemoteTempDir();
   const remoteDir = `${remoteTempDir}/blot-deploy-logs/${containerName}`;
   const remotePath = `${remoteDir}/${containerName}-${reason}-${timestamp}.logs`;
+  const tmpPath = `${remoteDir}/.${containerName}-${reason}-${timestamp}.tmp`;
 
-  const pruneCommand = `(cd '${remoteDir}' && ls -1t | awk 'NR>${MAX_REMOTE_LOGS}' | while read file; do [ -n "\\$file" ] && rm -f -- "\\$file"; done)`;
+  // 1) Ensure dir exists
+  await sshCommand(`mkdir -p '${remoteDir}'`);
 
-  const captureCommand = [
-    `mkdir -p '${remoteDir}'`,
-    `(docker logs ${containerName} > '${remotePath}' 2>&1 || true)`,
-    pruneCommand,
-  ].join(" && ");
+  // 2) Capture logs to a temp file (atomic move later)
+  await sshCommand(
+    `(docker logs '${containerName}' > '${tmpPath}' 2>&1 || true)`
+  );
 
-  await sshCommand(captureCommand);
+  // 3) Atomically move into place
+  await sshCommand(`mv -f '${tmpPath}' '${remotePath}'`);
 
+  // 4) Compute prune list on server
+  const listToDelete = await sshCommand(
+    `cd '${remoteDir}' && ls -1t | awk 'NR>${MAX_REMOTE_LOGS}'`
+  );
+
+  // 5) Delete old files one by one with full paths and --
+  const files = listToDelete
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  for (const f of files) {
+    await sshCommand(`rm -f -- '${remoteDir}/${f}'`);
+  }
+
+  // 6) Provide a fetch hint
   const fetchCommand = `scp blot:'${remotePath}' ./`;
-
   return { remotePath, fetchCommand };
 }
 
@@ -152,11 +173,11 @@ async function deployContainer(container, platform, imageHash) {
 
     if (archivedLogsInfo) {
       console.log(`Archived logs to ${archivedLogsInfo.remotePath}`);
-      console.log(
-        `Fetch them locally with: ${archivedLogsInfo.fetchCommand}`
-      );
+      console.log(`Fetch them locally with: ${archivedLogsInfo.fetchCommand}`);
     } else {
-      console.log(`No existing container logs to archive for ${container.name}.`);
+      console.log(
+        `No existing container logs to archive for ${container.name}.`
+      );
     }
   } catch (logError) {
     console.warn(
@@ -178,10 +199,14 @@ async function main() {
       throw new Error("Too many arguments provided.");
     }
 
-    console.log("When running a deployment, it's helpful to ssh into the server and run in two seperate windows");
+    console.log(
+      "When running a deployment, it's helpful to ssh into the server and run in two seperate windows"
+    );
     console.log("See live overview of docker containers:");
     console.log("watch 'docker ps' ");
-    console.log("Watch traffic to backup servers (ideally this should not happen during deployment):");
+    console.log(
+      "Watch traffic to backup servers (ideally this should not happen during deployment):"
+    );
     console.log("backup-servers");
 
     await checkBranch();
