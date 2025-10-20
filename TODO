@@ -9,6 +9,8 @@ Keep running scripts/blog/sanitize-deleted-entries.js in production
 
 Review, revise, test and run redis orchestration script to restore from s3 backup into new instance
 
+Check the deploy script does eventually purge old container logs
+
 ---
 
 Fix possible bug with changing file or folder case in Dropbox 
