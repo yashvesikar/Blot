@@ -1,4 +1,5 @@
 const Entries = require("models/entries");
+const retrieveTagged = require("../render/retrieve/tagged");
 
 describe("tags work on sites", function () {
   require("./util/setup")();
@@ -35,6 +36,38 @@ describe("tags work on sites", function () {
 
     await expectAsync(getTitles("a")).toBeResolvedTo(["second", "first"]);
     await expectAsync(getTitles("b")).toBeResolvedTo(["third", "second"]);
+  });
+
+  it("fetches intersected entry IDs for multiple tags", async function () {
+    await this.publish({ path: "/first.txt", content: "Tags: Alpha\n\nOne" });
+    await this.publish({
+      path: "/second.txt",
+      content: "Tags: Alpha,Beta\n\nTwo",
+    });
+    await this.publish({
+      path: "/third.txt",
+      content: "Tags: Beta\n\nThree",
+    });
+
+    const result = await new Promise((resolve, reject) => {
+      retrieveTagged(
+        {
+          blog: this.blog,
+          query: { tag: ["alpha", "beta"] },
+          params: {},
+          template: {},
+        },
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+
+    expect(result.entryIDs).toEqual(["/second.txt"]);
+    expect(result.tag).toBe("Alpha + Beta");
+    expect(result.tagged["Alpha + Beta"]).toBe(true);
+    expect(result.tagged["alpha + beta"]).toBe(true);
   });
 
   it("excludes entries without tags from tagged feeds", async function () {
@@ -232,7 +265,6 @@ describe("tags work on sites", function () {
     const res = await this.get(`/tagged/paginated`);
     expect(res.status).toBe(200);
     const text = await res.text();
-    console.log("RESPONSE TEXT:", text);
     const parsed = JSON.parse(text);
 
     expect(parsed).toEqual(
@@ -281,5 +313,45 @@ describe("tags work on sites", function () {
       })
     );
     expect(parsedPage3.entries).toEqual([]);
+  });
+
+  it("reports total count when pagination options are provided", async function () {
+    await this.publish({
+      path: "/page-a.txt",
+      content: "Title: Page A\nTags: Counted\n\nFirst",
+    });
+    await this.publish({
+      path: "/page-b.txt",
+      content: "Title: Page B\nTags: Counted\n\nSecond",
+    });
+
+    const result = await new Promise((resolve, reject) => {
+      retrieveTagged(
+        {
+          blog: this.blog,
+          query: { tag: "counted" },
+          params: { tag: "counted", page: "1" },
+          template: { locals: { page_size: 1 } },
+        },
+        (err, data) => {
+          if (err) return reject(err);
+          resolve(data);
+        }
+      );
+    });
+
+    expect(result.total).toBe(2);
+    expect(result.entryIDs.length).toBe(1);
+    expect(result.tag).toBe("Counted");
+    expect(result.pagination).toEqual(
+      jasmine.objectContaining({
+        current: 1,
+        pageSize: 1,
+        total: 2,
+        totalEntries: 2,
+        previous: null,
+        next: 2,
+      })
+    );
   });
 });
