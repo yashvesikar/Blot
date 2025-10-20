@@ -1,11 +1,9 @@
-Document new tag pagination
-- Force retrieve/tagged to use the pagination too
-- Tell Chuck
-
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Keep running scripts/blog/sanitize-deleted-entries.js in production
 - maybe work out how to make it skip already sanitized entries?
+
+Work out how to easily have a different page_size for the tagged pages vs the index page
 
 Review, revise, test and run redis orchestration script to restore from s3 backup into new instance
 
