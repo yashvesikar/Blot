@@ -43,7 +43,7 @@ async function storeRemoteContainerLogs(containerName, reason) {
   const timestamp = new Date().toISOString().replace(/[:]/g, "-");
   const remoteTempDir = await getRemoteTempDir();
   const remoteDir = `${remoteTempDir}/blot-deploy-logs/${containerName}`;
-  const remotePath = `${remoteDir}/${containerName}-${reason}-${timestamp}.logs`;
+  const remotePath = `${remoteDir}/${containerName}-${reason}-${timestamp}.log`;
   const tmpPath = `${remoteDir}/.${containerName}-${reason}-${timestamp}.tmp`;
 
   // 1) Ensure dir exists
@@ -87,7 +87,7 @@ async function dumpFailedContainerLogs(containerName) {
   console.log(`Fetch them locally with: ${fetchCommand}`);
 }
 
-async function archiveRedeployedContainerLogs(containerName) {
+async function archiveContainerLogs(containerName) {
   const exists = await sshCommand(
     `docker ps -a --format '{{.Names}}' | grep -q '^${containerName}$' && echo yes || echo no`
   );
@@ -98,7 +98,7 @@ async function archiveRedeployedContainerLogs(containerName) {
 
   const { remotePath, fetchCommand } = await storeRemoteContainerLogs(
     containerName,
-    "redeploy"
+    "deploy"
   );
 
   return { remotePath, fetchCommand };
@@ -167,7 +167,7 @@ async function deployContainer(container, platform, imageHash) {
 
   console.log("Removing running container...");
   try {
-    const archivedLogsInfo = await archiveRedeployedContainerLogs(
+    const archivedLogsInfo = await archiveContainerLogs(
       container.name
     );
 
@@ -316,7 +316,7 @@ if (require.main === module) {
 
 module.exports = {
   dumpFailedContainerLogs,
-  archiveRedeployedContainerLogs,
+  archiveContainerLogs,
   deployContainer,
   main,
 };
