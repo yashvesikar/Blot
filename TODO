@@ -1,8 +1,3 @@
-Keep running scripts/blog/sanitize-deleted-entries.js in production
-- maybe work out how to make it skip already sanitized entries?
-
-Investigate bug with editing local template synced via google drive (we got a stuck sync) and follow up with [Chuck](https://mail.google.com/mail/u/0/#inbox/KtbxLwHLvfJNPDWCtLhBzcxJmNfJFmTWZg)
-
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Check the deploy script does eventually purge old container logs
