@@ -1,7 +1,5 @@
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
-Check the deploy script does eventually purge old container logs
-
 ---
 
 Fix possible bug with changing file or folder case in Dropbox 
