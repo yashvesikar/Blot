@@ -11,7 +11,7 @@ const constants = require("./constants");
 const { CONTAINERS } = constants;
 const { REGISTRY_URL, PLATFORM_OS } = constants;
 
-const MAX_REMOTE_LOGS = 5;
+const MAX_REMOTE_LOGS = 3;
 let remoteTempDirPromise;
 
 async function getRemoteTempDir() {
