@@ -1,27 +1,9 @@
-Investigate bug with editing local template synced via google drive (we got a stuck sync) and follow up with [Chuck](https://mail.google.com/mail/u/0/#inbox/KtbxLwHLvfJNPDWCtLhBzcxJmNfJFmTWZg)
-
-Fix bug with sanitize entry delete:
-  [20/Oct/2025:21:10:42 +0000] [blue] blog_7d9c672     - linked entry: /Posts/2014/2014-07-30-rico.md
-  Error: Blog: blog_7d9c6729f90a4fd68ca68a09e88009f0 Entry.setURL: Entry metadata is unexpectedly undefined {
-    backlinks: [],
-    guid: 'entry_ad1e58767e4c45ab855de4be5f88c806',
-    created: 1760994642770,
-    dateStamp: 1760994642770,
-    dependencies: [],
-    internalLinks: [],
-    exif: {},
-    scheduled: false
-  }
-
-
-Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
-
 Keep running scripts/blog/sanitize-deleted-entries.js in production
 - maybe work out how to make it skip already sanitized entries?
 
-Work out how to easily have a different page_size for the tagged pages vs the index page
+Investigate bug with editing local template synced via google drive (we got a stuck sync) and follow up with [Chuck](https://mail.google.com/mail/u/0/#inbox/KtbxLwHLvfJNPDWCtLhBzcxJmNfJFmTWZg)
 
-Review, revise, test and run redis orchestration script to restore from s3 backup into new instance
+Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Check the deploy script does eventually purge old container logs
 
@@ -325,6 +307,9 @@ Speed up 404s
 - Remove case insensitive lookup and add path resolution to plugins
 - ensure all dropbox folders are reset and re-synced
 
+Work out how to easily have a different page_size for the tagged pages vs the index page
+- can we get rid of blog/tagged.js and update the urls of existing tagged.html files to have dynamic routes?
+
 Improvements to template engine
 - Performance improvements
   - Limit number of posts in rss feed to 15 (modify recent entries?)
@@ -449,6 +434,8 @@ Move image zoom plugin to templates
         inject required JS just above {{{appJS}}} and save
       disable image zoom plugin
   Remove image zoom plugin
+
+Review, revise, test and run redis orchestration script to restore from s3 backup into new instance
 
 Improve iCloud client
     ## 1. Harden sync pipeline
