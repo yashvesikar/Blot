@@ -1,3 +1,19 @@
+Investigate bug with editing local template synced via google drive (we got a stuck sync) and follow up with [Chuck](https://mail.google.com/mail/u/0/#inbox/KtbxLwHLvfJNPDWCtLhBzcxJmNfJFmTWZg)
+
+Fix bug with sanitize entry delete:
+  [20/Oct/2025:21:10:42 +0000] [blue] blog_7d9c672     - linked entry: /Posts/2014/2014-07-30-rico.md
+  Error: Blog: blog_7d9c6729f90a4fd68ca68a09e88009f0 Entry.setURL: Entry metadata is unexpectedly undefined {
+    backlinks: [],
+    guid: 'entry_ad1e58767e4c45ab855de4be5f88c806',
+    created: 1760994642770,
+    dateStamp: 1760994642770,
+    dependencies: [],
+    internalLinks: [],
+    exif: {},
+    scheduled: false
+  }
+
+
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Keep running scripts/blog/sanitize-deleted-entries.js in production
