@@ -84,7 +84,8 @@ async function dumpFailedContainerLogs(containerName) {
   );
 
   console.log(`Stored failure logs on remote server: ${remotePath}`);
-  console.log(`Fetch them locally with: ${fetchCommand}`);
+  console.log(`Fetch them locally with:`);
+  console.log(fetchCommand);
 }
 
 async function archiveContainerLogs(containerName) {
