@@ -26,9 +26,20 @@ module.exports = function (req, res, next) {
       template.selected =
         req.path.split("/")[1] === template.slug ? "selected" : "";
 
-      template.thumbnailSlug = template.cloneFrom
-        ? template.cloneFrom.split(":").slice(1).join(":")
-        : template.slug;
+      // Todo replace the thumbnail with a real thumbnail of the template
+      if (template.owner === blog.id) {
+        if (template.cloneFrom) {
+          if (template.slug.indexOf("-copy") !== -1) {
+            template.thumbnailSlug = template.slug.split("-copy")[0];
+          } else {
+            template.thumbnailSlug = "grid";
+          }
+        } else {
+          template.thumbnailSlug = "grid";
+        }
+      } else {
+        template.thumbnailSlug = template.slug;
+      }
 
       template.editURL = "/sites/" + blog.handle + "/template/" + template.slug;
 
@@ -97,11 +108,13 @@ module.exports = function (req, res, next) {
     });
 
     res.locals.yourTemplates = templates.filter(
-      (template) => template.isMine && !template.localEditing && !template.checked
+      (template) =>
+        template.isMine && !template.localEditing && !template.checked
     );
 
     res.locals.templatesInYourFolder = templates.filter(
-      (template) => template.isMine && template.localEditing === true && !template.checked
+      (template) =>
+        template.isMine && template.localEditing === true && !template.checked
     );
 
     res.locals.blotTemplates = templates.filter(
