@@ -83,7 +83,7 @@ eachBlog(
 
         Blog.set(
           blog.id,
-          { flags: updatedFlags },
+          { flags: updatedFlags, cacheID: Date.now() },
           function (setErr) {
             if (setErr) {
               errors += 1;
