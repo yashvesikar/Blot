@@ -125,6 +125,7 @@ async function runPostListenTasks() {
       "/dashboard.min.js",
       "/documentation.min.css",
       "/documentation.min.js",
+      "/images/featured.jpg",
     ]
       .map((path) => cdnURL(path, (p) => p))
       .map((p) => encodeURIComponent(p));
