@@ -476,6 +476,20 @@
       "name": "Alyssa Brocato",
       "bio": "is a cinematographer",
       "image": "/images/featured/alyssabrocato.com.jpg"
+    },
+    {
+      "link": "https://shaileshchitnis.com",
+      "host": "shaileshchitnis.com",
+      "name": "Shailesh Chitnis",
+      "bio": "is a journalist",
+      "image": "/images/featured/shaileshchitnis.com.jpg"
+    },
+    {
+      "link": "https://elenarazlogova.net",
+      "host": "elenarazlogova.net",
+      "name": "Elena Razlogova",
+      "bio": "is a historian",
+      "image": "/images/featured/elenarazlogova.net.jpg"
     }
   ]
 }
