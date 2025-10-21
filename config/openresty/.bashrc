@@ -29,6 +29,7 @@ alias access="docker exec blot-container-blue node /usr/src/app/scripts/access.j
 alias info="docker exec blot-container-blue node /usr/src/app/scripts/info"
 alias errors="tail -n 10000000 \$LOGS/access.log | egrep ' (500|501|502|504) '"
 alias 404s="cat /var/instance-ssd/logs/access.log | grep ' 404 ' | cut -d ' ' -f7 | sed -E 's|https?://[^/]+| |' |  sort | uniq -c | sort -rn | head -n 100"
+alias upstream='tail -f /var/instance-ssd/logs/access.log | stdbuf -oL grep MISS | stdbuf -oL awk "{print \$10, \$3, \$7}"'
 
 req() {
     grep -h --line-buffered "$1" <(tail -n 1000000 $LOGS/error.log $LOGS/access.log) <(docker logs blot-container-blue 2>&1) <(docker logs blot-container-green 2>&1) <(docker logs blot-container-yellow 2>&1)
