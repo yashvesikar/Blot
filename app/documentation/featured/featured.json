@@ -462,6 +462,20 @@
       "name": "Tormod Johansen",
       "bio": "is an academic",
       "image": "/images/featured/tormodotterjohansen.se.jpg"
+    },
+    {
+      "link": "https://merissalombardo.com",
+      "host": "merissalombardo.com",
+      "name": "Merissa Lombardo",
+      "bio": "is a production designer",
+      "image": "/images/featured/merissalombardo.com.jpg"
+    },
+    {
+      "link": "https://alyssabrocato.com",
+      "host": "alyssabrocato.com",
+      "name": "Alyssa Brocato",
+      "bio": "is a cinematographer",
+      "image": "/images/featured/alyssabrocato.com.jpg"
     }
   ]
 }
