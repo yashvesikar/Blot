@@ -441,6 +441,15 @@ Add per request resource monitoring, e.g. heap size before/after
 
 Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
 
+Move image zoom plugin to templates
+  For each blog:
+    if image zoom plugin enabled:
+      for each template:
+        inject required CSS just above {{{appCSS}}} and save
+        inject required JS just above {{{appJS}}} and save
+      disable image zoom plugin
+  Remove image zoom plugin
+
 Improve iCloud client
     ## 1. Harden sync pipeline
     - [ ] Add integration tests covering end-to-end sync flows via `sync/toiCloud.js` and `sync/fromiCloud.js`, including handling of deletions, renames, and empty files.
