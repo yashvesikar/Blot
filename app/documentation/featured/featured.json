@@ -490,6 +490,13 @@
       "name": "Elena Razlogova",
       "bio": "is a historian",
       "image": "/images/featured/elenarazlogova.net.jpg"
+    },
+    {
+      "link": "https://kristinemorgan.com",
+      "host": "kristinemorgan.com",
+      "name": "Kristine Morgan",
+      "bio": "is a writer",
+      "image": "/images/featured/kristinemorgan.com.jpg"
     }
   ]
 }
