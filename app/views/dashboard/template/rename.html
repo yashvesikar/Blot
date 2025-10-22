@@ -2,13 +2,19 @@
 <form class="dashboard-form" method="POST">
 
     <input type="hidden" name="_csrf" value="{{csrftoken}}" />
-	<input type="hidden" name="redirect" value="{{{base}}}/rename" />
+    {{#template.isMine}}
 	<input type="text" name="name" autofocus placeholder="{{template.name}}" value="{{template.name}}" />
-
     <div class="buttons">
         <button type="submit">
             Rename template
         </button>
         <a href="{{{base}}}">Cancel</a>
     </div>
+    {{/template.isMine}}
+    {{^template.isMine}}
+    <p>You cannot rename a default template.</p>
+    <div class="buttons" style="opacity: 0.5;">
+        <a href="{{{base}}}">Cancel</a>
+    </div>
+    {{/template.isMine}}
 </form>
