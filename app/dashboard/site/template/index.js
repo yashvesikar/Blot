@@ -319,7 +319,6 @@ TemplateEditor.route("/:templateSlug/delete")
     res.render("dashboard/template/delete");
   })
   .post(function (req, res, next) {
-    console.log('deleting template', req.template.slug, req.template.id);
     const idSlug = req.template.id.split(':').slice(1).join(':');
     Template.drop(req.blog.id, idSlug, function (err) {
       if (err) return next(err);
@@ -345,7 +344,6 @@ TemplateEditor.route("/:templateSlug/reset")
     res.render("dashboard/template/reset");
   })
   .post(function (req, res, next) {
-    console.log('deleting template', req.template.slug, req.template.id);
     const idSlug = req.template.id.split(':').slice(1).join(':');
     Template.drop(req.blog.id, idSlug, function (err) {
       if (err) return next(err);

@@ -128,9 +128,7 @@ module.exports = function (req, res, next) {
     res.locals.currentTemplate = templates.filter(
       (template) => template.id === currentTemplate
     )[0];
-
-    console.log(res.locals.yourTemplates);
-
+    
     next();
   });
 };
