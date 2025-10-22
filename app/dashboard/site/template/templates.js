@@ -80,9 +80,10 @@ module.exports = function (req, res, next) {
       // rather than the template owned by 'SITE' if there are two templates
       if (acc.some((t) => t.slug === template.slug && t.name === template.name)) {
         // if the template is owned by the blog id, replace the template owned by 'SITE'
-        // with the template owned by the blog id
+        // with the template owned by the blog id and also set the property
         if (template.owner === blogID) {
           template.isMine = false;
+          template.isMirror = true;
           return acc.filter((t) => t.slug !== template.slug).concat(template);
         } else {
           return acc;

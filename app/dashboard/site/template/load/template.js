@@ -6,22 +6,22 @@ var makeSlug = require("helper/makeSlug");
 // or a template owned by the site if it exists or null if neither exist
 const loadTemplate = async (blogID, templateSlug) => {
   const slug = makeSlug(templateSlug);
+  const defaultTemplate = await getMetadata(Template.makeID("SITE", slug));
+  const blogTemplate = await getMetadata(Template.makeID(blogID, slug));
 
-  const idsToTry = [
-    Template.makeID(blogID, slug),
-    Template.makeID("SITE", slug),
-  ];
+  if (blogTemplate && defaultTemplate) {
+    // both templates exist, return the blog template
+    // but mark it as a mirror template
+    blogTemplate.isMirror = true;
+    return blogTemplate;
+  }
 
-  console.log("Trying to load template with IDs:", idsToTry);
+  if (blogTemplate) {
+    return blogTemplate;
+  }
 
-  for (const id of idsToTry) {
-    console.log("Trying to load template with ID:", id);
-    const template = await getMetadata(id);
-    if (template) {
-      console.log("Found template with ID:", id, template);
-      return template;
-    }
-    console.log("No template found with ID:", id);
+  if (defaultTemplate) {
+    return defaultTemplate;
   }
 
   return null;

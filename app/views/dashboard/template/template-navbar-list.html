@@ -1,17 +1,6 @@
 <div id="template-list" style="margin-top:2rem">
 
-  {{#templatesInYourFolder.length}}
-  <h2>Templates in folder</h2>
-  {{/templatesInYourFolder.length}}
-
-  {{#templatesInYourFolder}}
-  {{> template-row}}
-  {{/templatesInYourFolder}}
-
-  {{#yourTemplates.length}}
-  <h2>Your {{#templatesInYourFolder.length}}other{{/templatesInYourFolder.length}} templates</h2>
-  {{/yourTemplates.length}}
-
+  <h2>Your templates</h2>
 
   {{#yourTemplates}}
   {{> template-row}}
@@ -28,6 +17,13 @@ New template
   
   </div>
  
+  {{#templatesInYourFolder.length}}
+  <h2>Templates in folder</h2>
+  {{/templatesInYourFolder.length}}
+
+  {{#templatesInYourFolder}}
+  {{> template-row}}
+  {{/templatesInYourFolder}}
 
 
   {{#blotTemplates.length}}
