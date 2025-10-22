@@ -2,7 +2,6 @@
 <form method="POST" class="dashboard-form">
 	<input type="hidden" name="_csrf" value="{{csrftoken}}" />
 
-	    {{^template.checked}}
     
 	
   <p>
@@ -15,14 +14,6 @@
     </button>
     <a href="{{{base}}}">Do not reset</a>
   </div>
-    {{/template.checked}}
 
- {{#template.checked}}
-    <p>The <strong>{{template.name}}</strong> template is your current template and cannot be reset. Use another template first, then reset this one.</p>
-        <div class="buttons" style="opacity: 0.5;">
-        <a href="{{{base}}}">Cancel</a>
-    </div>
-
-    {{/template.checked}}
 
 </form>
