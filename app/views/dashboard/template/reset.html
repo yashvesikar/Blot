@@ -1,0 +1,28 @@
+<br><br>
+<form method="POST" class="dashboard-form">
+	<input type="hidden" name="_csrf" value="{{csrftoken}}" />
+
+	    {{^template.checked}}
+    
+	
+  <p>
+    If you <b>reset the {{template.name}} template</b>, Blot will permanently remove the changes you have made to its code and settings, restoring it to the original version. This cannot be undone.
+  </p>
+
+  <div class="buttons">
+    <button type="submit" class="red">
+      Reset {{template.name}}
+    </button>
+    <a href="{{{base}}}">Do not reset</a>
+  </div>
+    {{/template.checked}}
+
+ {{#template.checked}}
+    <p>The <strong>{{template.name}}</strong> template is your current template and cannot be reset. Use another template first, then reset this one.</p>
+        <div class="buttons" style="opacity: 0.5;">
+        <a href="{{{base}}}">Cancel</a>
+    </div>
+
+    {{/template.checked}}
+
+</form>

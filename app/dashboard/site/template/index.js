@@ -330,6 +330,32 @@ TemplateEditor.route("/:templateSlug/delete")
     });
   });
 
+
+TemplateEditor.route("/:templateSlug/reset")
+  .all(require("./load/font-inputs"))
+  .all(require("./load/syntax-highlighter"))
+  .all(require("./load/color-inputs"))
+  .all(require("./load/index-inputs"))
+  .all(require("./load/navigation-inputs"))
+  .all(require("./load/dates"))
+
+  .get(function (req, res, next) {
+    res.locals.title = `Reset - ${req.template.name}`;
+    res.locals.selected = {...res.locals.selected , reset: 'selected'};
+    res.render("dashboard/template/reset");
+  })
+  .post(function (req, res, next) {
+    console.log('deleting template', req.template.slug, req.template.id);
+    const idSlug = req.template.id.split(':').slice(1).join(':');
+    Template.drop(req.blog.id, idSlug, function (err) {
+      if (err) return next(err);
+      res.message(
+        res.locals.dashboardBase + "/template",
+        "Reset template <b>" + req.template.name + "</b>"
+      );
+    });
+  });  
+
 TemplateEditor.use("/:templateSlug/source-code", require("./source-code"));
 
 TemplateEditor.use(function (err, req, res, next) {
