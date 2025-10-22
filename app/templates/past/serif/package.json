@@ -1,14 +1,23 @@
 {
   "name": "Serif",
   "locals": {
+    "text_color": "#000000",
     "page_size": 48,
     "background_color": "#ffffff",
-    "dark_text": "#000000",
-    "light_text": "#ababab",
-    "medium_text": "#696969",
-    "highlight_color": "blue",
+    "accent_color": "#0000FF",
     "hide_dates": false,
-    "date_display": "MMMM D, Y"
+    "date_display": "MMMM D, Y",
+    "body_font": {
+      "id": "charter",
+      "font_size": 24,
+      "line_height": 1.5
+    },
+    "syntax_highlighter": {
+      "id": "stackoverflow-light"
+    },
+    "syntax_highlighter_font": {
+      "font_size": 18
+    }
   },
   "isPublic": false,
   "views": {
