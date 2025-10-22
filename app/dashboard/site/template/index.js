@@ -232,7 +232,7 @@ TemplateEditor.route("/:templateSlug/local-editing")
       });
 
       res.message(
-        '/sites/' + req.blog.handle + '/template/' + template.slug,
+        '/sites/' + req.blog.handle + '/template/' + template.id.split(':').slice(1).join(':'),
         'Duplicated template <b>' + template.name + '</b>'
       );
     } catch (err) {
