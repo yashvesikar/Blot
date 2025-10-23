@@ -1,22 +1,19 @@
+Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
+
+Add tormod's template to default templates and [follow up with question](https://blot.im/questions/1449) about tufte css.
+
 Remap docker containers:
 - deploy first:   green:  sync / cdn files
 - deploy second:  blue:   dashboard
 - deploy third:   yellow: sites
 
-Add regression tests for date rendering
-- Include configuration settings, e.g. date_format, hide_dates
-- Implement toString for all existing template lambda
-- Map {{date}} => {{#date}}...{{/date}} and {{#updated}} and {{#created}} etc.
-- Update developer docs
-- Can we use this technique elsewhere? Simple string vs. function...
-
 Fix bug with navigation on Blog template on mobile and [tell Darren](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbMCpvjfDWVgNZcvdgfMQd)
-
-Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Fix terminal template display on mobile and tell [questioner](https://blot.im/questions/3254)
 
-Add tormod's template to default templates and [follow up with question](https://blot.im/questions/1449) about tufte css.
+Add embed feature (bare link -> card) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
+
+Add size / time limits to image caching function which fetches remote images
 
 ---
 
@@ -421,6 +418,11 @@ Launch new server and test that the new scripts to mount the instance store and 
 
 Automate the detection and removal of long-overdue sites (> 1 year)
 - Prevent long-overdue customers from accessing the service, then tell [Matvey](https://mail.google.com/mail/u/0/#inbox/FMfcgxwHNgWvzTkMVZXFrSpjGfcCrWJG)
+
+Implement toString for all existing template lambda, see retrieve/updated.js for an example
+- Map {{date}} => {{#date}}...{{/date}} and {{#updated}} and {{#created}} etc.
+- Update developer docs
+- Can we use this technique elsewhere? Simple string vs. function...
 
 Improve folder to CDN pipeline
 - Could we respond with redirects to Blot's CDN?
@@ -889,6 +891,7 @@ Make it possible to link between org mode files with: `[[file:another-test.org][
 
 ---
 
+Investigate memberful, maybe add a guide to setting it up on a site?
 
 Add simple server-side analytics:
 - Tell [Tom](https://mail.google.com/mail/u/0/#inbox/FMfcgxwGDNMCtRwGccFxfVKcwlcqfMpg) 
