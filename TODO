@@ -1,3 +1,8 @@
+Remap docker containers:
+- deploy first:   green:  sync / cdn files
+- deploy second:  blue:   dashboard
+- deploy third:   yellow: sites
+
 Add regression tests for date rendering
 - Include configuration settings, e.g. date_format, hide_dates
 - Implement toString for all existing template lambda
@@ -749,6 +754,8 @@ Add global site search of:
 - documentation
 - questions
 - templates
+
+Write a guide to using Formspark to add a contact form to a site
 
 Add an option to use the date modified property of the file, rather than the date created property as the publish date. This would be especially useful for the Dropbox client, which nukes the original file creation date but preserves the client modified data. This should be opt in because it could lead to misleading behaviour where an old file is dragged into your folder and is published way deep in your archives. Tell [Dirt](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTMSlvtWcHcckPtWlJljHVPdH)
 
