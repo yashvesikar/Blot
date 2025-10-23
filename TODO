@@ -1124,6 +1124,9 @@ Improvements to Dropbox client:
 
 ---
 
+Add profile photo cropping/masking tool
+- include circle, oval, and other shapes (e.g. https://www.jayceeday.com)
+
 Add explanation for which files are causing which menu links 
 
 Add export button to overdue subscription page
