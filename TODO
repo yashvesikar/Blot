@@ -1,3 +1,10 @@
+Add regression tests for date rendering
+- Include configuration settings, e.g. date_format, hide_dates
+- Implement toString for all existing template lambda
+- Map {{date}} => {{#date}}...{{/date}} and {{#updated}} and {{#created}} etc.
+- Update developer docs
+- Can we use this technique elsewhere? Simple string vs. function...
+
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Fix terminal template display on mobile and tell [questioner](https://blot.im/questions/3254)
