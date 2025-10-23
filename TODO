@@ -13,8 +13,6 @@ Fix terminal template display on mobile and tell [questioner](https://blot.im/qu
 
 Add embed feature (bare link -> card) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
 
-Add size / time limits to image caching function which fetches remote images
-
 ---
 
 Work on template editor
@@ -316,6 +314,8 @@ Speed up 404s
 
 Work out how to easily have a different page_size for the tagged pages vs the index page
 - can we get rid of blog/tagged.js and update the urls of existing tagged.html files to have dynamic routes?
+
+Add size / time limits to image caching function which fetches remote images
 
 Improvements to template engine
 - Performance improvements
