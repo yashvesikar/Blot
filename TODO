@@ -2,6 +2,12 @@ Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMf
 
 Add tormod's template to default templates and [follow up with question](https://blot.im/questions/1449) about tufte css.
 
+Run:
+
+node scripts/template/archive essay-old
+node scripts/template/archive essay-two
+node scripts/template/archive wordpress-export
+
 Remap docker containers:
 - deploy first:   green:  sync / cdn files
 - deploy second:  blue:   dashboard
