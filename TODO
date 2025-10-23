@@ -5,6 +5,8 @@ Add regression tests for date rendering
 - Update developer docs
 - Can we use this technique elsewhere? Simple string vs. function...
 
+Fix bug with navigation on Blog template on mobile and [tell Darren](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbMCpvjfDWVgNZcvdgfMQd)
+
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Fix terminal template display on mobile and tell [questioner](https://blot.im/questions/3254)
