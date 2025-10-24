@@ -298,6 +298,8 @@ Improve server performance by 1. Create `app/build/plugins/folderAssets/index.js
 - 2. Register the plugin in `app/build/plugins/index.js` so it runs for HTML entries (respecting `options.isHTML`) and make it default-enabled for blogs.
 - 3. Add new tests under `app/build/plugins/folderAssets/tests` to confirm the plugin emits CDN URLs and leaves untouched cases alone.
 
+Can we use lightningcss to replace the existing css minifier for performance?
+
 Migrate JSON blob entry into a redis hash:
 - Use hash to store entries rather than a JSON string:
 - app/models/entry/get.js
