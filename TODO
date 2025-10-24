@@ -1,10 +1,3 @@
-Fix terminal template display on mobile and tell [questioner](https://blot.im/questions/3254)
-
-Remap docker containers:
-- deploy first:   green:  sync / cdn files
-- deploy second:  blue:   dashboard
-- deploy third:   yellow: sites
-
 Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
 
 Add embed feature (bare link -> card) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
