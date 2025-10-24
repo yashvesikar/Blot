@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   background: black;
   color: gray;
-  padding: 3em 4em 5em;
+  padding: 1em 4em 5em;
   word-wrap: break-word; /* for long words & urls */
 }
 
@@ -28,6 +28,7 @@ a {color: white;text-decoration: none;}
 
 .terminal-header {
   position: relative;
+  padding: 1em 0;
 }
 
 .terminal-header__bar {
@@ -66,9 +67,8 @@ a {color: white;text-decoration: none;}
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 50%;
+  top: 0;
   right: 0;
-  transform: translateY(-50%);
   cursor: pointer;
   width: 2.5em;
   height: 2.5em;
@@ -255,7 +255,7 @@ input:focus {outline: none;}
 
 @media (max-width: 600px) {
   body {
-    padding: 2.5em 1.5em 3.5em;
+    padding: 2.5em 1em 3.5em;
   }
 
   .container {
@@ -267,7 +267,7 @@ input:focus {outline: none;}
   .grid-sizer,
   .grid-item {
     width: 100%;
-    padding: 0 0 1.5em;
+    padding-bottom: 1.5em;
   }
 }
 
