@@ -556,6 +556,8 @@ Check that Google Drive is staying in sync:
 
 Add https://www.textasticapp.com/ to text editor tools
 
+Ensure we handle google doc link cards properly
+
 Write proper tests for clients:
 - Dropbox
 - Google Drive
