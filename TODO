@@ -292,6 +292,9 @@ Improve server performance by 1. Create `app/build/plugins/folderAssets/index.js
 
 Can we use lightningcss to replace the existing css minifier for performance?
 
+Transformer should short-circuit network lookups to {{config.host}} or {{cdn}} urls and pull the files directly
+- and have limits on resource size and time
+
 Migrate JSON blob entry into a redis hash:
 - Use hash to store entries rather than a JSON string:
 - app/models/entry/get.js
