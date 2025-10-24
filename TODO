@@ -554,6 +554,8 @@ Check that Google Drive is staying in sync:
 - login -> node scripts/google-drive/reset.js
 - add proper bottlenecks then run this regularly
 
+Add https://www.textasticapp.com/ to text editor tools
+
 Write proper tests for clients:
 - Dropbox
 - Google Drive
