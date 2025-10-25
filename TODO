@@ -1,20 +1,15 @@
 Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRCkhdsXvnSjxbbfGSxxDtlW)
 
 Work on template editor
+- Verify local template editing works for all clients
+- Add button to enable local template editing to editor
+- When setting up local editing, Copy the case used elsewhere when creating templates directory, e.g. pages -> templates, Posts -> Templates
 
 Turn all folders into templates
 
-Write about mustache technique for {{#updated}}
-
 Move dashboard onto blot-container-blue for performance
 
-Does local template editing work for all clients? 
-
-When setting up local editing, Copy the case used elsewhere when creating templates directory, e.g. pages -> templates, Posts -> Templates
-
----
-
-Add embed feature (bare link -> card) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
+Add link card feature (bare links) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
 
 Add folder post feature
 
@@ -517,6 +512,8 @@ Improve the camera make and model names extracted by exiftool using a third-part
 - [ ] Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/QgrcJHrhvXLmnzQkFJsDwTvsrSbqBFVgtxV)
 
 Move folder lock location to instance ssd for improved reliability and performance (non-networked drive...) – could be inside the cache
+
+Write about mustache technique for {{#updated}} and {{updated}} to work at the same time (toString)
 
 Pandoc doesn't support autolinking for Chrome's copy link to highlight feature – should we make this work? e.g. `https://stackoverflow.com/questions/71806679/how-to-copy-link-to-highlight-using-chrome-api#:~:text=How%20to%20copy%20link%20to%20highlight`
 
