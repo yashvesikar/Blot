@@ -1,12 +1,30 @@
-Finish [setting up Francesco's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgcNCpRcDFrsBhMlBwlXLNxNq)
-
-Add embed feature (bare link -> card) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
-
----
+Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRCkhdsXvnSjxbbfGSxxDtlW)
 
 Work on template editor
 
+Turn all folders into templates
+
+Write about mustache technique for {{#updated}}
+
+Move dashboard onto blot-container-blue for performance
+
+Does local template editing work for all clients? 
+
+When setting up local editing, Copy the case used elsewhere when creating templates directory, e.g. pages -> templates, Posts -> Templates
+
 ---
+
+Add embed feature (bare link -> card) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
+
+Add folder post feature
+
+---
+
+Fix bug with swiper css - it totally breaks site when pasted into css file...
+
+Fix bug with title based wikilinks [[Corsi|...more]] -> Corsi/Index.md 'Title: Corsi'
+
+Fix bug linking to relative pdf in subfolders, e.g. Pages/File.md '[](./file.pdf)' breaks
 
 Fix bug with recursive partials which took down server
 - seems possible in local templates
@@ -1047,7 +1065,10 @@ Add support for proxying particular analytics files and tell [questioner](https:
 
 One bad latex equation should not [tank the build process for the whole post](https://blot.im/questions/2037)
 
-Follow up with [Tim](https://mail.google.com/mail/u/0/#inbox/FMfcgzGtwCvckCnTJHxSFsQDZnkTPBzp) about activitypub
+Add support for activitypub and tell
+- [Tim](https://mail.google.com/mail/u/0/#inbox/FMfcgzGtwCvckCnTJHxSFsQDZnkTPBzp)
+- [Questioner](https://blot.im/questions/2543)
+- [Rhys](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRDsGrLZFghZhShLQHNZdchS)
 
 Work out why we get a 'Zombie process' notification email every morning at 9:05am – now 8:05am it seems the process hangs
 
