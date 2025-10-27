@@ -2,17 +2,13 @@ Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgz
 
 Fix drag and drop image behavior obsidian and tell John P
 
-Add photo/pictures/pics/images grid to tagged page of blog template and photos subfolder to default folder.
-
-Refactor front end domain page to have radio button to seelct between custom domain and blot subdomain
-Inbox
-- don't delete custom domain, though (maybe add property redirectDomain ?)
-
 Work on template editor
 - Verify local template editing works for all clients
 - Add button to enable local template editing to editor
 - When setting up local editing, Copy the case used elsewhere when creating templates directory, e.g. pages -> templates, Posts -> Templates
 - Turn all folders into templates
+
+Re-test domain setup flow in production
 
 Add link card feature (bare links) and tell [Guy](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRBbftcBdFZZfZmqhfKNklbd)
 
@@ -290,6 +286,12 @@ Modify slowest function to aggregate by upstream response time
 - send daily report of biggest URLs and bandwidth
 
 Build out simple discover page with links to publish in daily email
+
+Add photo/pictures/pics/images grid to tagged page of blog template and photos subfolder to default folder.
+
+Refactor front end domain page to have radio button to seelct between custom domain and blot subdomain
+Inbox
+- don't delete custom domain, though (maybe add property redirectDomain ?)
 
 Think about how to improve the efficieny of the app/views/js/sync_status.js response from the server when loading the new contents of `.live-updates`. perhaps we could intercept send requests and use cheerio to filter out everything except the live update div? or some other method? and once we do that we could then leverage etags for improved performance too
 
