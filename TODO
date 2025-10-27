@@ -12,6 +12,8 @@ Add folder post feature
 
 ---
 
+Fix bug with huge draft crashing the sync server /a327ex/drafts/it_follows.txt
+
 Fix bug with swiper css - it totally breaks site when pasted into css file...
 
 Fix bug with title based wikilinks [[Corsi|...more]] -> Corsi/Index.md 'Title: Corsi'
