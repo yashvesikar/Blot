@@ -1,5 +1,11 @@
 Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRCkhdsXvnSjxbbfGSxxDtlW)
 
+Fix drag and drop image behavior obsidian and tell John P
+
+Refactor front end domain page to have radio button to seelct between custom domain and blot subdomain
+Inbox
+- don't delete custom domain, though (maybe add property redirectDomain ?)
+
 Work on template editor
 - Verify local template editing works for all clients
 - Add button to enable local template editing to editor
@@ -463,6 +469,8 @@ Move image zoom plugin to templates
 Review, revise, test and run redis orchestration script to restore from s3 backup into new instance
 
 Migrate repository to new account
+
+Add webmentions plugin point-and-click on dashboard
 
 Improve iCloud client
 - Resolve flakiness disconnecting, transfering existing folder contents
