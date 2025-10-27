@@ -269,6 +269,11 @@ Fix bug with accessibility issues with scrolling and code blocks and tell [Eli](
 
 Do preview subdomains respond to etags?
 
+Switch from mustache to handlebars
+- Precompile using template content hash
+- Add strict verification for output differences 
+- Can we generally do a ‘static’ build out directly into a cache (e.g. openresty)?
+
 Identify areas of the codebase which need resource limits to be more secure, e.g. max file size for the image converter, max file size for the docx converter. look across the codebase and create a series of implementation tasks for the most pressing
 
 Modify slowest function to aggregate by upstream response time
