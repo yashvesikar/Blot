@@ -52,11 +52,11 @@ const sortAndPaginate = (questions, page_size, page) => {
   return questions.slice(startIndex, endIndex + 1);
 };
 
-const hasNonEmptyBodyAndTitle = (body, title) =>
-  typeof body === "string" &&
-  body.trim().length > 0 &&
-  typeof title === "string" &&
-  title.trim().length > 0;
+const hasNonEmptyBody = (body) =>
+  typeof body === "string" && body.trim().length > 0;
+
+const hasNonEmptyTitle = (title) =>
+  typeof title === "string" && title.trim().length > 0;
 
 const load = (ids) => {
   return new Promise((resolve, reject) => {
@@ -91,7 +91,10 @@ const load = (ids) => {
         const questions = results
           .filter(
             (result) =>
-              result && !result.parent && hasNonEmptyBodyAndTitle(result.body, result.title)
+              result &&
+              !result.parent &&
+              hasNonEmptyBody(result.body) &&
+              hasNonEmptyTitle(result.title)
           )
           .map((result) => {
             result.replies = results
@@ -99,7 +102,7 @@ const load = (ids) => {
                 (reply) =>
                   reply &&
                   reply.parent === result.id &&
-                  hasNonEmptyBodyAndTitle(reply.body, reply.title)
+                  hasNonEmptyBody(reply.body)
               )
               .map((reply) => {
                 return { body: reply.body };
