@@ -142,14 +142,6 @@ TemplateEditor.route("/:templateSlug")
   });
 
 TemplateEditor.route("/:templateSlug/local-editing")
-  .all(require("./load/font-inputs"))
-  .all(require("./load/syntax-highlighter"))
-  .all(require("./load/color-inputs"))
-  .all(require("./load/index-inputs"))
-  .all(require("./load/navigation-inputs"))
-  .all(require("./load/dates"))
-
-  .all(require("./load/dates"))
   .get(function (req, res) {
     res.locals.enabled = req.template.localEditing;
     res.locals.title = `Local editing - ${req.template.name}`;
