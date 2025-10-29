@@ -5,7 +5,7 @@ const Blog = require('models/blog');
 const moment = require('moment');
 const verify = require('./verify');
 const identifyNameServers = require('./identifyNameServers');
-
+const fetch = require('node-fetch');
 const Domain = express.Router();
 
 const ip = config.ip;
@@ -89,6 +89,7 @@ Domain.route('/')
                 req.session.save();
                 await updateDomain(blogID, hostname);
                 res.message(res.locals.base + '/domain', 'Domain added');
+                triggerAutoSSL(hostname);
             } else {
                 throw new Error('Domain verification failed.');
             }
@@ -143,5 +144,19 @@ const updateHandle = (blogID, handle) => {
         });
     });
 };
+
+function triggerAutoSSL(hostname) {
+  if (!hostname) return;
+
+  fetch(`https://${hostname}`, { method: "HEAD", redirect: "manual" }).catch(
+    (error) => {
+      console.error(
+        "Failed to trigger AutoSSL for %s: %s",
+        hostname,
+        error && error.message ? error.message : error
+      );
+    }
+  );
+}
 
 module.exports = Domain;
