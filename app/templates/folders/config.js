@@ -3,40 +3,32 @@ module.exports = {
     title: "Björn Allard",
     template: "SITE:portfolio",
   },
-  botanist: {
-    title: "William Copeland McCalla",
-    template: "SITE:photo",
+  clara: {
+    title: "Clara Xiao",
+    template: "SITE:cv",
   },
   david: {
     title: "David",
     template: "SITE:blog",
   },
-  illustrator: {
-    title: "Thought-forms",
-    template: "SITE:portfolio",
+  documentation: {
+    title: "Documentation",
+    template: "SITE:documentation",
   },
-  manifesto: {
-    title: "Manifesto",
-    template: "SITE:blog",
-  },
-  painter: {
-    title: "Piet Mondrian",
-    template: "SITE:portfolio",
-  },
-  photographer: {
-    title: "Sergey Prokudin-Gorsky",
-    template: "SITE:portfolio",
-  },
-  plants: {
-    title: "Plants",
-    template: "SITE:magazine",
+  lecture: {
+    title: "The Cartography of Solitude",
+    template: "SITE:event",
   },
   programmer: {
     title: "Programmer",
-    template: "SITE:blog",
+    template: "SITE:fieldnotes",
   },
-  writer: {
-    title: "Writer",
-    template: "SITE:blog",
+  sergey: {
+    title: "Sergey Prokudin-Gorsky",
+    template: "SITE:album",
+  },
+  thoughtforms: {
+    title: "Thought-forms",
+    template: "SITE:hypertext",
   },
 };

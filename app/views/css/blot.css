@@ -470,7 +470,7 @@ h2 + .clients {margin-top: 0}
   align-items: center;
   justify-content: space-between;
   margin: 4px;
-  padding: 32px;
+  padding: 64px 32px;
 }
 
 .clients.templates .template-name {
