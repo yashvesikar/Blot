@@ -6,18 +6,15 @@ const fs = require("fs-extra");
 const TEMPLATES_DIRECTORY = root + "/app/templates/source";
 const IMAGE_DIRECTORY = root + "/app/views/images/examples";
 
-const templateOptions = {};
 
 const templates = fs
   .readdirSync(TEMPLATES_DIRECTORY)
   .filter((i) => !i.startsWith(".") && !i.endsWith(".md"))
   .map((i) => {
-    const handle = templateOptions[i] ? templateOptions[i].handle : "david";
     const template = i;
-    const pages =
-      templateOptions[i] && templateOptions[i].pages
-        ? templateOptions[i].pages
-        : ["/"];
+    const json = fs.readJSONSync(TEMPLATES_DIRECTORY + '/' + template + '/package.json');
+    const handle = json.locals.demo_folder || "david";
+    const pages = ["/"];
 
     return pages.map((page, index) => {
       return {
