@@ -8,7 +8,7 @@ const hasUnsupportedExtension = (filePath = "") => {
 };
 
 module.exports = {
-  MAX_FILE_SIZE: 50 * 1024 * 1024, // 50 MB
+  MAX_FILE_SIZE: 100 * 1024 * 1024, // 100 MB
   UNSUPPORTED_FILE_EXTENSIONS,
   hasUnsupportedExtension,
 };
