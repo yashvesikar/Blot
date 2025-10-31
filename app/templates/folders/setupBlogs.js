@@ -24,6 +24,7 @@ module.exports = async function setupBlogs(user, folders) {
     }
 
     if (!blog) {
+      console.log('Creating blog', handle);
       blog = await createBlog(user.uid, { handle });
     }
 
