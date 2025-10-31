@@ -6,6 +6,8 @@ const fs = require("fs-extra");
 const TEMPLATES_DIRECTORY = root + "/app/templates/source";
 const IMAGE_DIRECTORY = root + "/app/views/images/examples";
 
+const templateOptions = {};
+
 const templates = fs
   .readdirSync(TEMPLATES_DIRECTORY)
   .filter((i) => !i.startsWith(".") && !i.endsWith(".md"))
