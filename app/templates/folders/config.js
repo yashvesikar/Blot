@@ -18,6 +18,13 @@ module.exports = {
   lecture: {
     title: "The Cartography of Solitude",
     template: "SITE:event",
+    menu: [
+      { url: "/", label: "Information",  id: "/Landing page.txt" },
+      { url: "/speakers", label: "Speakers",  id: "/Speakers.txt" },
+      { url: "/faqs", label: "FAQs", id: "/FAQs.txt" },
+      { url: "/page/1", label: "Announcements", id: "/Announcements.txt" },
+      { url: "/tickets", label: "Get tickets", id: "/Tickets.txt" },
+    ],
   },
   programmer: {
     title: "Programmer",

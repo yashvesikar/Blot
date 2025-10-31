@@ -1,5 +1,4 @@
 Work on template editor
-- Turn all folders into templates
 
 Run in production:
 
@@ -31,15 +30,6 @@ node scripts/template/archive.js terminal
 node scripts/template/archive.js twentytwelve
 node scripts/template/archive.js wordpress-export
 ```
-
-Work out how to fix the navigation for the event template folder:
-  "navigation": [
-        {"url": "/", "label": "Information"},
-        {"url": "/speakers", "label": "Speakers"},
-        {"url": "/faqs", "label": "FAQs"},
-        {"url": "/page/1", "label": "Announcements"},
-        {"url": "/tickets", "label": "Get tickets"}
-      ],
 
 ---
 
