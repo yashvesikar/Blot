@@ -1,8 +1,12 @@
+var fs = require("fs-extra");
+var join = require("path").join;
+var clients = require("clients");
+
 describe("template", function () {
   var writeToFolder = require("../index").writeToFolder;
   var setView = require("../index").setView;
+  var dropView = require("../index").dropView;
   var setMetadata = require("../index").setMetadata;
-  var fs = require("fs-extra");
 
   require("./setup")({ createTemplate: true });
 
@@ -162,7 +166,9 @@ describe("template", function () {
 
         try {
           expect(fs.readFileSync(lowercasePath, "utf-8")).toEqual(view.content);
-          expect(fs.existsSync(test.blogDirectory + "/Templates")).toEqual(false);
+          expect(fs.existsSync(test.blogDirectory + "/Templates")).toEqual(
+            false
+          );
         } catch (assertErr) {
           fs.removeSync(posts);
           fs.removeSync(drafts);
@@ -175,4 +181,168 @@ describe("template", function () {
       });
     });
   });
+
+  it("skips rewriting files when contents have not changed", function (done) {
+    var test = this;
+    var view = {
+      name: test.fake.random.word() + ".html",
+      content: test.fake.random.word(),
+    };
+
+    setView(this.template.id, view, function (err) {
+      if (err) return done.fail(err);
+
+      writeToFolder(test.blog.id, test.template.id, function (err) {
+        if (err) return done.fail(err);
+
+        var targetPath = getTemplatePath(test, view.name);
+        var originalStat = fs.statSync(targetPath);
+
+        writeToFolder(test.blog.id, test.template.id, function (err) {
+          if (err) return done.fail(err);
+
+          var updatedStat = fs.statSync(targetPath);
+          expect(updatedStat.mtimeMs).toEqual(originalStat.mtimeMs);
+          done();
+        });
+      });
+    });
+  });
+
+  it("removes orphaned files left in the template directory", function (done) {
+    var test = this;
+    var view = {
+      name: test.fake.random.word() + ".html",
+      content: test.fake.random.word(),
+    };
+
+    setView(this.template.id, view, function (err) {
+      if (err) return done.fail(err);
+
+      writeToFolder(test.blog.id, test.template.id, function (err) {
+        if (err) return done.fail(err);
+
+        var templateDir = getTemplateDir(test);
+        var orphanPath = join(templateDir, "orphan.html");
+        fs.outputFileSync(orphanPath, "orphan");
+
+        writeToFolder(test.blog.id, test.template.id, function (err) {
+          if (err) return done.fail(err);
+
+          expect(fs.existsSync(orphanPath)).toEqual(false);
+          expect(
+            fs.readFileSync(join(templateDir, view.name), "utf-8")
+          ).toEqual(view.content);
+          done();
+        });
+      });
+    });
+  });
+
+  it("removes orphans while preserving existing files with the local client", function (done) {
+    var test = this;
+    var view = {
+      name: test.fake.random.word() + ".html",
+      content: test.fake.random.word(),
+    };
+
+    this.blog
+      .update({ client: "local" })
+      .then(function () {
+        setView(test.template.id, view, function (err) {
+          if (err) return done.fail(err);
+
+          writeToFolder(test.blog.id, test.template.id, function (err) {
+            if (err) return done.fail(err);
+
+            var templateDir = getTemplateDir(test);
+            var viewPath = join(templateDir, view.name);
+            var originalStat = fs.statSync(viewPath);
+            var orphanPath = join(templateDir, "orphan.html");
+
+            fs.outputFileSync(orphanPath, "orphan");
+
+            writeToFolder(test.blog.id, test.template.id, function (err) {
+              if (err) return done.fail(err);
+
+              var rewrittenStat = fs.statSync(viewPath);
+
+              expect(fs.existsSync(orphanPath)).toEqual(false);
+              expect(rewrittenStat.mtimeMs).toEqual(originalStat.mtimeMs);
+              expect(fs.readFileSync(viewPath, "utf-8")).toEqual(view.content);
+              done();
+            });
+          });
+        });
+      })
+      .catch(function (err) {
+        done.fail(err);
+      });
+  });
+
+  it("ignores symbolic links when scanning template files", function (done) {
+    var test = this;
+    var view = {
+      name: test.fake.random.word() + ".html",
+      content: test.fake.random.word(),
+    };
+
+    setView(this.template.id, view, function (err) {
+      if (err) return done.fail(err);
+
+      writeToFolder(test.blog.id, test.template.id, function (err) {
+        if (err) return done.fail(err);
+
+        var templateDir = getTemplateDir(test);
+        var loopPath = join(templateDir, "loop");
+        var orphanPath = join(templateDir, "orphan.html");
+
+        try {
+          fs.removeSync(loopPath);
+        } catch (cleanupErr) {
+          if (cleanupErr && cleanupErr.code !== "ENOENT") {
+            return done.fail(cleanupErr);
+          }
+        }
+
+        try {
+          fs.ensureSymlinkSync(templateDir, loopPath, "dir");
+        } catch (symlinkErr) {
+          return done.fail(symlinkErr);
+        }
+
+        fs.outputFileSync(orphanPath, "orphan");
+
+        writeToFolder(test.blog.id, test.template.id, function (err) {
+          if (err) return done.fail(err);
+
+          try {
+            expect(fs.existsSync(orphanPath)).toEqual(false);
+            expect(
+              fs.readFileSync(join(templateDir, view.name), "utf-8")
+            ).toEqual(view.content);
+
+            var linkStat = fs.lstatSync(loopPath);
+            expect(linkStat.isSymbolicLink()).toEqual(true);
+          } catch (assertErr) {
+            return done.fail(assertErr);
+          }
+
+          done();
+        });
+      });
+    });
+  });
 });
+
+function getTemplateDir(test) {
+  var upperPath = test.blogDirectory + "/Templates/" + test.template.slug;
+  var lowerPath = test.blogDirectory + "/templates/" + test.template.slug;
+
+  return fs.existsSync(upperPath) ? upperPath : lowerPath;
+}
+
+function getTemplatePath(test, fileName) {
+  var templateDir = getTemplateDir(test);
+  return join(templateDir, fileName);
+}
