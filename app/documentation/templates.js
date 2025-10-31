@@ -4,9 +4,7 @@ const { marked } = require("marked");
 const prettySize = require("helper/prettySize");
 const path = require("path");
 
-const templatesDirectory = path.join(__dirname, "../templates/latest");
-const archivedTemplatesDirectory = path.join(__dirname, "../templates/past");
-const foldersDirectory = path.join(__dirname, "../templates/folders");
+const templatesDirectory = path.join(__dirname, "../templates/source");
 const { getMetadata } = require("models/template");
 
 // If the template name needs to be mapped to a different name
@@ -15,21 +13,6 @@ const NAME_MAP = {
   'cv': 'CV',
 };
 
-const featuredTemplates = [
-  "cv",
-  "blog",
-  "portfolio",
-  "event",
-  "documentation",
-  "magazine",
-  "painter",
-  "photographer",
-  "rosa",
-  "reference",
-  "isola",
-  "manifesto",
-];
-
 const categories = [
   {
     name: "Blogging",
@@ -37,9 +20,7 @@ const categories = [
     templates: [
       "blog",
       "magazine",
-      "isola",
-      "rosa",
-      "manifesto",
+      "fieldnotes",
       "index",
     ]
   },
@@ -48,13 +29,7 @@ const categories = [
     slug: "photography",
     templates: [
       "portfolio",
-      "reference",
-      "illustrator",
-      "painter",
-      "photographer",
-      "grid",
-      "photo",
-      "photo-old"
+      "album"
     ]
   },
   {
@@ -62,8 +37,6 @@ const categories = [
     slug: "personal",
     templates: [
       "cv",
-      "painter",
-      "marfa"
     ]
   },
   {
@@ -71,7 +44,6 @@ const categories = [
     slug: "organizations",
     templates: [
       "event",
-      "forty",
       "documentation",
     ]
   }
@@ -91,54 +63,31 @@ const getTemplate = async slug => {
   }
 };
 
-// Load folders
-const loadFolders = async () => {
-  const folderNames = await fs.readdir(foldersDirectory);
-  return folderNames
-    .filter(i => !i.startsWith(".") && !i.endsWith(".js") && !i.endsWith(".md"))
-    .map(i => ({
-      name: NAME_MAP[i] || i[0].toUpperCase() + i.slice(1),
-      demo_folder: i,
-      source: `https://github.com/davidmerfield/Blot/tree/master/app/templates/folders/${i}`,
-      slug: i
-    }));
-};
 
 // Load templates
 const loadTemplates = async () => {
   const latestTemplateFiles = await fs.readdir(templatesDirectory);
-  const archivedTemplateFiles = await fs.readdir(archivedTemplatesDirectory);
-  const templateFiles = [...latestTemplateFiles, ...archivedTemplateFiles]
-    .filter(i => !i.startsWith(".") && !i.endsWith(".js") && !i.endsWith(".md") && !i.includes("wordpress-export"));
+  const templateFiles = latestTemplateFiles
+    .filter(i => !i.startsWith(".") && !i.endsWith(".js") && !i.endsWith(".md"));
 
   const templates = await Promise.all(templateFiles.map(async i => {
     const template = await getTemplate(i);
     if (!template) return null;
     const demo_folder = template.locals.demo_folder || "david";
     return {
-      name: i[0].toUpperCase() + i.slice(1),
+      name: NAME_MAP[i] || i[0].toUpperCase() + i.slice(1),
       slug: i,
       demo_folder,
-      source: `https://github.com/davidmerfield/Blot/tree/master/app/templates/${ latestTemplateFiles.includes(i) ? 'latest' : 'past'}/${i}`,
+      source: `https://github.com/davidmerfield/Blot/tree/master/app/templates/source/${i}`,
 
     };
   }));
 
-  const folders = (await loadFolders()).filter(
-    folder => !templates.some(template => template.demo_folder === folder.slug)
-  );
+  const all = templates.filter(i => i).sort((a,b)=>{
+    return a.slug - b.slug;
+  })
 
-  const all = folders.concat(templates.filter(i => i));
-
-  const featured = all.filter(t => featuredTemplates.includes(t.slug)).sort((a, b) => {
-    return featuredTemplates.indexOf(a.slug) - featuredTemplates.indexOf(b.slug);
-  });
-
-  const sortedTemplates = featured.concat(
-    all.filter(t => !featuredTemplates.includes(t.slug))
-  );
-
-  return sortedTemplates;
+  return all;
 };
 
 // Middleware function

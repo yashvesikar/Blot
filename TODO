@@ -1,8 +1,45 @@
 Work on template editor
-- Verify local template editing works for all clients
-- Add button to enable local template editing to editor
-- When setting up local editing, Copy the case used elsewhere when creating templates directory, e.g. pages -> templates, Posts -> Templates
 - Turn all folders into templates
+
+Run in production:
+
+```
+node scripts/template/archive.js blank
+node scripts/template/archive.js empty
+node scripts/template/archive.js essay
+node scripts/template/archive.js essay-old
+node scripts/template/archive.js essay-two
+node scripts/template/archive.js forty
+node scripts/template/archive.js grid
+node scripts/template/archive.js isola
+node scripts/template/archive.js log
+node scripts/template/archive.js marfa
+node scripts/template/archive.js minima
+node scripts/template/archive.js mira
+node scripts/template/archive.js mono
+node scripts/template/archive.js moving
+node scripts/template/archive.js mundana
+node scripts/template/archive.js old-default
+node scripts/template/archive.js original
+node scripts/template/archive.js photo
+node scripts/template/archive.js photo-old
+node scripts/template/archive.js reference
+node scripts/template/archive.js rosa
+node scripts/template/archive.js scroll
+node scripts/template/archive.js serif
+node scripts/template/archive.js terminal
+node scripts/template/archive.js twentytwelve
+node scripts/template/archive.js wordpress-export
+```
+
+Work out how to fix the navigation for the event template folder:
+  "navigation": [
+        {"url": "/", "label": "Information"},
+        {"url": "/speakers", "label": "Speakers"},
+        {"url": "/faqs", "label": "FAQs"},
+        {"url": "/page/1", "label": "Announcements"},
+        {"url": "/tickets", "label": "Get tickets"}
+      ],
 
 ---
 
