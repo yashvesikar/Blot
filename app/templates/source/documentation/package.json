@@ -28,7 +28,8 @@
     },
     "body_font": {
       "id": "system-sans"
-    }
+    },
+    "demo_folder": "documentation"
   },
   "enabled": true,
   "views": {

@@ -1,7 +1,9 @@
 {
   "name": "Hypertext",
   "locals": {
-    "page_size": 36
+    "page_size": 36,
+        "demo_folder": "thoughtforms"
+
   },
   "isPublic": false,
   "views": {
