@@ -26,6 +26,12 @@
   },
   "enabled": true,
   "views": {
+     "archives.html": {
+      "url": "/archives",
+      "partials": {
+        "title": "Archives - {{{title}}}"
+      }
+    },
     "error.html": {
       "partials": {
         "title": "{{{error.title}}} - {{{title}}}"
