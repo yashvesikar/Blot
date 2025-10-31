@@ -14,6 +14,9 @@ module.exports = async function setupBlogs(user, folders) {
   // Create/get blogs
   for (const path of folders) {
     const handle = basename(path);
+
+    console.log('Setting up', handle);
+
     let blog = await getBlog({ handle });
 
     if (blog && blog.owner !== user.uid) {

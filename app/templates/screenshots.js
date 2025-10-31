@@ -1,63 +1,10 @@
-// todo turn this into a github action? runs when changes made automatically?
-
 const screenshot = require("helper/screenshot");
 const config = require("config");
 const { dirname } = require("path");
 const root = require("helper/rootDir");
 const fs = require("fs-extra");
 const TEMPLATES_DIRECTORY = root + "/app/templates/source";
-const FOLDERS_DIRECTORY = root + "/app/templates/folders";
 const IMAGE_DIRECTORY = root + "/app/views/images/examples";
-
-const templateOptions = {
-  blog: {
-    handle: "david",
-  },
-  magazine: {
-    handle: "plants",
-  },
-  grid: {
-    handle: "botanist",
-  },
-  photo: {
-    handle: "william",
-  },
-  portfolio: {
-    handle: "bjorn",
-  },
-  "photo-old": {
-    handle: "photographer",
-  },
-  scroll: {
-    handle: "illustrator",
-  },
-  terminal: {
-    handle: "photographer",
-  },
-  reference: {
-    handle: "bjorn",
-  },
-  blank: {
-    handle: "david",
-  },
-  isola: {
-    handle: "writer",
-  },
-  marfa: {
-    handle: "david",
-  },
-};
-
-// you don't need to do this for folders with
-// a template in the Templates folder
-const foldersOptions = {
-  bjorn: {
-    template: "portfolio",
-  },
-  david: {
-    template: "blog",
-  },
-};
 
 const templates = fs
   .readdirSync(TEMPLATES_DIRECTORY)
@@ -78,33 +25,8 @@ const templates = fs
     });
   });
 
-const folders = fs
-  .readdirSync(FOLDERS_DIRECTORY)
-  .filter((i) => !i.startsWith(".") && !i.endsWith(".md") && !i.endsWith(".js"))
-  .map((folder) => {
-    const pages =
-      foldersOptions[folder] && foldersOptions[folder].pages
-        ? foldersOptions[folder].pages
-        : ["/"];
-    const template =
-      foldersOptions[folder] && foldersOptions[folder].template
-        ? foldersOptions[folder].template
-        : fs.existsSync(`${FOLDERS_DIRECTORY}/${folder}/Templates`)
-        ? `my-${
-            fs
-              .readdirSync(`${FOLDERS_DIRECTORY}/${folder}/Templates`)
-              .filter((i) => !i.startsWith("."))[0]
-          }`
-        : "blog";
-    return pages.map((page, index) => {
-      return {
-        url: `${config.protocol}preview-of-${template}-on-${folder}.${config.host}${page}`,
-        destination: `${IMAGE_DIRECTORY}/${folder}/${index}`,
-      };
-    });
-  });
 
-const screenshots = templates.concat(folders).flat();
+const screenshots = templates.flat();
 
 const main = async () => {
   console.log(screenshots);
