@@ -63,6 +63,8 @@ const main = () => {
 
         // good practice to catch warnings (ie stat failures and other non-blocking errors)
         archive.on("warning", function (err) {
+          console.log(err);
+
           if (err.code === "ENOENT") {
             // log warning
           } else {
@@ -73,6 +75,7 @@ const main = () => {
 
         // good practice to catch this error explicitly
         archive.on("error", function (err) {
+          console.log(err);
           reject(err);
         });
 
