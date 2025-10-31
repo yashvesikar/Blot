@@ -35,10 +35,10 @@ module.exports = function (req, res, next) {
           if (template.slug.indexOf("-copy") !== -1) {
             template.thumbnailSlug = template.slug.split("-copy")[0];
           } else {
-            template.thumbnailSlug = "grid";
+            template.thumbnailSlug = "index";
           }
         } else {
-          template.thumbnailSlug = "grid";
+          template.thumbnailSlug = "index";
         }
       } else {
         template.thumbnailSlug = template.slug;
