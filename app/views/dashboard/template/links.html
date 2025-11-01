@@ -1,24 +1,14 @@
-<div style="margin-top: 2rem;">
-    <a href="{{{base}}}/" class="template-button" style="margin-left: 0;">
-        &larr; Back to template settings
-    </a>
-</div>
+{{> template-settings-back}}
 
-{{> message}}
+<form method='post' class="dashboard-form" action='{{{dashboardBase}}}' enctype='multipart/form-data'>
 
-
-<form method='post' class="dashboard-form" action='{{{dashboardBase}}}' enctype='multipart/form-data' style="max-width: 500px;border: 1px solid var(--border-color);padding: 2em 2em 2em;border-radius: 4px;">
+  	<div class="settings-group">
+		<h2 class="template-heading">Menu links</h2>
 
     <input type="hidden" name="_csrf" value="{{csrftoken}}" />
+    <input type="hidden" name="redirect" value="{{{base}}}/links" />
 
-<input type="hidden" name="redirect" value="{{{base}}}/links" />
-
-<p>
-  The following links appear on your site. You can add new links to external
-  sites. <a href="/how/pages">Pages</a> in your folder are added to these links
-  automatically. Click-and-drag the handle on the links to re-order them.
-</p>
-<br>
+<div style="padding:2em">
 
 <!-- Neccessary to produce an empty menu -->
 <input type="hidden" name="hasMenu" value="true" />
@@ -98,6 +88,13 @@
   ><span class="on-hover">Add new link</span></a
 >
 
+{{> form-footer}}
+
+</div>
+
+</div>
+</form>
+
 <script src="/js/jquery.js?{{ cacheID }}"></script>
 <script src="/js/sortable.js?{{ cacheID }}"></script>
 <script type="text/javascript">
@@ -171,4 +168,3 @@
   });
 </script>
 
-{{> form-footer}}

@@ -19,7 +19,7 @@
 		<h2 class="template-heading">Photo</h2>
 		<a class="line" href="{{{base}}}/photo"  style="padding: 11px 20px;border-bottom: none;"> 
 		{{^blog.avatar}}
-		<span class="center" style="border: 1px dashed var(--border-color);width: 48px;height:48px;display:inline-block; vertical-align: middle;margin-right: 0.5rem;margin-bottom: 4px;">
+		<span class="center" style="border: 1px dashed var(--border-color);width: 48px;height:48px;display:inline-block; vertical-align: middle;margin-right: 0.5rem;">
 		</span>
 		<span class="link">Choose a photo</span>
 		{{/blog.avatar}}
@@ -28,7 +28,7 @@
 		<span class="center" style="width: 48px;height:48px;display:inline-block; vertical-align: middle;">
 			<img style="max-width:48px;max-height:48px;vertical-align: baseline; display: inline;" src="{{blog.avatar}}" class="{{#blog.roundAvatar}}rounded{{/blog.roundAvatar}}" />
 		</span>
-		<span class="right" >Edit</span>    
+		<span class="link" >Edit</span>    
 			{{/blog.avatar}}
 		</a>
 	</div>

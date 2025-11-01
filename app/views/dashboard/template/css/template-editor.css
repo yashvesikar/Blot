@@ -294,6 +294,7 @@ label[for^="show_picker"] {
 .settings-group {
 	border: 1px solid var(--border-color);
 	border-radius: var(--border-radius);
+    overflow: hidden;
 	margin-bottom: 1.5rem;
 }
 
@@ -302,7 +303,8 @@ label[for^="show_picker"] {
 }
 
 .line.links .center {
-    margin-top: 4px;white-space: nowrap;overflow: hidden;position: relative;
+   white-space: nowrap;overflow: hidden;position: relative;
+   flex-grow: 1;
 }
 
 .line.links .link {

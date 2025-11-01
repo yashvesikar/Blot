@@ -25,6 +25,8 @@ Array.from(document.querySelectorAll('[data-font-picker-form]')).forEach(form =>
 
   if (!trigger || !label || !valueInput) return;
 
+  trigger.setAttribute('aria-expanded', 'false');
+
   const openPicker = () => {
     picker.cancelHide();
     trigger.setAttribute('aria-expanded', 'true');
@@ -48,6 +50,10 @@ Array.from(document.querySelectorAll('[data-font-picker-form]')).forEach(form =>
 
   trigger.addEventListener('click', event => {
     event.preventDefault();
+    if (trigger.getAttribute('aria-expanded') === 'true') {
+      picker.hide();
+      return;
+    }
     openPicker();
   });
 
@@ -55,6 +61,10 @@ Array.from(document.querySelectorAll('[data-font-picker-form]')).forEach(form =>
     const activationKeys = ['Enter', ' ', 'Spacebar'];
     if (!activationKeys.includes(event.key)) return;
     event.preventDefault();
+    if (trigger.getAttribute('aria-expanded') === 'true') {
+      picker.hide();
+      return;
+    }
     openPicker();
   });
 
