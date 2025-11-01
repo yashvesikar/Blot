@@ -26,7 +26,7 @@ h2 {
 .template-sidebar {
     width: 240px;
     padding: 0 3px 0 20px;
-    border-right: 1px solid #eeeeec;
+    border-right: 1px solid var(--border-color);
     flex-grow: 0;
     flex-shrink: 0;
     height: 100vh;
