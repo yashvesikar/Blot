@@ -75,9 +75,15 @@ if (previewIframeContainer) {
   };
 
   var storedPath = readStoredPath();
-  if (storedPath) {
+  var pathname = URL.parse(iframe.getAttribute("src")).pathname;
+
+  if (storedPath && storedPath !== pathname) {
+    console.log('updating iframe url')
     iframe.setAttribute("src", previewOrigin + storedPath);
+  } else {
+    console.log('iframe matches');
   }
+
   updatePreviewLink(storedPath);
 
   // Listen to messages sent from the iframe which contains
