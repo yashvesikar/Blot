@@ -35,7 +35,7 @@ SourceCode.route("/create")
   .get(function (req, res) {
     res.render("dashboard/template/source-code/create");
   })
-  .post(function (req, res, next) {
+  .post(require("./save/fork-if-needed"), function (req, res, next) {
     const name = req.body.name;
 
     if (req.params.viewSlug === "package.json") {
@@ -67,28 +67,6 @@ SourceCode.route("/create")
     });
   });
 
-SourceCode.route("/:viewSlug/configure")
-  .all(function (req, res, next) {
-    if (req.params.viewSlug === "package.json") {
-      return next(new Error("You cannot rename package.json"));
-    }
-    next();
-  })
-  .get(function (req, res) {
-    const { views, template } = res.locals.getAllViews;
-
-    req.view = res.locals.view = {
-      content: Template.package.generate(req.blog.id, template, views),
-      name: "package.json",
-      editorMode: editorMode("package.json"),
-    };
-
-    res.render("dashboard/template/source-code/edit");
-  })
-  .post(function (req, res, next) {
-    Template.setView(req.template.id, view, next);
-  });
-
 SourceCode.route("/:viewSlug/edit")
   .get(function (req, res) {
     res.locals.title = `${req.view.name} - ${req.template.name}`;
@@ -96,7 +74,7 @@ SourceCode.route("/:viewSlug/edit")
     res.locals.layout = "dashboard/template/layout";
     res.render("dashboard/template/source-code/edit");
   })
-  .post(function (req, res, next) {
+  .post(require("./save/fork-if-needed"), function (req, res, next) {
     var view = formJSON(req.body, Template.viewModel);
 
     view.name = req.view.name;
@@ -126,6 +104,9 @@ SourceCode.route("/:viewSlug/edit")
               if (err) return next(err);
               writeChangeToFolder(req.blog, req.template, view, function (err) {
                 if (err) return next(err);
+                if (res.locals.templateForked) {
+                  res.set("X-Template-Forked", "1");
+                }
                 res.send("Saved changes!");
               });
             }
@@ -137,6 +118,9 @@ SourceCode.route("/:viewSlug/edit")
         if (err) return next(err);
         writeChangeToFolder(req.blog, req.template, view, function (err) {
           if (err) return next(err);
+          if (res.locals.templateForked) {
+            res.set("X-Template-Forked", "1");
+          }
           res.send("Saved changes!");
         });
       });
@@ -152,7 +136,7 @@ SourceCode.route("/:viewSlug/rename")
     res.locals.title = `Rename - ${req.view.name} - ${req.template.name}`;
     res.render("dashboard/template/source-code/rename");
   })
-  .post(function (req, res, next) {
+  .post(require("./save/fork-if-needed"), function (req, res, next) {
     if (req.params.viewSlug === "package.json") {
       return next(new Error("You cannot rename package.json"));
     }
@@ -190,7 +174,7 @@ SourceCode.route("/:viewSlug/delete")
     res.locals.title = `Delete - ${req.view.name} - ${req.template.name}`;
     res.render("dashboard/template/source-code/delete");
   })
-  .post(function (req, res, next) {
+  .post(require("./save/fork-if-needed"), function (req, res, next) {
     Template.dropView(req.template.id, req.view.name, function (err) {
       if (err) return next(err);
       res.redirect(res.locals.base + "/source-code");

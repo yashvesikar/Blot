@@ -50,7 +50,7 @@ a.blog-link .text-info {
 }
 
 .site:hover {
-  background-color: #e4eafb75
+  background-color: var(--light-background-color);
 }
 
 .site:active {
@@ -96,7 +96,7 @@ button.logout {
 }
 
 button.logout:hover {
-  background-color: #e4eafb;
+  background-color: var(--light-background-color);
   color: var(--accent-color);
 }
 

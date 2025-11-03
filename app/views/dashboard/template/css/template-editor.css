@@ -69,12 +69,12 @@ h2 {
 
  
 .template-row:hover {
-    background: #e4eafb75;
+    background: var(--light-background-color);
     border-radius: var(--border-radius);
 }
 
 .template-row.menu-open {
-    background: #e4eafb75;
+    background: var(--light-background-color);
     border-radius: var(--border-radius);
 }
 
@@ -306,11 +306,11 @@ h2.template-heading:not(:first-child) {
 }
 
 .line.links .link {
-    position: absolute;top:0;right:0;background-color:linear-gradient(90deg,transparent,white 50%);padding: 0 0 1em 2em;
+    position: absolute;top:0;right:0;background:linear-gradient(90deg,transparent,var(--background-color) 50%);padding: 0 0 1em 2em;
   transition: background-color 0.2s;
 }
 
 .line.links:hover .link {
-    background-color: linear-gradient(90deg,transparent,#f3f5fd 50%);
+    background: linear-gradient(90deg,transparent,var(--light-background-color) 50%);
     
 }

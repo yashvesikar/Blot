@@ -79,7 +79,7 @@ width: 284px;
 }
 
 .color-picker-popup:hover {
-	background-color: #e4eafb75;
+	background-color: var(--light-background-color);
 }
 
 .color-label {

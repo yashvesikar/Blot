@@ -76,17 +76,20 @@ function initializeSourceEditor() {
 
         $(".error").text(res.responseText).fadeIn();
       },
-      success: function () {
+      success: function (_data, _textStatus, jqXHR) {
+        if (jqXHR && jqXHR.getResponseHeader('X-Template-Forked') === '1') {
+          window.location.reload();
+          return;
+        } 
+      
         $saveButton
           .addClass("disabled")
           .prop("disabled", true)
           .removeClass("working")
           .val("Saved!");
-
+      
         $saveButton.text("Saved");
-
         $(".error").hide();
-
         setTimeout(function () {
           $(".success").fadeOut();
         }, 3000);

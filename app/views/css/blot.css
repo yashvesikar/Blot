@@ -1,8 +1,8 @@
 html {
 
   --background-color: #fff;
-  --medium-background-color: var(--background-color);
-  --light-background-color: #f0f4ff;
+  --medium-background-color: #e4eafb;
+  --light-background-color: #f7f9fe; 
 
   --text-color: #000;
   --medium-text-color: #7e848f;
@@ -408,7 +408,7 @@ background .window {
 }
 
 .clients li a:hover {
-  background-color:  #e4eafb75;
+  background-color: var(--light-background-color);
 }
 
 
@@ -931,7 +931,7 @@ ul.pill-navigation {
 }
 
 .navigation a:hover {
-  background: #e4eafb75;
+  background:var(--light-background-color);
 } 
 
 .navigation a:focus {
@@ -939,7 +939,6 @@ ul.pill-navigation {
 }
 
 .navigation a.selected {
-  /* background: #e4eafb; */
   font-weight: 600;
   color: var(--accent-color);
 }
