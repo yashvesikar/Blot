@@ -136,8 +136,6 @@ Fix bug with template tags in blog post and tell [Shibel](https://mail.google.co
 
 Fix [Frank](https://mail.google.com/mail/u/0/1527fbcf999ba0c3)'s strange template bug
 
-Fix bug with a once-scheduled post, based on the file's path or previous date metadata. The post remains scheduled even if the date is removed, and even if it is then rebuilt.
-
 Fix bugs with template engine:
 - Prevent double submission on template editor at insertion and front-end levels
 - Make it possible to rename template directories and tell [Darren](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwHxvsmgwbnxLbDMNDplTLltlc) and tell [questioner](https://blot.im/questions/1610)
