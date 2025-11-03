@@ -16,7 +16,6 @@ TemplateEditor.param("templateSlug", require("./load/template"));
 TemplateEditor.use((req, res, next) => {
   res.locals.layout = "dashboard/template/layout";
   res.locals.dashboardBase = res.locals.base;
-  res.locals.breadcrumbs.add("Templates", "template");
   next();
 });
 
@@ -40,7 +39,6 @@ TemplateEditor.route("/disable")
 TemplateEditor.route("/new")
   .get((req, res) => {
     res.locals.newSelected = "selected";
-    res.locals.breadcrumbs.add("New template", "new");
     res.locals.title = "New template";
     res.render("dashboard/template/new");
   })
@@ -141,10 +139,6 @@ TemplateEditor.route("/:templateSlug")
 TemplateEditor.route("/:templateSlug/syntax-highlighter")
   .all(require("./load/font-inputs"))
   .all(require("./load/syntax-highlighter"))
-  .all(require("./load/color-inputs"))
-  .all(require("./load/index-inputs"))
-  .all(require("./load/navigation-inputs"))
-  .all(require("./load/dates"))
   .post(
     require("./save/fork-if-needed"),
     prepareTemplateUpdate,
@@ -156,7 +150,6 @@ TemplateEditor.route("/:templateSlug/syntax-highlighter")
     if (res.locals.syntax_themes) {
       res.locals.syntax_themes.expanded = true;
     }
-    res.locals.breadcrumbs.add("Syntax highlighter", "syntax-highlighter");
     res.locals.title = `Syntax highlighter - ${req.template.name}`;
     res.render("dashboard/template/syntax-highlighter");
   });
@@ -167,30 +160,27 @@ TemplateEditor.route("/:templateSlug/local-editing")
     res.locals.title = `Local editing - ${req.template.name}`;
     res.render("dashboard/template/local-editing");
   })
-  .post(
-    require("./save/fork-if-needed"),
-    function (req, res, next) {
-      Template.setMetadata(
-        req.template.id,
-        { localEditing: true },
-        function (err) {
-          if (err) return next(err);
+  .post(require("./save/fork-if-needed"), function (req, res, next) {
+    Template.setMetadata(
+      req.template.id,
+      { localEditing: true },
+      function (err) {
+        if (err) return next(err);
 
-          res.message(
-            "/sites/" + req.blog.handle + "/template",
-            "Transferred template <b>" + req.template.name + "</b> to your folder"
-          );
+        res.message(
+          "/sites/" + req.blog.handle + "/template",
+          "Transferred template <b>" + req.template.name + "</b> to your folder"
+        );
 
-          Template.writeToFolder(req.blog.id, req.template.id, function () {
-            // could we do something with this error? Could we wait to render the page?
-            // it would be useful to have a progress bar here to prevent
-            // busted folder state
-            // we should also do something with the error
-          });
-        }
-      );
-    }
-  );
+        Template.writeToFolder(req.blog.id, req.template.id, function () {
+          // could we do something with this error? Could we wait to render the page?
+          // it would be useful to have a progress bar here to prevent
+          // busted folder state
+          // we should also do something with the error
+        });
+      }
+    );
+  });
 
 TemplateEditor.route("/:templateSlug/download-zip").get(function (req, res) {
   // create a zip file of the template on the fly and send it to the user
@@ -278,7 +268,7 @@ TemplateEditor.route("/:templateSlug/rename")
 TemplateEditor.route("/:templateSlug/links")
   .get(require("dashboard/site/load/menu"), function (req, res) {
     res.locals.title = `Links - ${req.template.name}`;
-    res.locals.breadcrumbs.add("Links", "links");
+    res.locals.selected = { ...res.locals.selected, settings: "selected" };
     res.render("dashboard/template/links");
   })
   .post(function (req, res, next) {
@@ -288,7 +278,7 @@ TemplateEditor.route("/:templateSlug/links")
 TemplateEditor.route("/:templateSlug/photo")
   .get(function (req, res) {
     res.locals.title = `Photo - ${req.template.name}`;
-    res.locals.breadcrumbs.add("Photo", "photo");
+    res.locals.selected = { ...res.locals.selected, settings: "selected" };
     res.render("dashboard/template/photo");
   })
   .post(function (req, res, next) {
@@ -296,13 +286,6 @@ TemplateEditor.route("/:templateSlug/photo")
   });
 
 TemplateEditor.route("/:templateSlug/delete")
-  .all(require("./load/font-inputs"))
-  .all(require("./load/syntax-highlighter"))
-  .all(require("./load/color-inputs"))
-  .all(require("./load/index-inputs"))
-  .all(require("./load/navigation-inputs"))
-  .all(require("./load/dates"))
-
   .get(function (req, res, next) {
     res.locals.title = `Delete - ${req.template.name}`;
     res.locals.selected = { ...res.locals.selected, delete: "selected" };
@@ -326,13 +309,6 @@ TemplateEditor.route("/:templateSlug/delete")
   });
 
 TemplateEditor.route("/:templateSlug/reset")
-  .all(require("./load/font-inputs"))
-  .all(require("./load/syntax-highlighter"))
-  .all(require("./load/color-inputs"))
-  .all(require("./load/index-inputs"))
-  .all(require("./load/navigation-inputs"))
-  .all(require("./load/dates"))
-
   .get(function (req, res, next) {
     res.locals.title = `Reset - ${req.template.name}`;
     res.locals.selected = { ...res.locals.selected, reset: "selected" };

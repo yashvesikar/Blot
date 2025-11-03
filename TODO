@@ -1,5 +1,7 @@
 Work on template editor
 
+Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
+
 ---
 
 Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRCkhdsXvnSjxbbfGSxxDtlW)
@@ -13,8 +15,6 @@ Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 ---
 
 Fix bug with huge draft crashing the sync server /a327ex/drafts/it_follows.txt
-
-Fix bug with swiper css - it totally breaks site when pasted into css file...
 
 Fix bug with title based wikilinks [[Corsi|...more]] -> Corsi/Index.md 'Title: Corsi'
 
@@ -100,16 +100,9 @@ Fix bug with huge tiddlywiki post that crashed site by enforcing a size limit on
 Fix bug with incorrect date of files by path and follow up with [Ashish](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGBfxXGrhsDPbNJfnbZVCW)
 - `/posts/2021/Dec 2021/12-01 - Snow envy/Snow envy.txt` isn't dated correctly (should be first of december rather than january 12th)
 
-Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
-
 Fix bug with link format using filename and [follow up with yct](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTMLqzhtlSBrtFqNDFDdXPSfk)
 
 Fix bug with light mode colors and tell [Gary](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwJSCRWXMlsPRVBsnrcRcbMklc)
-
-Fix bug with first edit on forked template on template editor:
-- 1. open template editor for fresh blog
-- 2. change the text color
-- 3. nothing happens (due to the inital fork) until you reload the page
 
 Fix bugs with git client
 - Investigate a bug with git client credentials triggered when you have two sites using git on one account, and delete one of the sites
@@ -118,36 +111,13 @@ Fix bugs with git client
 - Pipe custom message when you change a blog's handle (breaking repo url)
 - Tell [Koen](https://mail.google.com/mail/u/0/#inbox/1670f516115ef9bd) about the broken repo URL fix
 
-Fix bug so that script 'fix' is able to remove tag items without posts
-- how to reproduce this bug?
-- it seems there is a phanton entry which no longer exists on a tag index
-- can we iterate over all tag keys during fix to detect this?
-
-Fix bug for 'edit this page' link in production
-
-Fix bug with images zooming inside footnotes and tell [Nathan](https://mail.google.com/mail/u/0/#inbox/FMfcgzGtwWCBmtldhMfQRgZjHDpFvSGb)
-
 Fix bug with menu which occur when multiple pages are added at once Menu needs concurrency or atomic operations (so we can build posts in parallel)
 - move menu into its own model (it's possible to add thousands of entries to it...)
-
-Fix bug with navigation link with blog tempalte and tell [Jason](https://mail.google.com/mail/u/0/#inbox/FMfcgzGrbcCBmkcVhfWTpZbmqndwXQrL)
-
-Fix bug with [date metadata](https://blot.im/questions/936)
-
-Fix bug with this [question](https://blot.im/questions/648)
-
-Fix issue with git client mirroring on GitHub by follow steps in email and follow up with [n](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqPzKcnQKsQQNkzcRpvCWpWKTr)
 
 Fix bug with the typeset settings do not actually affect anything (you can only disable/enable)
 
 Fix bug where one bad page can take down upstream repeatedly 
 – perhaps we need to cache in proxy cache timeouts? or somehow detect if a request causes upstream to crash?
-
-Fix bug with rename detector which caused old permalinks not to redirect to their latest version and tell [Shibel](https://mail.google.com/mail/u/0/#inbox/FMfcgxwChSMBfbsZQQSGSjtghSHKKVzm)
-- To reproduce, create file 'foo.txt' with title and permalink 'foo'
-- Then turn off server
-- Then rename file to 'bar.txt', and edit title to 'bar' at the same time
-- we expect /foo to redirect to /bar, but it doesn't
 
 Fix bugs with templates:
 - Fix bug with videos on Reference template and [Tell Marco](https://mail.google.com/mail/u/0/#inbox/FMfcgzGslbPSKMXkRbvrHKFTWhbJbPlg)
@@ -183,12 +153,6 @@ Fix bugs with template engine:
 
 Fix bug with script to import wordpress posts and follow up with [Simon](https://mail.google.com/mail/u/0/#inbox/FMfcgxwGCtMPcJhlmcdNvWwtWvgzWJvZ)
 
-Fix issues with menu links based on case-sensitivity switch
-
-Fix issues with bad permalinks based on case-sensitivity switch
-
-Fix bug with [bulk redirects page](https://blot.im/questions/2385)
-
 Fix bug with date metadata on [Vincent](https://mail.google.com/mail/u/0/#inbox/FMfcgxwJXVMdhvCJPXwVVSKRTFHQTQzn)'s blog and follow up. I suspect it's to do with the ordering of date tokens.
 
 Fix bug with tokens inside blog posts and follow up with [Karoly](https://mail.google.com/mail/u/0/#inbox/FMfcgxwJXfkFdhXCgBCTwGfBCzPhqwJF)
@@ -196,8 +160,6 @@ Fix bug with tokens inside blog posts and follow up with [Karoly](https://mail.g
 Fix bug with potentially TeX-related escaping issues and tell [Anthony](https://mail.google.com/mail/u/0/#inbox/FMfcgxwJWhzZspbBhTCPBGjvnslgrZlb) and Roy
 
 Fix issue with variable passed to dateFormat function and tell [Leo](https://mail.google.com/mail/u/0/#inbox/FMfcgzGqQJlfVpSBNBwDxcSlGGqHXQbh)
-
-Fix bug with image zoomer on mobile devices and tell [Alessandro](https://mail.google.com/mail/u/0/#inbox/FMfcgxwChSCwptjLtLGMjWxdkQNnNfTk)
 
 Fix bug with handling of queries and tell [this person](https://mail.google.com/mail/u/0/?zx=tqp989l7y4yi#inbox/15b575fbc8d80ad1).
 
@@ -306,6 +268,7 @@ Create abstract models/storage that could be used to eventually migrate blog dat
 - 1. Add `app/storage/index.js` that exposes namespaced helpers (e.g., `storage.blogs.resolve(blogID, relativePath)`, `storage.blogs.readFile`, `storage.static.writeFile`) implemented with `fs-extra` and the existing `config.blog_folder_dir` / `config.blog_static_files_dir`.
 - 2. Move the path normalization logic from `helper/localPath.js` into the new storage module (or have `localPath` call the storage API), keeping existing validations intact.
 - 3. Provide unit coverage mirroring `app/helper/tests/localPath.js` to confirm the new abstraction still resolves paths correctly for typical blog IDs and paths.
+- 4. Add mechanism for error storage, e.g. Dropbox .page file error or Dropbox file too large error, etc.
 
 Improve server performance by 1. Create `app/build/plugins/folderAssets/index.js` that exports a `render` handler; reuse the logic from `app/blog/render/replaceFolderLinks/html.js` and `lookupFile` so it asynchronously rewrites `<a href>`/`<img src>` etc. during build-time processing to CDN urls, resolving the correct case where needed.
 - 2. Register the plugin in `app/build/plugins/index.js` so it runs for HTML entries (respecting `options.isHTML`) and make it default-enabled for blogs.
@@ -461,6 +424,9 @@ Add per request resource monitoring, e.g. heap size before/after
 Tune proxy next upstream status code conditions to preserve zero-downtime-deployments but prevent expensive requests (timeout?)
 
 Move image zoom plugin to templates
+  - Fix bug with image zoomer on mobile devices and tell [Alessandro](https://mail.google.com/mail/u/0/#inbox/FMfcgxwChSCwptjLtLGMjWxdkQNnNfTk)
+  - Fix bug with images zooming inside footnotes and tell [Nathan](https://mail.google.com/mail/u/0/#inbox/FMfcgzGtwWCBmtldhMfQRgZjHDpFvSGb)
+  - Document image zoom disable feature ?zoom=false and tell [questioner](https://blot.im/questions/2236)
   For each blog:
     if image zoom plugin enabled:
       for each template:
@@ -937,8 +903,6 @@ Add simple commenting system
 
 Add [textbundle support](http://textbundle.org/spec/) and tell [questioner](https://blot.im/questions/1385)
 - this will help me understand how best to accomplish multi-file posts
-
-Document image zoom disable feature ?zoom=false and tell [questioner](https://blot.im/questions/2236)
 
 Add way to import directly
 - Add micro.blog import to dashboard and tell [Gabriel](https://mail.google.com/mail/u/0/#inbox/FMfcgzGwJRvfgrRhXwqDNDlxbpXmRlbd]

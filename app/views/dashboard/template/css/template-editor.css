@@ -279,10 +279,7 @@ h2.template-heading:not(:first-child) {
     border-top: 1px solid var(--border-color);
 }
 
-form.color-picker,
-label[for^="show_picker"] {
-    padding: 0 16px;
-}
+
 
 .template-grid {
             display: grid;
@@ -300,6 +297,7 @@ label[for^="show_picker"] {
 
 .line.links  {
     border-bottom: none;
+    padding-left: 11px;
 }
 
 .line.links .center {
@@ -308,10 +306,11 @@ label[for^="show_picker"] {
 }
 
 .line.links .link {
-    position: absolute;top:0;right:0;background:linear-gradient(90deg,transparent,white 50%);padding: 0 0 1em 2em;
+    position: absolute;top:0;right:0;background-color:linear-gradient(90deg,transparent,white 50%);padding: 0 0 1em 2em;
+  transition: background-color 0.2s;
 }
 
 .line.links:hover .link {
-    background: linear-gradient(90deg,transparent,#f3f5fd 50%);
+    background-color: linear-gradient(90deg,transparent,#f3f5fd 50%);
     
 }

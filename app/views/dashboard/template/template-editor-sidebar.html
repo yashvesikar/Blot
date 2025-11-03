@@ -17,9 +17,9 @@
 
 	<div class="settings-group">
 		<h2 class="template-heading">Photo</h2>
-		<a class="line" href="{{{base}}}/photo"  style="padding: 11px 20px;border-bottom: none;"> 
+		<a class="line" href="{{{base}}}/photo"  style="padding: 11px 14px;border-bottom: none;"> 
 		{{^blog.avatar}}
-		<span class="center" style="border: 1px dashed var(--border-color);width: 48px;height:48px;display:inline-block; vertical-align: middle;margin-right: 0.5rem;">
+		<span class="center" style="border: 1px dashed var(--border-color);width: 48px;height:48px;display:inline-block; vertical-align: middle;margin-right: 0.5rem;border-radius: var(--border-radius);">
 		</span>
 		<span class="link">Choose a photo</span>
 		{{/blog.avatar}}
@@ -43,11 +43,9 @@
 	{{/colors.length}}
 
 	{{#fonts.length}} 	
-	<div class="settings-group">
 	{{#fonts}} 
 	{{> font}} 
 	{{/fonts}} 
-	</div>
 	{{/fonts.length}} 	
 
 	{{#navigation.length}}
