@@ -14,12 +14,6 @@ Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 
 ---
 
-Fix bug with huge draft crashing the sync server /a327ex/drafts/it_follows.txt
-
-Fix bug with title based wikilinks [[Corsi|...more]] -> Corsi/Index.md 'Title: Corsi'
-
-Fix bug linking to relative pdf in subfolders, e.g. Pages/File.md '[](./file.pdf)' breaks
-
 Fix bug with recursive partials which took down server
 - seems possible in local templates
 - possibly on web templates too
@@ -27,6 +21,10 @@ Fix bug with recursive partials which took down server
 Fix bug with [~/gitbug folder](https://mail.google.com/mail/u/0/#inbox/KtbxLxgKJJfmhMNplLBcTcFCPgBVNlGtHL) during setup
 - surface setup errors with git client
 - handle these errors nicely through sync status
+
+Fix bug with huge draft crashing the sync server /a327ex/drafts/it_follows.txt
+
+Fix bug linking to relative pdf in subfolders, e.g. Pages/File.md '[](./file.pdf)' breaks
 
 Fix bugs with documentation template and tell [Ray](https://blot.im/questions/3233)
 
