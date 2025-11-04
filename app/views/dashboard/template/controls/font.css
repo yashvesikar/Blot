@@ -10,17 +10,17 @@
   cursor: pointer;
   position: relative;
   border: none;
-  background: #fafafa;
   text-align: left;
   display: block;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--border-color);
   font: inherit;
   color: inherit;
+  background-color: var(--background-color);
 }
 
 .font-picker-trigger:hover,
 .font-picker-trigger:focus {
-  background: #fff;
+  background-color: var(--light-background-color);
   outline: none;
 }
 
@@ -45,7 +45,6 @@
 .font-picker-sizing {
   display: flex;
   font-size: 11px;
-  border-bottom: 1px solid #ddd;
 }
 
 .font-picker-sizing__field {
