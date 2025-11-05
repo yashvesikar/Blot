@@ -11,6 +11,7 @@ var serialize = require("./util/serialize");
 var getMetadata = require("./getMetadata");
 var Blog = require("models/blog");
 var parseTemplate = require("./parseTemplate");
+var ERROR = require("../../blog/render/error");
 
 module.exports = function setView(templateID, updates, callback) {
   ensure(templateID, "string").and(updates, "object").and(callback, "function");
@@ -110,20 +111,236 @@ module.exports = function setView(templateID, updates, callback) {
 
         extend(view.partials).and(parseResult.partials);
 
-        view.retrieve = parseResult.retrieve || [];
+        detectInfinitePartialDependency(
+          templateID,
+          view,
+          parseResult,
+          function (infiniteError) {
+            if (infiniteError) return callback(infiniteError);
 
-        view = serialize(view, viewModel);
+            view.retrieve = parseResult.retrieve || [];
 
-        client.hmset(viewKey, view, function (err) {
-          if (err) return callback(err);
+            view = serialize(view, viewModel);
 
-          if (!changes) return callback();
+            client.hmset(viewKey, view, function (err) {
+              if (err) return callback(err);
 
-          Blog.set(metadata.owner, { cacheID: Date.now() }, function (err) {
-            callback(err);
-          });
-        });
+              if (!changes) return callback();
+
+              Blog.set(
+                metadata.owner,
+                { cacheID: Date.now() },
+                function (err) {
+                  callback(err);
+                }
+              );
+            });
+          }
+        );
       });
     });
   });
 };
+
+function detectInfinitePartialDependency(templateID, view, parseResult, callback) {
+  var viewName = view && view.name;
+  var viewAlias = null;
+  if (type(viewName, "string") && viewName.indexOf(".") > -1) {
+    viewAlias = viewName.slice(0, viewName.lastIndexOf("."));
+  }
+
+  var stack = [];
+  var cache = {};
+  var visited = {};
+
+  var rootInlinePartials = {};
+  if (type(view && view.partials, "object")) {
+    extend(rootInlinePartials).and(view.partials);
+  }
+  if (type(parseResult && parseResult.partials, "object")) {
+    extend(rootInlinePartials).and(parseResult.partials);
+  }
+
+  traverse(viewName, rootInlinePartials, function (err) {
+    if (err) return callback(err);
+    callback(null);
+  });
+
+  function traverse(name, contextInlinePartials, done) {
+    if (!type(name, "string")) return done();
+
+    if (stack.indexOf(name) > -1) {
+      return done(ERROR.INFINITE());
+    }
+
+    stack.push(name);
+
+    resolveNode(name, contextInlinePartials, function (err, node) {
+      if (err) {
+        stack.pop();
+        return done(err);
+      }
+
+      if (node && node.cacheable && visited[name]) {
+        stack.pop();
+        return done();
+      }
+
+      if (!node) {
+        stack.pop();
+        return done();
+      }
+
+      var deps = node.deps || [];
+      var childContext = {};
+      if (type(contextInlinePartials, "object")) extend(childContext).and(contextInlinePartials);
+      if (type(node.inlinePartials, "object")) extend(childContext).and(node.inlinePartials);
+      if (type(rootInlinePartials, "object")) extend(childContext).and(rootInlinePartials);
+
+      eachSeries(
+        deps,
+        function (dep, next) {
+          traverse(dep, childContext, next);
+        },
+        function (err) {
+          stack.pop();
+          if (!err && node.cacheable) visited[name] = true;
+          done(err);
+        }
+      );
+    });
+  }
+
+  function resolveNode(name, contextInlinePartials, done) {
+    if (
+      contextInlinePartials &&
+      Object.prototype.hasOwnProperty.call(contextInlinePartials, name) &&
+      contextInlinePartials[name] !== null &&
+      contextInlinePartials[name] !== undefined
+    ) {
+      return done(null, buildFromInline(contextInlinePartials[name]));
+    }
+
+    if (
+      rootInlinePartials &&
+      Object.prototype.hasOwnProperty.call(rootInlinePartials, name) &&
+      rootInlinePartials[name] !== null &&
+      rootInlinePartials[name] !== undefined
+    ) {
+      return done(null, buildFromInline(rootInlinePartials[name]));
+    }
+
+    if (cache[name]) return done(null, cache[name]);
+
+    if (isRootName(name)) {
+      cache[name] = buildFromView(view, parseResult);
+      return done(null, cache[name]);
+    }
+
+    if (name.charAt(0) === "/") {
+      cache[name] = { deps: [], inlinePartials: {}, cacheable: true };
+      return done(null, cache[name]);
+    }
+
+    getView(templateID, name, function (err, fetchedView) {
+      if (err) {
+        if (!err.message || err.message.indexOf("No view:") !== 0) {
+          return done(err);
+        }
+      }
+
+      if (!fetchedView) {
+        cache[name] = { deps: [], inlinePartials: {}, cacheable: true };
+        return done(null, cache[name]);
+      }
+
+      cache[name] = buildFromFetchedView(fetchedView);
+      done(null, cache[name]);
+    });
+  }
+
+  function isRootName(name) {
+    return name === viewName || (viewAlias && name === viewAlias);
+  }
+
+  function buildFromView(view, parseResult) {
+    var inlinePartials = {};
+
+    if (type(view && view.partials, "object")) {
+      extend(inlinePartials).and(view.partials);
+    }
+
+    if (type(parseResult && parseResult.partials, "object")) {
+      extend(inlinePartials).and(parseResult.partials);
+    }
+
+    return {
+      deps: Object.keys(inlinePartials),
+      inlinePartials: inlinePartials,
+      cacheable: true,
+    };
+  }
+
+  function buildFromFetchedView(fetchedView) {
+    var inlinePartials = {};
+
+    if (type(fetchedView && fetchedView.partials, "object")) {
+      extend(inlinePartials).and(fetchedView.partials);
+    }
+
+    var parsed = parseTemplate((fetchedView && fetchedView.content) || "");
+
+    if (type(parsed && parsed.partials, "object")) {
+      extend(inlinePartials).and(parsed.partials);
+    }
+
+    return {
+      deps: Object.keys(inlinePartials),
+      inlinePartials: inlinePartials,
+      cacheable: true,
+    };
+  }
+
+  function buildFromInline(partialValue) {
+    var inlinePartials = {};
+    var content = "";
+
+    if (type(partialValue, "object")) {
+      if (type(partialValue.partials, "object")) {
+        extend(inlinePartials).and(partialValue.partials);
+      }
+
+      if (type(partialValue.content, "string")) {
+        content = partialValue.content;
+      }
+    } else if (type(partialValue, "string")) {
+      content = partialValue;
+    }
+
+    var parsed = parseTemplate(content || "");
+
+    if (type(parsed && parsed.partials, "object")) {
+      extend(inlinePartials).and(parsed.partials);
+    }
+
+    return {
+      deps: Object.keys(inlinePartials),
+      inlinePartials: inlinePartials,
+      cacheable: false,
+    };
+  }
+}
+
+function eachSeries(list, iterator, done) {
+  var index = 0;
+  var items = Array.isArray(list) ? list : [];
+
+  function next(err) {
+    if (err) return done(err);
+    if (index >= items.length) return done();
+
+    iterator(items[index++], next);
+  }
+
+  next();
+}
