@@ -14,10 +14,6 @@ Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 
 ---
 
-Fix bug with recursive partials which took down server
-- seems possible in local templates
-- possibly on web templates too
-
 Fix bug with [~/gitbug folder](https://mail.google.com/mail/u/0/#inbox/KtbxLxgKJJfmhMNplLBcTcFCPgBVNlGtHL) during setup
 - surface setup errors with git client
 - handle these errors nicely through sync status
