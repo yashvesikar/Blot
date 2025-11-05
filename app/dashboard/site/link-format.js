@@ -68,7 +68,7 @@ linkFormat.get("/", function (req, res, next) {
   },  (req, res, next) => {
     res.locals.edit = !!req.query.edit;
     res.locals.breadcrumbs.add("Settings", "settings");
-    res.render("dashboard/site/settings/link-format");
+    res.render("dashboard/site/settings/links");
   });
   
 linkFormat.post("/", async (req, res) => {

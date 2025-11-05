@@ -43,7 +43,7 @@ site.use("/client", require("./client"));
 site.use("/title", require("./title"));
 
 site.use("/settings/date", require("./date"));
-site.use("/settings/link-format", require("./link-format"));
+site.use("/settings/links", load.plugins, require("./link-format"));
 
 site.get("/status", sse);
 

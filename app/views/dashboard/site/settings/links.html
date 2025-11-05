@@ -1,11 +1,21 @@
 {{> settings-form-header}}
+
+<h1>Links</h1>
+
+{{#categories.Links}}
+{{> plugin-row}}
+{{/categories.Links}}
+
+
 </form>
+<br>
 <form method='post' class="dashboard-form" enctype='multipart/form-data' style="max-width: 540px;padding:0;margin:0">
 
     <input type="hidden" name="_csrf" value="{{csrftoken}}" />
 
-<h1>Link format</h1>
 
+    <h2>Link format</h2>
+    
 {{#permalinkFormats}}
 <label class="format" style="border-bottom: 1px solid #eeeeec;line-height:inherit;margin:0;text-transform:none;font-size:16px;letter-spacing:0;padding:9px 0 9px 10px">
   <input style="margin:5px 10px 20px 0;float:left" type="radio" name="format" value="{{value}}" {{checked}}>
@@ -183,3 +193,5 @@ style="
 ">
 Guide to link formats <span style="float: right">&rarr;</span>
 </a>
+
+{{> settings-form-footer}}

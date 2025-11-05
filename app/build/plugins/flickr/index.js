@@ -71,5 +71,5 @@ module.exports = {
   render: render,
   category: "embeds",
   title: "Flickr",
-  description: "Embed photos and galleries from Flickr",
+  description: "Embed photos and galleries from Flickr links",
 };
