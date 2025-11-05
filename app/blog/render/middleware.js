@@ -16,7 +16,7 @@ var CACHE = config.cache;
 var CONTENT_TYPE = "Content-Type";
 var CACHE_CONTROL = "Cache-Control";
 
-const {minifyJS, minifyCSS} = require("./minify");
+const { minifyJS, minifyCSS } = require("./minify");
 const replaceFolderLinks = require("./replaceFolderLinks/html");
 const replaceFolderLinksCSS = require("./replaceFolderLinks/css");
 
@@ -71,8 +71,8 @@ module.exports = function (req, res, _next) {
       var missingLocals = response[2];
       var viewType = response[3];
       var view = response[4];
-      var query = Object.keys(req.query).length ? req.query : {};
-      
+      var query = Object.keys(req.query).length ? { query: req.query } : {};
+
       extend(res.locals)
         .and(query)
         .and(viewLocals)
@@ -80,7 +80,7 @@ module.exports = function (req, res, _next) {
         .and(blog.locals);
 
       extend(res.locals.partials).and(viewPartials);
-      
+
       retrieve(req, res, missingLocals, function (err, foundLocals) {
         extend(res.locals).and(foundLocals);
 
@@ -133,7 +133,11 @@ module.exports = function (req, res, _next) {
 
             // Only cache JavaScript and CSS if the request is not to a preview
             // subdomain and Blot's caching is turned on.
-            if (CACHE && !req.preview && (viewType === STYLE || viewType === JS)) {
+            if (
+              CACHE &&
+              !req.preview &&
+              (viewType === STYLE || viewType === JS)
+            ) {
               res.header(CACHE_CONTROL, cacheDuration);
             }
 
@@ -143,7 +147,7 @@ module.exports = function (req, res, _next) {
               req.protocol === "http" &&
               fromCloudflare === false &&
               output.indexOf(config.cdn.origin) > -1
-            ) 
+            )
               output = output
                 .split(config.cdn.origin)
                 .join(config.cdn.origin.split("https://").join("http://"));
@@ -163,13 +167,13 @@ module.exports = function (req, res, _next) {
               output = minifyCSS(output);
               req.log("Minified CSS");
             }
-            
+
             if (viewType === JS && !req.preview) {
               req.log("Minifying JavaScript");
               output = await minifyJS(output);
               req.log("Minified JavaScript");
             }
-            
+
             try {
               req.log("Sending response");
               res.header(CONTENT_TYPE, viewType);
