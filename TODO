@@ -1,7 +1,5 @@
 Work on template editor
 
-Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
-
 ---
 
 Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRCkhdsXvnSjxbbfGSxxDtlW)
@@ -13,6 +11,8 @@ Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Use as [reference](https://fsanchez.io)
 
 ---
+
+Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
 
 Fix bug with [~/gitbug folder](https://mail.google.com/mail/u/0/#inbox/KtbxLxgKJJfmhMNplLBcTcFCPgBVNlGtHL) during setup
 - surface setup errors with git client
