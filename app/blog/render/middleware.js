@@ -73,6 +73,7 @@ module.exports = function (req, res, _next) {
       var view = response[4];
 
       extend(res.locals)
+        .and({query: req.query})
         .and(viewLocals)
         .and(req.template.locals)
         .and(blog.locals);
