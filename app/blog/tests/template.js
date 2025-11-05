@@ -97,6 +97,48 @@ describe("template engine", function () {
     expect((await res1.text()).trim()).toEqual("");
   });
 
+  it("does not render templates with infinitely nested partials", async function () {
+    await this.template(
+      {
+        "entries.html": "{{> first}}",
+      },
+      {
+        views: {
+          "entries.html": {
+            partials: {
+              first: "{{> second}}",
+              second: "{{> first}}",
+            },
+          },
+        },
+      }
+    );
+
+    const res = await this.get(`/`);
+    const body = await res.text();
+
+    expect(res.status).toEqual(400);
+    expect(body).toContain("Error with your template");
+  });
+
+  it("does not render templates when views include each other infinitely", async function () {
+    await this.template({
+      "entries.html": "{{> header.html}}",
+      "header.html": "STALE",
+    });
+
+    expect(await this.text(`/`)).toBe("STALE");
+
+    await this.template({
+      "header.html": "{{> entries.html}}",
+    });
+    
+    const res = await this.fetch(`/`);
+    const text = await res.text();
+
+    expect(res.status).toBe(400);
+    expect(text).toContain('Error with your template')
+  });
 
   it("does not render the contents of an thumbnail block for posts without thumbnails", async function () {
     await this.write({
