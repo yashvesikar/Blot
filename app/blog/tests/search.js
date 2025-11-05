@@ -38,7 +38,7 @@ describe("search", function () {
 
     it("if there is no query it returns an empty list", async function () {
         
-        await this.template({ "search.html": `<h1>{{query}}</h1> {{#entries}} {{{html}}} {{/entries}}`});
+        await this.template({ "search.html": `{{#entries}} {{{html}}} {{/entries}}`});
 
         await this.write({path: '/a.txt', content: 'Hello, A!'});
 
@@ -46,7 +46,7 @@ describe("search", function () {
         const body = await res.text();
 
         expect(res.status).toEqual(200);
-        expect(body).toEqual('<h1></h1> '); 
+        expect(body).toEqual(''); 
     }); 
 
     it("if no entries match it returns an empty list", async function () {

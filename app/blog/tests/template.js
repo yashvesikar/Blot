@@ -89,12 +89,12 @@ describe("template engine", function () {
   it("renders the query object", async function () {
     // this previously triggered a bug with the template engine
     await this.template({
-      "foo.html": "{{query}}",
+      "foo.html": "{{query.bar}}",
     });
 
-    const res1 = await this.get(`/foo.html`);
+    const res1 = await this.get(`/foo.html?bar=baz`);
 
-    expect((await res1.text()).trim()).toEqual("");
+    expect((await res1.text()).trim()).toEqual("baz");
   });
 
   it("does not render templates with infinitely nested partials", async function () {
