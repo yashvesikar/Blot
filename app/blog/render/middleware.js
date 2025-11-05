@@ -71,9 +71,10 @@ module.exports = function (req, res, _next) {
       var missingLocals = response[2];
       var viewType = response[3];
       var view = response[4];
-
+      var query = Object.keys(req.query).length ? req.query : {};
+      
       extend(res.locals)
-        .and({query: req.query})
+        .and(query)
         .and(viewLocals)
         .and(req.template.locals)
         .and(blog.locals);
