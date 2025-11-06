@@ -83,10 +83,11 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   user-select: none;
   display: flex;
-  margin-top:-6px;
+  margin-top:-7px;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  overflow: hidden;
+  margin-left: -1px;
   flex-direction: column;
-  max-height: 340px;
-  width: 280px;
 }
 
 .template-font-picker[hidden] {
@@ -95,9 +96,11 @@
 
 .template-font-picker__filters {
   font-size: 12px;
-  padding: 0.15em 0.5em;
+  padding: 0.3em 0.5em;
   display: flex;
+  border-bottom: 1px solid var(--border-color);
   gap: 0.25em;
+  background-color: var(--light-background-color);
   flex-wrap: wrap;
 }
 
@@ -105,31 +108,44 @@
   border-radius: 10px;
   padding: 0.15em 0.5em;
   cursor: pointer;
-  color: #666;
+  color:var(--light-text-color);
   border: none;
   background: transparent;
 }
 
+.template-font-picker__filter:hover {
+  color: var(--accent-color);
+
+}
+
 .template-font-picker__filter.is-active {
-  background: #e0e0e0;
-  color: #111;
+  background: #ebebff;
+  color: var(--accent-color);
 }
 
 .template-font-picker__options {
-  overflow-y: auto;
-  flex: 1;
+  height: 340px;
+  width: 280px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
 }
+
+
 
 .template-font-picker__option {
   width: 100%;
+  box-sizing: border-box;
   text-align: left;
   margin: 0;
   display: block;
   border: none;
   outline: none;
+  font-size: 1.2em;
+  line-height: 1.1;
   background: #fafafa;
-  border-top: 1px solid #ddd;
-  padding: 0.333em 0.5em;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
 }
 
@@ -142,6 +158,7 @@
 }
 
 .template-font-picker__option svg {
-  height: 1.5em;
+  height: 1em;
+  font-size: 1.2em;
   display: block;
 }

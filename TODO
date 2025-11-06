@@ -1,12 +1,16 @@
 Work on template editor
 
+Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
+- Set up vanilla zoom
+- Use as [reference](https://fsanchez.io)
+
 Make it possible to serve abritrary template views through the CDN... JS CSS etc. and remove usage of cssURL, jsURL
 
 Turn andrew's template into a seperate 'Notebook' template
 
-Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
-- Set up vanilla zoom
-- Use as [reference](https://fsanchez.io)
+Apply improvements from andrew's template into documentation template
+
+Turn francesco's template into a seperate 'Restaurant' template
 
 ---
 
