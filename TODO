@@ -1,10 +1,6 @@
 Work on template editor
 
----
-
-Finish [setting up Andrew's site](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqRCkhdsXvnSjxbbfGSxxDtlW)
-- Turn on preserve linebreaks
-- Turn on auto title injection
+Make it possible to serve abritrary template views through the CDN... JS CSS etc. and remove usage of cssURL, jsURL
 
 Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
