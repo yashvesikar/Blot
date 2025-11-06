@@ -6,7 +6,7 @@
 
 .font-picker-trigger {
   width: 100%;
-  padding: 0.333em 16px;
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
   position: relative;
   border: none;
@@ -42,38 +42,27 @@
   display: block;
 }
 
-.font-picker-sizing {
-  display: flex;
-  font-size: 11px;
-}
-
-.font-picker-sizing__field {
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  flex-grow: 1;
-  box-sizing: border-box;
-}
-
-.font-picker-sizing__field--size {
-  border-right: 1px solid #ddd;
-}
-
-.font-picker-sizing__field label {
-  flex-grow: 1;
-}
-
-.font-picker-sizing__field input[type="number"] {
+.template-font-control input[type="number"] {
   margin-left: 8px;
   font-variant-numeric: tabular-nums;
   flex-grow: 0;
   width: 60px;
 }
 
-.font-picker-sizing__field--size input[type="number"] {
-  width: 50px;
+.sizing label {font-size: 12px;}
+
+.sizing {
+  border-bottom: 1px solid var(--border-color);
+  padding: 6px 16px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
+.sizing:hover {
+  background-color: var(--light-background-color);
+}
+.sizing:last-child {border-bottom: none;}
 /* Shared picker */
 .template-font-picker {
   position: absolute;
