@@ -11,13 +11,13 @@
     
     {{^hide_dates}}
     {{#displayFormats.length}}
-    <label style="padding:0 1rem">
-        <select style="width:257px;font-size:1rem;margin: 16px 0 8px;" id="date_display" name="locals.date_display">
+    <div style="display: flex;">
+        <select style="font-size:1rem;" id="date_display" name="locals.date_display">
             {{#displayFormats}}
             <option value="{{value}}" {{selected}}>{{date}}</option>
             {{/displayFormats}}
         </select>
-    </label>
+        </div>
     {{/displayFormats.length}}
     {{/hide_dates}}
     

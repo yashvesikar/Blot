@@ -1,4 +1,6 @@
-            {{> template-sub-navigation}}
+  <div style="flex-shrink:0;display: flex;flex-direction: column;width:284px">
+
+        {{> template-sub-navigation}}
 
             <div class="file-list">
                 <h2 class="template-heading">Files</h2>
@@ -7,14 +9,18 @@
                 
 
         {{#views}}
-        <a class="{{selected}}" href="{{{base}}}/source-code/{{name}}/edit">{{name}}</a>
+        <a class="{{selected}}" href="{{{base}}}/source-code/{{name}}/edit"><span class="icon-file"></span>&thinsp; {{name}}</a>
         {{/views}}
 
           <div style="border-top: 1px solid var(--border-color);">
-        	<a style="text-decoration:none;display: block;padding: 5px 20px;color:#666;font-size: 14px" href="{{{base}}}/source-code/create">+ Create new file</a>
-                <a style="text-decoration:none;display: block;padding: 5px 20px;color:#666;font-size: 14px" href="{{{base}}}/local-editing">Edit in folder</a>
+        	<a class="template-button" style="margin:4px 0" href="{{{base}}}/source-code/create"><span class="icon-plus"></span> Create new file</a>
+                <a class="template-button" style="margin:4px 0" href="{{{base}}}/local-editing"><svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.6865 9.00011L13.8595 7.76711C13.9966 7.62297 14.0708 7.43025 14.0659 7.23137C14.0609 7.03249 13.9771 6.84373 13.833 6.70661C13.6888 6.5695 13.4961 6.49526 13.2972 6.50023C13.0983 6.5052 12.9096 6.58897 12.7725 6.73311L10.3945 9.23311C10.2618 9.37254 10.1878 9.55765 10.1878 9.75011C10.1878 9.94258 10.2618 10.1277 10.3945 10.2671L12.7725 12.7671C12.9096 12.9113 13.0983 12.995 13.2972 13C13.4961 13.005 13.6888 12.9307 13.833 12.7936C13.9771 12.6565 14.0609 12.4677 14.0659 12.2689C14.0708 12.07 13.9966 11.8773 13.8595 11.7331L12.6865 10.5001H15.9375C16.1364 10.5001 16.3271 10.4211 16.4678 10.2804C16.6084 10.1398 16.6875 9.94902 16.6875 9.75011C16.6875 9.5512 16.6084 9.36043 16.4678 9.21978C16.3271 9.07913 16.1364 9.00011 15.9375 9.00011H12.6865Z"></path>
+      <path d="M1.75 0C0.784 0 0 0.784 0 1.75V12.25C0 12.7141 0.184374 13.1592 0.512563 13.4874C0.840752 13.8156 1.28587 14 1.75 14C1.75 14 8 14 9 14C10 14 10 12.5 9 12.5C8 12.5 1.75 12.5 1.75 12.5C1.612 12.5 1.5 12.388 1.5 12.25V1.75C1.5 1.6837 1.52634 1.62011 1.57322 1.57322C1.62011 1.52634 1.6837 1.5 1.75 1.5H5C5.03881 1.5 5.07709 1.50904 5.1118 1.52639C5.14652 1.54375 5.17671 1.56895 5.2 1.6L6.1 2.8C6.43 3.24 6.95 3.5 7.5 3.5H14.25C14.3163 3.5 14.3799 3.52634 14.4268 3.57322C14.4737 3.62011 14.5 3.6837 14.5 3.75C14.5 3.75 14.5 3.5 14.5 4.5C14.5 5.5 16 5.5 16 4.5C16 3.5 16 3.75 16 3.75C16 2.784 15.216 2 14.25 2H7.5C7.46119 2 7.42291 1.99096 7.3882 1.97361C7.35348 1.95625 7.32329 1.93105 7.3 1.9L6.4 0.7C6.07 0.26 5.55 0 5 0H1.75Z"></path>
+      </svg> Edit in folder</a>
 
         </div>
        
 
 </div>
+  </div>

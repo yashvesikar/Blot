@@ -63,6 +63,8 @@
   justify-content: space-between;
 }
 
+.sizing label {flex-grow: 1;}
+
 .sizing:hover {
   background-color: var(--light-background-color);
 }

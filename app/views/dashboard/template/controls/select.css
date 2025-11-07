@@ -6,7 +6,8 @@ form.select {
   form.select:hover {background: #fff;}
 form.select:last-of-type {border-bottom: none;}
 
-form.select select {
+form.select select,
+#date_display {
   -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -19,11 +20,20 @@ form.select select {
     color: var(--text-color)
 }
 
-form.select:hover {
+#date_display {
+  text-align: left;
+  margin:0;
+  flex-grow: 1;
+  border-bottom: 1px solid var(--light-border-color);
+}
+
+form.select:hover,
+#date_display:hover {
   background-color: var(--light-background-color);
 }
 
-form.select::before {
+form.select::before,
+#date_display::before {
   content: "";
   width: 1em;
   height: 1em;
@@ -37,6 +47,7 @@ form.select::before {
   background-size: 1em;
 }
 
-form.select:hover::before {
+form.select:hover::before,
+#date_display:hover::before {
   opacity: 0.7;
 }
