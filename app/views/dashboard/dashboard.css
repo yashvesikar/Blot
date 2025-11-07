@@ -145,20 +145,6 @@ span.file {
   background-image: url("/images/file.svg");
 }
 
-.underline {
-  color: blue;
-  text-decoration: none;
-  text-shadow: 0.03em 0 #fff, -0.03em 0 #fff, 0 0.03em #fff, 0 -0.03em #fff,
-    0.06em 0 #fff, -0.06em 0 #fff, 0.09em 0 #fff, -0.09em 0 #fff, 0.12em 0 #fff,
-    -0.12em 0 #fff, 0 0.03em #fff, 0 -0.03em #fff, 0 0.06em #fff, 0 -0.06em #fff,
-    0 0.08em #fff, 0 -0.08em #fff;
-  background-image: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff),
-    linear-gradient(blue, blue);
-  background-size: 0 0, 0 0, 0.07em 0.07em;
-  background-repeat: no-repeat, no-repeat, repeat-x;
-  background-position: 0% 90%, 100% 90%, 0% 95%;
-}
-
 .sortable>section {}
 
 .sortable>section.isPage .button {

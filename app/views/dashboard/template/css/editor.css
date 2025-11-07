@@ -14,16 +14,18 @@
 }
 
 .file-list {
-	padding: 1rem 0;
+  border:1px solid var(--border-color);
+  border-radius: var(--border-radius);
 }
 
 .file-list .selected {
-	background: rgba(255, 255, 255, 0.5);
-	color: #000;
+	background-color: var(--light-background-color);
+  color: var(--accent-color);
+  font-weight: 600;
 }
 .file-list a {
 	font-size: 14px;
-	padding: 0 1rem;
+  padding:2px 16px;
 	display: block;
 	color: #777;
 	text-decoration: none;
@@ -56,38 +58,39 @@
     z-index: 2;}
 
   #save.button {
-        border-radius: 2px;
-    padding: 4px 8px;
-    font-size: 14px;
-    font-weight: 600;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+    padding: 8px 16px;
     text-decoration: none;
-    color: #555;
+    color: var(--success-text-color);
     background-color: rgb(255, 255, 255);
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px;
     flex-grow: 1;
+    font-size: 14px;
     text-align: left;
-    border: none;
     cursor: pointer;
 
   }
 
   #save.button:before {
-    content: "●";
-    color: green;
-    text-shadow: 0 0 6px green;
-    padding: 0 1rem 0 0.75rem
+    content: "";
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    border-radius: 1em;
+    font-size: 8px;
+    background: var(--success-text-color);
+    margin-right:  12px
   }
 
-  #save.button.disabled:before {color: #ddd;text-shadow: none;}
+  #save.button.disabled:before {background: #ddd;text-shadow: none;}
 
   #save.button.disabled {
-    background-color: transparent;
-    color: #888;
+    background-color: #fafafa;
+    border-color: #fafafa;
+    color: var(--light-text-color);
     font-weight: 500;
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, rgba(60, 66, 87, 0.16) 0px 0px 0px -1px;
   }
 
-  #save.button:focus {border:none;outline: none}
 
   .CodeMirror-sizer {
     border-top: 1px solid #ccc;

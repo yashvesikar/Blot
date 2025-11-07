@@ -12,7 +12,7 @@
   border: none;
   text-align: left;
   display: block;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--light-border-color);
   font: inherit;
   color: inherit;
   background-color: var(--background-color);
@@ -55,10 +55,8 @@
   width: 60px;
 }
 
-.sizing label {font-size: 12px;}
-
 .sizing {
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--light-border-color);
   padding: 6px 16px;
   display: flex;
   align-items: baseline;

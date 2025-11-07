@@ -8,11 +8,12 @@ html {
   --medium-text-color: #7e848f;
   --light-text-color: #9ba0ac;
 
-  --accent-color: #00f; /* used for links */
-  --light-accent-color: #00f; /* used for button background */
-  --dark-accent-color:#00f; /* used for button hover background*/
+  --accent-color: #0066de; /* used for links */
+  --light-accent-color: #0066de; /* used for button background */
+  --dark-accent-color: #0066de; /* used for button hover background*/
 
   --border-color: #EEEEEC;
+  --light-border-color: #f9f9f9;
   --inset-image-border-color: rgba(255,255,255,0.05);
 
   --warning-text-color: #F6C30F;

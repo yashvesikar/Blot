@@ -13,6 +13,7 @@ h2 {
     border-bottom: none;
 }
 
+.inputs form label {color:var(--text-color);font-size: 13px;}
 
 .template-row + h2 {
     margin-top: calc(var(--spacing) * 1);
@@ -26,7 +27,6 @@ h2 {
 .template-sidebar {
     width: 240px;
     padding: 0 3px 0 20px;
-    border-right: 1px solid var(--border-color);
     flex-grow: 0;
     flex-shrink: 0;
     height: 100vh;
@@ -196,17 +196,7 @@ h2 {
     right: 0;
 }
 
-.template-row .preview iframe {
-    border: none;
-    outline: none;
-    box-shadow: none;
-    height: 800px;
-    width: 1200px;
-    background: var(--background-color);
-    transform: scale(0.0375);
-    background-color: #fff;
-    transform-origin: top left;
-}
+
 
 .installed {
     display: block;
@@ -246,7 +236,7 @@ h2 {
 
 .iframe-container {
     width: 100%;
-    padding-top: 75%;
+    height: calc(100vh - 8.75rem);
     overflow: hidden;
     box-shadow: inset 0 1px 0 #f5f4f5, 0 -1px 0 rgba(0, 0, 0, .11), 0 1px 0 rgba(0, 0, 0, .26), -1px 0 0 rgba(0, 0, 0, .13), 1px 0 0 rgba(0, 0, 0, .13);
     border-radius: var(--border-radius);
@@ -262,7 +252,7 @@ h2 {
     border: none;
     background-color: var(--background-color);
     transform-origin: 0 0;
-    transform: scale(calc(var(--iframe-container-width) / 1200));
+    transform: scale(calc(var(--iframe-container-width) / 960));
 }
 
 
@@ -296,8 +286,12 @@ h2.template-heading:not(:first-child) {
 }
 
 .line.links  {
-    border-bottom: none;
+    border-bottom: 1px solid var(--light-border-color);
     padding-left: 11px;
+}
+
+.line.links:last-child {
+    border-bottom: none;
 }
 
 .line.links .center {
@@ -313,4 +307,27 @@ h2.template-heading:not(:first-child) {
 .line.links:hover .link {
     background: linear-gradient(90deg,transparent,var(--light-background-color) 50%);
     
+}
+
+.segmented-control {
+    display: flex;padding:2px;border-radius: 7px;margin-bottom: 24px;
+    background: #f5f5f5;
+    position: relative;
+    overflow: hidden;
+    gap:2px;
+}
+
+.segmented-control .template-button {
+margin:0;flex-basis: 50%;
+text-align: center;
+padding: 6px 0;
+}
+
+.segmented-control .template-button.selected {
+    background-color: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .11);
+}
+
+.segmented-control .template-button.selected::after{
+    display: none;
 }

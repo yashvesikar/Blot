@@ -1,17 +1,19 @@
-<div class="file-list">
+            {{> template-sub-navigation}}
 
-        <div style="border-bottom: 1px solid var(--border-color);margin-bottom: 1em;">
-<a style="text-decoration:none;display: block;padding: 5px 20px;color:#666;font-size: 14px" href="{{{base}}}/local-editing">Edit in folder</a>
+            <div class="file-list">
+                <h2 class="template-heading">Files</h2>
 
-        </div>
+
                 
 
         {{#views}}
         <a class="{{selected}}" href="{{{base}}}/source-code/{{name}}/edit">{{name}}</a>
         {{/views}}
 
-          <div style="border-top: 1px solid var(--border-color);margin-top: 1em;">
+          <div style="border-top: 1px solid var(--border-color);">
         	<a style="text-decoration:none;display: block;padding: 5px 20px;color:#666;font-size: 14px" href="{{{base}}}/source-code/create">+ Create new file</a>
+                <a style="text-decoration:none;display: block;padding: 5px 20px;color:#666;font-size: 14px" href="{{{base}}}/local-editing">Edit in folder</a>
+
         </div>
        
 

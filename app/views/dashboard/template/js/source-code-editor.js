@@ -42,6 +42,7 @@ function initializeSourceEditor() {
   var editor = CodeMirror.fromTextArea(sourceElement, {
     mode: { name: "handlebars", base: $source.attr("data-mode") },
     lineNumbers: true,
+    lineWrapping: true,
     smartIndent: false,
     styleActiveLine: true,
     theme: "default",
