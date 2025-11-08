@@ -157,7 +157,11 @@ TemplateEditor.route("/:templateSlug/syntax-highlighter")
 TemplateEditor.route("/:templateSlug/local-editing")
   .get(require("./load/template-views"), function (req, res) {
     res.locals.enabled = req.template.localEditing;
-    res.locals.selected = { ...res.locals.selected, source: "selected", local_editing: "selected" };
+    res.locals.selected = {
+      ...res.locals.selected,
+      source: "selected",
+      local_editing: "selected",
+    };
     res.locals.title = `Local editing - ${req.template.name}`;
     res.render("dashboard/template/source-code/local-editing");
   })
@@ -169,7 +173,14 @@ TemplateEditor.route("/:templateSlug/local-editing")
           { localEditing: false },
           function (err) {
             if (err) return next(err);
-            res.message(req.baseUrl, "Disabled local editing");
+            res.message(
+              "/sites/" +
+                req.blog.handle +
+                "/template/" +
+                req.template.id.split(":").slice(1).join(":") +
+                "/source-code",
+              "Moved template from your folder"
+            );
           }
         );
       });
@@ -184,8 +195,9 @@ TemplateEditor.route("/:templateSlug/local-editing")
             "/sites/" +
               req.blog.handle +
               "/template/" +
-              req.template.id.split(":").slice(1).join(":"),
-            "Transferred template to your folder"
+              req.template.id.split(":").slice(1).join(":") +
+              "/source-code",
+            "Moved template to your folder"
           );
 
           Template.writeToFolder(req.blog.id, req.template.id, function () {
@@ -358,9 +370,5 @@ TemplateEditor.route("/:templateSlug/reset")
   });
 
 TemplateEditor.use("/:templateSlug/source-code", require("./source-code"));
-
-TemplateEditor.use(function (err, req, res, next) {
-  res.status(400).send("Error: " + err.message || "Error");
-});
 
 module.exports = TemplateEditor;
