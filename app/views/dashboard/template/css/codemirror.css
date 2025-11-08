@@ -106,7 +106,8 @@
 
 /* DEFAULT THEME */
 
-.cm-s-default .cm-header {color:var(--accent-color);}
+.cm-s-default .cm-header,
+.cm-s-default .cm-property {color:var(--accent-color);}
 .cm-s-default .cm-quote {color: var(--success-text-color);}
 .cm-negative {color: var(--error-text-color);}
 .cm-positive {color: var(--success-text-color);}
@@ -126,7 +127,6 @@
 .cm-s-default .cm-def {color: var(--accent-color);}
 .cm-s-default .cm-variable,
 .cm-s-default .cm-punctuation,
-.cm-s-default .cm-property,
 .cm-s-default .cm-operator {}
 .cm-s-default .cm-variable-2 {color: var(--accent-color);}
 .cm-s-default .cm-variable-3, .cm-s-default .cm-type {color:  var(--success-text-color);}
