@@ -96,7 +96,10 @@ a.close-button:hover > span,
 }
 
 .template-button svg {
-    fill:currentColor;vertical-align: middle;position:relative;top:-0.1em;
+    fill:currentColor;
+    vertical-align: middle;
+    position:relative;
+    top:-0.1em;
     margin-right: 4px;
 }
 

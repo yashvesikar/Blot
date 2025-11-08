@@ -27,7 +27,7 @@ module.exports = function (req, res, next) {
 // Determine the mode for the
 // text editor based on the file extension
 function editorMode(name) {
-  var mode = "xml";
+  var mode = "htmlmixed";
 
   if (extname(name) === ".js") mode = "javascript";
 
@@ -36,6 +36,10 @@ function editorMode(name) {
   if (extname(name) === ".css") mode = "css";
 
   if (extname(name) === ".txt") mode = "text";
+
+  if (extname(name) === ".rss") mode = "xml";
+
+  if (extname(name) === ".xml") mode = "xml";
 
   return mode;
 }

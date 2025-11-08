@@ -1,5 +1,6 @@
-<br><br>
-<form action="{{{base}}}/local-editing" method="post" class="dashboard-form">
+<div style="display:flex;min-height:80vh;gap:2em">
+	  {{> source-code-sidebar}}
+    <form action="{{{base}}}/local-editing" method="post" class="dashboard-form">
 	<input type="hidden" name="_csrf" value="{{csrftoken}}" />
 	
   {{^template.localEditing}}
@@ -23,3 +24,4 @@
 	<a href="{{{base}}}/source-code" >Cancel</a>
   </div>
 </form>
+</div>

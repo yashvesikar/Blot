@@ -19,11 +19,13 @@ h2 {
     margin-top: calc(var(--spacing) * 1);
 }
 .smallLink {
-    font-size: 11px;
-    color: #555;
-    margin-left: 0.2rem;
+    margin-left: 0.5rem;
+    font-size: 12px;
+  color: var(--medium-text-color);
 }
-
+.smallLink:hover {
+    color:var(--accent-color)
+}
 .template-sidebar {
     width: 240px;
     padding: 0 3px 0 20px;
@@ -287,7 +289,7 @@ h2.template-heading:not(:first-child) {
 
 .line.links  {
     border-bottom: 1px solid var(--light-border-color);
-    padding-left: 11px;
+    padding-left: 7px;
 }
 
 .line.links:last-child {
@@ -323,8 +325,14 @@ text-align: center;
 padding: 6px 0;
 }
 
+.segmented-control .template-button:hover {
+    background-color: transparent;
+    color: var(--text-color)
+}
+
 .segmented-control .template-button.selected {
     background-color: white;
+    color: var(--accent-color);
     box-shadow: 0 0 6px rgba(0, 0, 0, .11);
 }
 

@@ -33,6 +33,7 @@ SourceCode.route("/")
 SourceCode.route("/create")
   .get(require("./load/template-views"))
   .get(function (req, res) {
+      res.locals.selected = { ...res.locals.selected, create: "selected" };
     res.render("dashboard/template/source-code/create");
   })
   .post(require("./save/fork-if-needed"), function (req, res, next) {

@@ -6,11 +6,11 @@
 }
 
 .CodeMirror-gutters {
-	background-color: #fbf8f6;
+  padding-right: 4px;
 }
 
 .CodeMirror-linenumber {
-	color: rgb(158, 154, 152);
+	color: var(--light-text-color);
 }
 
 .file-list {
@@ -23,12 +23,33 @@
   color: var(--accent-color);
   font-weight: 600;
 }
+
+.file-list a svg {
+    fill:currentColor;
+    vertical-align: middle;
+    position:relative;
+    top:-0.1em;
+
+}
+
+.file-list a span,
+.file-list a svg {
+  margin-right: 2px;
+
+}
+  
 .file-list a {
 	font-size: 14px;
   padding:2px 16px;
 	display: block;
 	color: #777;
 	text-decoration: none;
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+.file-list a:hover {
+  background-color: var(--light-background-color);
 }
 
 .tab.selected {

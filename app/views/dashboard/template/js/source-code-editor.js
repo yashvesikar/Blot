@@ -1,18 +1,4 @@
-const $ = require("../../../js/jquery.js");
-
-if (typeof window !== "undefined") {
-  window.$ = window.jQuery = $;
-}
-
-const codeMirrorModule = require("./codemirror/codemirror.js");
-const CodeMirror =
-  (codeMirrorModule && codeMirrorModule.default) ||
-  codeMirrorModule ||
-  (typeof window !== "undefined" ? window.CodeMirror : undefined);
-
-if (typeof window !== "undefined" && CodeMirror) {
-  window.CodeMirror = CodeMirror;
-}
+const CodeMirror = require("./codemirror/codemirror.js");
 
 require("./codemirror/active-line.js");
 require("./codemirror/mode-css.js");
@@ -24,99 +10,169 @@ require("./codemirror/mode-javascript.js");
 require("./codemirror/mode-xml.js");
 
 function initializeSourceEditor() {
-  if (typeof window === "undefined" || !window.document || !CodeMirror) {
-    return;
-  }
+  if (typeof window === "undefined" || !window.document || !CodeMirror) return;
 
   var sourceElement = document.getElementById("source");
-  if (!sourceElement) {
-    return;
-  }
+  if (!sourceElement) return;
 
-  var $source = $(sourceElement);
-  var $saveButton = $("#save");
-  var $form = $(".save");
+  var saveButton = document.getElementById("save");
+  var form = document.querySelector("form.save");
+  if (!form || !saveButton) return;
 
-  $source.hide();
+  sourceElement.style.display = "none";
+
+  var baseMode = sourceElement.getAttribute("data-mode") || "htmlmixed";
 
   var editor = CodeMirror.fromTextArea(sourceElement, {
-    mode: { name: "handlebars", base: $source.attr("data-mode") },
+    mode: { name: "handlebars", base: baseMode },
     lineNumbers: true,
     lineWrapping: true,
     smartIndent: false,
     styleActiveLine: true,
     theme: "default",
+    extraKeys: {
+      "Cmd-S": doSave,
+      "Ctrl-S": doSave,
+    },
   });
 
-  function handleSave(event) {
-    if (event && typeof event.preventDefault === "function") {
-      event.preventDefault();
-    }
-
-    if ($saveButton.hasClass("disabled")) {
-      return false;
-    }
-
-    $saveButton.addClass("working").addClass("disabled").val("Saving");
-
-    $('input[name="content"]').val(editor.getValue());
-
-    $saveButton.text("Saving changes");
-
-    $.ajax({
-      type: "POST",
-      url: $form.attr("action"),
-      data: $form.serialize(),
-      error: function (res) {
-        $saveButton
-          .text("Save changes")
-          .removeClass("working")
-          .removeClass("disabled")
-          .prop("disabled", false)
-          .val("Save");
-
-        $(".error").text(res.responseText).fadeIn();
-      },
-      success: function (_data, _textStatus, jqXHR) {
-        if (jqXHR && jqXHR.getResponseHeader('X-Template-Forked') === '1') {
-          window.location.reload();
-          return;
-        } 
-      
-        $saveButton
-          .addClass("disabled")
-          .prop("disabled", true)
-          .removeClass("working")
-          .val("Saved!");
-      
-        $saveButton.text("Saved");
-        $(".error").hide();
-        setTimeout(function () {
-          $(".success").fadeOut();
-        }, 3000);
-      },
+  editor.on("change", function () {
+    setButtonState({
+      text: "Save changes",
+      value: "Save",
+      disabled: false,
+      working: false,
+      disabledClass: false,
     });
+  });
+
+  function setButtonState(options) {
+    const text = options.text;
+    const value = options.value;
+    const disabled = options.disabled;
+    const working = options.working;
+    const disabledClass = options.disabledClass;
+
+    if (typeof text === "string") saveButton.textContent = text;
+    if (typeof value === "string") saveButton.value = value;
+    if (typeof disabled === "boolean") saveButton.disabled = disabled;
+
+    saveButton.classList.toggle("working", !!working);
+    saveButton.classList.toggle("disabled", !!disabledClass);
+  }
+
+  function showError(msg) {
+    var el = document.querySelector(".error");
+    if (!el) return;
+    el.textContent = msg || "An error occurred";
+    el.style.display = "block";
+    el.style.opacity = "1";
+  }
+
+  function hideError() {
+    var el = document.querySelector(".error");
+    if (!el) return;
+    el.style.display = "none";
+  }
+
+  function fadeOutSuccessAfter(ms) {
+    var el = document.querySelector(".success");
+    if (!el) return;
+    // If your CSS has a transition on opacity, this will animate; otherwise it’s an instant hide.
+    setTimeout(function () {
+      el.style.opacity = "0";
+      // Remove from flow after a short delay to allow any transition to run
+      setTimeout(function () {
+        el.style.display = "none";
+        el.style.opacity = "";
+      }, 300);
+    }, ms);
+  }
+
+  function serializeForm(formEl) {
+    return new URLSearchParams(new FormData(formEl)).toString();
+  }
+
+  async function handleSave(event) {
+    if (event && typeof event.preventDefault === "function")
+      event.preventDefault();
+
+    if (saveButton.classList.contains("disabled")) return false;
+
+    setButtonState({
+      text: "Saving changes",
+      value: "Saving",
+      disabled: true,
+      working: true,
+      disabledClass: true,
+    });
+
+    // Mirror editor content into the hidden input
+    var contentInput = form.querySelector('input[name="content"]');
+    if (contentInput) contentInput.value = editor.getValue();
+
+    hideError();
+
+    try {
+      const body = serializeForm(form);
+      const res = await fetch(form.getAttribute("action"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+        body,
+        credentials: "same-origin",
+      });
+
+      // Support the fork header behavior
+      const forked = res.headers.get("X-Template-Forked") === "1";
+      if (forked) {
+        window.location.reload();
+        return false;
+      }
+
+      if (!res.ok) {
+        const text = await res.text();
+        setButtonState({
+          text: "Save changes",
+          value: "Save",
+          disabled: false,
+          working: false,
+          disabledClass: false,
+        });
+        showError(text);
+        return false;
+      }
+
+      setButtonState({
+        text: "Saved",
+        value: "Saved!",
+        disabled: true,
+        working: false,
+        disabledClass: true,
+      });
+
+      hideError();
+      fadeOutSuccessAfter(3000);
+    } catch (err) {
+      setButtonState({
+        text: "Save changes",
+        value: "Save",
+        disabled: false,
+        working: false,
+        disabledClass: false,
+      });
+      showError(String(err && err.message ? err.message : err));
+    }
 
     return false;
   }
 
-  $form.submit(handleSave);
+  form.addEventListener("submit", handleSave);
 
-  editor.on("keydown", function (mirror, event) {
-    if (
-      event.keyCode === 83 &&
-      (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)
-    ) {
-      event.preventDefault();
-      $form.submit();
-    } else {
-      $saveButton
-        .removeClass("disabled")
-        .text("Save changes")
-        .prop("disabled", false)
-        .val("Save");
-    }
-  });
+  function doSave(cm) {
+    handleSave();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initializeSourceEditor);
