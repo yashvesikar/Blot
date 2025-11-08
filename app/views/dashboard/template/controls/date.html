@@ -11,7 +11,7 @@
     
     {{^hide_dates}}
     {{#displayFormats.length}}
-    <div style="display: flex;">
+    <div style="display: flex;" id="date_display_container">
         <select style="font-size:1rem;" id="date_display" name="locals.date_display">
             {{#displayFormats}}
             <option value="{{value}}" {{selected}}>{{date}}</option>
@@ -23,18 +23,20 @@
     
 
 {{#show_hide_dates}}
-    <label style="padding:5px 1rem;border-bottom: 1px solid #eee;display: block;">
-        <input type="hidden" value="off" name="locals.hide_dates" />
-        {{#hide_dates}}
-        <input checked id="hide_dates" type="checkbox" name="locals.hide_dates"
-        />
-        {{/hide_dates}}
+<label class="bool" style="padding:8px 16px;border-bottom: 1px solid var(--light-border-color);display: block;display: flex;">
+                        	   <span style="flex-grow: 1;">Hide dates:</span>
+                        	   <input type="hidden" value="off" name="locals.hide_dates">
+                                       {{#hide_dates}}
+
+                        	  <input type="checkbox" checked name="locals.hide_dates">
+                                      {{/hide_dates}}
         {{^hide_dates}}
-        <input  id="hide_dates" type="checkbox" name="locals.hide_dates"
-        />
+                                	  <input type="checkbox" checked name="locals.hide_dates">
+
         {{/hide_dates}}
-         Hide dates
-    </label>
+
+                        	</label>
+
     {{/show_hide_dates}}								
 </form>
 </div>

@@ -23,17 +23,21 @@ form.select select,
 #date_display {
   text-align: left;
   margin:0;
+  padding: 11px 16px;
   flex-grow: 1;
   border-bottom: 1px solid var(--light-border-color);
 }
 
+#date_display_container {
+  position: relative;
+}
 form.select:hover,
 #date_display:hover {
   background-color: var(--light-background-color);
 }
 
 form.select::before,
-#date_display::before {
+#date_display_container::before {
   content: "";
   width: 1em;
   height: 1em;
@@ -48,6 +52,6 @@ form.select::before,
 }
 
 form.select:hover::before,
-#date_display:hover::before {
+#date_display_container:hover::before {
   opacity: 0.7;
 }

@@ -1,10 +1,10 @@
 {
-  "name": "System serif",
+  "name": "Trebuchet",
   "tags": [
-    "serif",
+    "sans",
     "system"
   ],
-  "stack": "serif",
+  "stack": "'trebuchet ms', tahoma, verdana, sans-serif",
   "line_height": 1.45,
   "line_width": 38,
   "font_size": 16

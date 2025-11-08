@@ -56,7 +56,8 @@
     "id": "arial",
     "stack": "Arial,Helvetica Neue,Helvetica,sans-serif",
     "tags": [
-      "sans"
+      "sans",
+      "system"
     ],
     "line_height": 1.615,
     "line_width": 38,
@@ -127,6 +128,19 @@
     "line_width": 38,
     "font_size": 16,
     "styles": "@font-face{font-family:Chivo;font-style:normal;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/chivo/400.eot?version=9ae571&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/chivo/400.eot?version=9ae571&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/chivo/400.woff?version=5c7ac5&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/chivo/400.ttf?version=da67b3&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/chivo/400.otf?version=22dcb6&extension=.otf') format('opentype')}@font-face{font-family:Chivo;font-style:italic;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/chivo/400-italic.eot?version=5ab3ad&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/chivo/400-italic.eot?version=5ab3ad&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/chivo/400-italic.woff?version=073c14&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/chivo/400-italic.ttf?version=38d4c8&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/chivo/400-italic.otf?version=567eda&extension=.otf') format('opentype')}.pull-double{margin-left:-.395em}.push-double{margin-right:.395em}.pull-single{margin-left:-.231em}.push-single{margin-right:.231em}.push-double,.push-single{display:inline-block}"
+  },
+  {
+    "name": "Comic Sans",
+    "id": "comic-sans",
+    "stack": "'comic sans ms', 'comic sans', cursive, sans-serif",
+    "tags": [
+      "other",
+      "system"
+    ],
+    "line_height": 1.4,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
   },
   {
     "name": "Computer Modern",
@@ -205,6 +219,19 @@
     "line_width": 38,
     "font_size": 16,
     "styles": "@font-face{font-family:Cormorant;font-style:normal;font-weight:300;src:url('{{{config.cdn.origin}}}/fonts/cormorant/300.eot?version=00b644&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/300.eot?version=00b644&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/300.woff?version=3586cb&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/300.ttf?version=a5b2f2&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/300.otf?version=d65323&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:italic;font-weight:300;src:url('{{{config.cdn.origin}}}/fonts/cormorant/300-italic.eot?version=c67dae&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/300-italic.eot?version=c67dae&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/300-italic.woff?version=cc8545&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/300-italic.ttf?version=e0651e&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/300-italic.otf?version=74c60b&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:normal;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/cormorant/400.eot?version=22648e&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/400.eot?version=22648e&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/400.woff?version=4c2656&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/400.ttf?version=4518fe&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/400.otf?version=cb3c40&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:italic;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/cormorant/400-italic.eot?version=a0c51e&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/400-italic.eot?version=a0c51e&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/400-italic.woff?version=078bc9&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/400-italic.ttf?version=e43ca3&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/400-italic.otf?version=e55cf7&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:normal;font-weight:500;src:url('{{{config.cdn.origin}}}/fonts/cormorant/500.eot?version=d1dfe9&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/500.eot?version=d1dfe9&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/500.woff?version=56508f&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/500.ttf?version=cbad48&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/500.otf?version=feea2a&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:italic;font-weight:500;src:url('{{{config.cdn.origin}}}/fonts/cormorant/500-italic.eot?version=cd5cd3&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/500-italic.eot?version=cd5cd3&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/500-italic.woff?version=e27003&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/500-italic.ttf?version=18fd7d&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/500-italic.otf?version=588157&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:normal;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/cormorant/600.eot?version=04cb3d&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/600.eot?version=04cb3d&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/600.woff?version=b376e6&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/600.ttf?version=914078&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/600.otf?version=85e517&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:italic;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/cormorant/600-italic.eot?version=a50574&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/600-italic.eot?version=a50574&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/600-italic.woff?version=933e89&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/600-italic.ttf?version=c0e266&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/600-italic.otf?version=8267f6&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:normal;font-weight:700;src:url('{{{config.cdn.origin}}}/fonts/cormorant/700.eot?version=f920f2&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/700.eot?version=f920f2&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/700.woff?version=efc762&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/700.ttf?version=34af1a&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/700.otf?version=0f5f98&extension=.otf') format('opentype')}@font-face{font-family:Cormorant;font-style:italic;font-weight:700;src:url('{{{config.cdn.origin}}}/fonts/cormorant/700-italic.eot?version=c585bd&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/cormorant/700-italic.eot?version=c585bd&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/cormorant/700-italic.woff?version=0db14e&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/cormorant/700-italic.ttf?version=48e965&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/cormorant/700-italic.otf?version=0101d6&extension=.otf') format('opentype')}.pull-double{margin-left:-.283em}.push-double{margin-right:.283em}.pull-single{margin-left:-.14em}.push-single{margin-right:.14em}.push-double,.push-single{display:inline-block}"
+  },
+  {
+    "name": "Courier New",
+    "id": "courier-new",
+    "stack": "'courier new', courier, consolas, monospace",
+    "tags": [
+      "mono",
+      "system"
+    ],
+    "line_height": 1.45,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
   },
   {
     "name": "Crimson Text",
@@ -324,11 +351,38 @@
     "styles": "@font-face{font-family:Fondamento;font-style:normal;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/fondamento/400.eot?version=1e55eb&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/fondamento/400.eot?version=1e55eb&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/fondamento/400.woff?version=a5d58d&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/fondamento/400.ttf?version=bd1c8b&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/fondamento/400.otf?version=fd8ad2&extension=.otf') format('opentype')}@font-face{font-family:Fondamento;font-style:italic;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/fondamento/400-italic.eot?version=93897a&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/fondamento/400-italic.eot?version=93897a&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/fondamento/400-italic.woff?version=1589c5&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/fondamento/400-italic.ttf?version=d9066a&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/fondamento/400-italic.otf?version=0560a4&extension=.otf') format('opentype')}.pull-double{margin-left:-.34130859375em}.push-double{margin-right:.34130859375em}.pull-single{margin-left:-.19482421875em}.push-single{margin-right:.19482421875em}.push-double,.push-single{display:inline-block}"
   },
   {
+    "name": "Garamond",
+    "id": "garamond",
+    "stack": "garamond, 'times new roman', times, serif",
+    "tags": [
+      "serif",
+      "system"
+    ],
+    "line_height": 1.6,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
+  },
+  {
+    "name": "Georgia",
+    "id": "georgia",
+    "stack": "georgia, 'times new roman', times, serif",
+    "tags": [
+      "serif",
+      "system"
+    ],
+    "line_height": 1.55,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
+  },
+  {
     "name": "Gill Sans",
     "id": "gill-sans",
     "stack": "'Gill Sans MT', 'Gill Sans', 'Gill Sans Std', Verdana, 'Bitstream Vera Sans', sans-serif",
     "tags": [
-      "sans"
+      "sans",
+      "system"
     ],
     "line_height": 1.5,
     "line_width": 38,
@@ -366,7 +420,8 @@
     "id": "helvetica",
     "stack": "Helvetica,Helvetica Neue,Arial,sans-serif",
     "tags": [
-      "sans"
+      "sans",
+      "system"
     ],
     "line_height": 1.56,
     "line_width": 39,
@@ -384,6 +439,19 @@
     "line_width": 38,
     "font_size": 16,
     "styles": "@font-face{font-family:'iA Writer Duospace';font-style:normal;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/ia-writer/400.eot?version=9d9627&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/ia-writer/400.eot?version=9d9627&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/ia-writer/400.woff2?version=ddb8db&extension=.woff2') format('woff2'),url('{{{config.cdn.origin}}}/fonts/ia-writer/400.woff?version=b52acf&extension=.woff') format('woff')}@font-face{font-family:'iA Writer Duospace';font-style:italic;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/ia-writer/400-italic.eot?version=308f32&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/ia-writer/400-italic.eot?version=308f32&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/ia-writer/400-italic.woff2?version=b525f8&extension=.woff2') format('woff2'),url('{{{config.cdn.origin}}}/fonts/ia-writer/400-italic.woff?version=70d67c&extension=.woff') format('woff')}@font-face{font-family:'iA Writer Duospace';font-style:normal;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/ia-writer/600.eot?version=4463d8&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/ia-writer/600.eot?version=4463d8&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/ia-writer/600.woff2?version=1d85b6&extension=.woff2') format('woff2'),url('{{{config.cdn.origin}}}/fonts/ia-writer/600.woff?version=3d1167&extension=.woff') format('woff')}@font-face{font-family:'iA Writer Duospace';font-style:italic;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/ia-writer/600-italic.eot?version=2bd1de&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/ia-writer/600-italic.eot?version=2bd1de&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/ia-writer/600-italic.woff2?version=c0b31e&extension=.woff2') format('woff2'),url('{{{config.cdn.origin}}}/fonts/ia-writer/600-italic.woff?version=eaa9ca&extension=.woff') format('woff')}.pull-double{margin-left:-.6em}.push-double{margin-right:.6em}.pull-single{margin-left:-.6em}.push-single{margin-right:.6em}.push-double,.push-single{display:inline-block}"
+  },
+  {
+    "name": "Impact",
+    "id": "impact",
+    "stack": "impact, 'arial black', sans-serif",
+    "tags": [
+      "sans",
+      "system"
+    ],
+    "line_height": 1.3,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
   },
   {
     "name": "Inconsolata",
@@ -529,6 +597,19 @@
     "styles": "@font-face{font-family:Karla;font-style:normal;font-weight:200;src:url('{{{config.cdn.origin}}}/fonts/karla/200.eot?version=e7259d&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/200.eot?version=e7259d&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/200.woff?version=e78705&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/200.ttf?version=0b928d&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/200.otf?version=465c5a&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:200;src:url('{{{config.cdn.origin}}}/fonts/karla/200-italic.eot?version=4e576b&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/200-italic.eot?version=4e576b&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/200-italic.woff?version=d76730&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/200-italic.ttf?version=f88057&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/200-italic.otf?version=5e4e81&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:normal;font-weight:300;src:url('{{{config.cdn.origin}}}/fonts/karla/300.eot?version=f3b14b&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/300.eot?version=f3b14b&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/300.woff?version=8030e1&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/300.ttf?version=a11615&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/300.otf?version=1820e2&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:300;src:url('{{{config.cdn.origin}}}/fonts/karla/300-italic.eot?version=2f4784&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/300-italic.eot?version=2f4784&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/300-italic.woff?version=b821c0&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/300-italic.ttf?version=2de582&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/300-italic.otf?version=5f2f1d&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:normal;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/karla/400.eot?version=aadb06&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/400.eot?version=aadb06&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/400.woff?version=a4c35a&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/400.ttf?version=871b31&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/400.otf?version=d09e4d&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/karla/400-italic.eot?version=1314d1&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/400-italic.eot?version=1314d1&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/400-italic.woff?version=209d17&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/400-italic.ttf?version=fef8a5&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/400-italic.otf?version=9052ba&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:normal;font-weight:500;src:url('{{{config.cdn.origin}}}/fonts/karla/500.eot?version=76a505&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/500.eot?version=76a505&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/500.woff?version=90eda6&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/500.ttf?version=b2df7a&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/500.otf?version=bd921a&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:500;src:url('{{{config.cdn.origin}}}/fonts/karla/500-italic.eot?version=f20067&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/500-italic.eot?version=f20067&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/500-italic.woff?version=24e1ff&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/500-italic.ttf?version=e55db7&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/500-italic.otf?version=75c907&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:normal;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/karla/600.eot?version=f0704a&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/600.eot?version=f0704a&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/600.woff?version=02496b&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/600.ttf?version=6ef19b&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/600.otf?version=b7f737&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/karla/600-italic.eot?version=4084de&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/600-italic.eot?version=4084de&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/600-italic.woff?version=36ad24&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/600-italic.ttf?version=d792c4&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/600-italic.otf?version=5f2bc4&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:normal;font-weight:700;src:url('{{{config.cdn.origin}}}/fonts/karla/700.eot?version=358c9d&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/700.eot?version=358c9d&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/700.woff?version=6d400f&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/700.ttf?version=886c86&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/700.otf?version=ee4b3a&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:700;src:url('{{{config.cdn.origin}}}/fonts/karla/700-italic.eot?version=b00584&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/700-italic.eot?version=b00584&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/700-italic.woff?version=9d0ebd&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/700-italic.ttf?version=a54dac&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/700-italic.otf?version=7f84a4&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:normal;font-weight:800;src:url('{{{config.cdn.origin}}}/fonts/karla/800.eot?version=f30c7e&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/800.eot?version=f30c7e&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/800.woff?version=d8814d&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/800.ttf?version=b025bf&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/800.otf?version=b71c2c&extension=.otf') format('opentype')}@font-face{font-family:Karla;font-style:italic;font-weight:800;src:url('{{{config.cdn.origin}}}/fonts/karla/800-italic.eot?version=dcd34e&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/karla/800-italic.eot?version=dcd34e&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/karla/800-italic.woff?version=b9d749&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/karla/800-italic.ttf?version=914610&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/karla/800-italic.otf?version=a35f84&extension=.otf') format('opentype')}.pull-double{margin-left:-.3045em}.push-double{margin-right:.3045em}.pull-single{margin-left:-.1355em}.push-single{margin-right:.1355em}.push-double,.push-single{display:inline-block}"
   },
   {
+    "name": "Menlo",
+    "id": "menlo",
+    "stack": "menlo, monaco, consolas, 'courier new', monospace",
+    "tags": [
+      "mono",
+      "system"
+    ],
+    "line_height": 1.5,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
+  },
+  {
     "name": "Michroma",
     "id": "michroma",
     "svg": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<html><head></head><body><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"458.859375\" height=\"102.375\" viewBox=\"0 1.1875 458.859375 100\" preserveAspectRatio=\"xMinYMid meet\"><path d=\"M13.64 83.25L6.89 83.25L6.89 29.25L16.95 29.25L49.61 73.30L81.77 29.25L91.83 29.25L91.83 83.25L85.08 83.25L85.08 35.37L52.84 79.70L46.72 79.70L13.64 35.37L13.64 83.25ZM109.97 83.25L103.22 83.25L103.22 45L109.97 45L109.97 83.25ZM109.97 36L103.22 36L103.22 29.25L109.97 29.25L109.97 36ZM142.63 84.02L142.63 84.02Q135.84 84.02 131.10 83.34Q126.35 82.65 123.43 80.53Q120.52 78.40 119.18 74.14Q117.84 69.89 117.84 62.79L117.84 62.79Q117.84 55.90 119.18 51.75Q120.52 47.60 123.43 45.49Q126.35 43.38 131.10 42.68Q135.84 41.98 142.63 41.98L142.63 41.98Q150.75 41.98 156.01 42.91Q161.26 43.84 163.79 46.72Q166.32 49.61 166.32 55.51L166.32 55.51L159.86 55.51Q159.86 52.10 158.45 50.41Q157.04 48.73 153.32 48.16Q149.59 47.60 142.63 47.60L142.63 47.60Q136.37 47.60 132.71 48.13Q129.06 48.66 127.34 50.19Q125.61 51.71 125.10 54.74Q124.59 57.76 124.59 62.79L124.59 62.79Q124.59 67.99 125.10 71.12Q125.61 74.25 127.34 75.81Q129.06 77.38 132.71 77.89Q136.37 78.40 142.63 78.40L142.63 78.40Q147.94 78.40 151.31 78.10Q154.69 77.80 156.55 76.90Q158.41 76.01 159.13 74.30Q159.86 72.60 159.86 69.75L159.86 69.75L166.32 69.75Q166.32 74.46 164.92 77.31Q163.51 80.16 160.63 81.60Q157.75 83.04 153.26 83.53Q148.78 84.02 142.63 84.02ZM181.09 83.25L174.34 83.25L174.34 29.25L181.09 29.25L181.09 48.13Q182.60 46.09 184.83 44.72Q187.07 43.35 190.81 42.66Q194.55 41.98 200.64 41.98L200.64 41.98Q208.58 41.98 213.17 43.52Q217.76 45.07 219.69 49.04Q221.63 53.02 221.63 60.29L221.63 60.29L221.63 83.25L214.84 83.25L214.84 60.29Q214.84 56.14 214.14 53.61Q213.43 51.08 211.73 49.78Q210.02 48.48 207.04 48.04Q204.05 47.60 199.44 47.60L199.44 47.60Q192.41 47.60 188.40 48.76Q184.39 49.92 182.74 52.40Q181.09 54.88 181.09 58.85L181.09 58.85L181.09 83.25ZM238.01 83.25L231.26 83.25L231.26 42.75L238.01 42.75L238.01 48.34Q239.13 46.55 240.28 45.35Q241.42 44.16 243.26 43.45Q245.11 42.75 248.27 42.45Q251.44 42.15 256.61 42.15L256.61 42.15L256.61 47.81Q249.64 47.81 245.83 48.30Q242.02 48.80 240.36 49.97Q238.71 51.15 238.36 53.23Q238.01 55.30 238.01 58.50L238.01 58.50L238.01 83.25ZM288.88 84.02L288.88 84.02Q282.09 84.02 277.35 83.34Q272.60 82.65 269.68 80.53Q266.77 78.40 265.43 74.14Q264.09 69.89 264.09 62.79L264.09 62.79Q264.09 55.90 265.43 51.75Q266.77 47.60 269.68 45.49Q272.60 43.38 277.35 42.68Q282.09 41.98 288.88 41.98L288.88 41.98Q295.70 41.98 300.43 42.68Q305.16 43.38 308.07 45.49Q310.99 47.60 312.33 51.75Q313.66 55.90 313.66 62.79L313.66 62.79Q313.66 69.89 312.33 74.14Q310.99 78.40 308.07 80.53Q305.16 82.65 300.43 83.34Q295.70 84.02 288.88 84.02ZM306.91 62.79L306.91 62.79Q306.91 57.76 306.40 54.74Q305.89 51.71 304.17 50.19Q302.45 48.66 298.81 48.13Q295.17 47.60 288.88 47.60L288.88 47.60Q282.62 47.60 278.96 48.13Q275.31 48.66 273.59 50.19Q271.86 51.71 271.35 54.74Q270.84 57.76 270.84 62.79L270.84 62.79Q270.84 67.99 271.35 71.12Q271.86 74.25 273.59 75.81Q275.31 77.38 278.96 77.89Q282.62 78.40 288.88 78.40L288.88 78.40Q295.17 78.40 298.81 77.89Q302.45 77.38 304.17 75.81Q305.89 74.25 306.40 71.12Q306.91 67.99 306.91 62.79ZM328.43 83.25L321.68 83.25L321.68 42.75L328.43 42.75L328.43 47.78Q329.94 45.74 332.05 44.37Q334.16 43.00 337.45 42.31Q340.73 41.63 345.87 41.63L345.87 41.63Q352.23 41.63 356.24 43.35Q360.25 45.07 362.14 49.29L362.14 49.29Q363.87 46.62 366.29 44.91Q368.72 43.21 372.39 42.42Q376.07 41.63 381.45 41.63L381.45 41.63Q387.84 41.63 391.85 43.37Q395.86 45.11 397.74 49.29Q399.62 53.47 399.62 60.75L399.62 60.75L399.62 83.25L392.87 83.25L392.87 60.75Q392.87 55.20 391.71 52.29Q390.55 49.39 387.86 48.32Q385.17 47.25 380.60 47.25L380.60 47.25Q371.64 47.25 367.82 49.89Q364.01 52.52 364.01 58.50L364.01 58.50L364.01 58.46Q364.04 59.55 364.04 60.75L364.04 60.75L364.04 83.25L357.29 83.25L357.29 60.75Q357.29 55.20 356.13 52.29Q354.97 49.39 352.28 48.32Q349.59 47.25 345.02 47.25L345.02 47.25Q336.06 47.25 332.24 49.89Q328.43 52.52 328.43 58.50L328.43 58.50L328.43 83.25ZM429.89 84.02L429.89 84.02Q422.61 84.02 417.88 83.27Q413.16 82.51 410.85 79.95Q408.55 77.38 408.55 71.96L408.55 71.96Q408.55 66.45 410.71 63.86Q412.88 61.28 417.57 60.50Q422.26 59.73 429.89 59.73L429.89 59.73Q436.08 59.73 440.26 60.01Q444.45 60.29 447.75 61.00L447.75 61.00Q447.68 56.32 447.12 53.63Q446.55 50.94 445.01 49.64Q443.46 48.34 440.49 47.97Q437.52 47.60 432.60 47.60L432.60 47.60Q426.97 47.60 423.79 47.85Q420.61 48.09 419.17 48.73Q417.73 49.36 417.36 50.55Q416.99 51.75 416.99 53.65L416.99 53.65L410.24 53.65Q410.24 49.85 411.28 47.53Q412.31 45.21 414.81 44.02Q417.30 42.82 421.65 42.40Q425.99 41.98 432.60 41.98L432.60 41.98Q439.70 41.98 444.04 42.89Q448.38 43.80 450.65 46.18Q452.92 48.55 453.71 52.80Q454.50 57.06 454.50 63.77L454.50 63.77L454.50 83.25L447.75 83.25L447.75 80.47Q446.55 81.74 444.45 82.51Q442.34 83.29 438.84 83.65Q435.34 84.02 429.89 84.02ZM429.89 78.54L429.89 78.54Q435.90 78.54 439.49 78.40Q443.07 78.26 444.85 77.63Q446.63 76.99 447.19 75.59Q447.75 74.18 447.75 71.65L447.75 71.65L447.75 65.43L429.89 65.21Q425.14 65.14 422.24 65.34Q419.34 65.53 417.83 66.18Q416.32 66.83 415.81 68.22Q415.30 69.61 415.30 71.96L415.30 71.96Q415.30 74.25 415.81 75.59Q416.32 76.92 417.83 77.55Q419.34 78.19 422.24 78.36Q425.14 78.54 429.89 78.54Z\"></path></svg></body></html>",
@@ -592,6 +673,19 @@
     "line_width": 38,
     "font_size": 16,
     "styles": "@font-face{font-family:Oswald;font-style:normal;font-weight:200;src:url('{{{config.cdn.origin}}}/fonts/oswald/200.eot?version=78ecbc&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/oswald/200.eot?version=78ecbc&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/oswald/200.woff?version=00453f&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/oswald/200.ttf?version=bae2f0&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/oswald/200.otf?version=e7a6f3&extension=.otf') format('opentype')}@font-face{font-family:Oswald;font-style:normal;font-weight:300;src:url('{{{config.cdn.origin}}}/fonts/oswald/300.eot?version=653837&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/oswald/300.eot?version=653837&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/oswald/300.woff?version=f4df4e&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/oswald/300.ttf?version=6ee38c&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/oswald/300.otf?version=ad8c71&extension=.otf') format('opentype')}@font-face{font-family:Oswald;font-style:normal;font-weight:400;src:url('{{{config.cdn.origin}}}/fonts/oswald/400.eot?version=2cf40b&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/oswald/400.eot?version=2cf40b&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/oswald/400.woff?version=dbeab4&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/oswald/400.ttf?version=a7ccbd&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/oswald/400.otf?version=2e4ea2&extension=.otf') format('opentype')}@font-face{font-family:Oswald;font-style:normal;font-weight:500;src:url('{{{config.cdn.origin}}}/fonts/oswald/500.eot?version=0ec030&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/oswald/500.eot?version=0ec030&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/oswald/500.woff?version=e30070&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/oswald/500.ttf?version=14cf87&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/oswald/500.otf?version=258ced&extension=.otf') format('opentype')}@font-face{font-family:Oswald;font-style:normal;font-weight:600;src:url('{{{config.cdn.origin}}}/fonts/oswald/600.eot?version=9f1693&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/oswald/600.eot?version=9f1693&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/oswald/600.woff?version=303a57&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/oswald/600.ttf?version=6a5d13&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/oswald/600.otf?version=358f28&extension=.otf') format('opentype')}@font-face{font-family:Oswald;font-style:normal;font-weight:700;src:url('{{{config.cdn.origin}}}/fonts/oswald/700.eot?version=ee68c2&extension=.eot');src:url('{{{config.cdn.origin}}}/fonts/oswald/700.eot?version=ee68c2&extension=.eot#iefix') format('embedded-opentype'),url('{{{config.cdn.origin}}}/fonts/oswald/700.woff?version=ec3f76&extension=.woff') format('woff'),url('{{{config.cdn.origin}}}/fonts/oswald/700.ttf?version=452bfe&extension=.ttf') format('truetype'),url('{{{config.cdn.origin}}}/fonts/oswald/700.otf?version=faff5f&extension=.otf') format('opentype')}.pull-double{margin-left:-.266em}.push-double{margin-right:.266em}.pull-single{margin-left:-.127em}.push-single{margin-right:.127em}.push-double,.push-single{display:inline-block}"
+  },
+  {
+    "name": "Palatino",
+    "id": "palatino",
+    "stack": "palatino, 'palatino linotype', 'book antiqua', georgia, serif",
+    "tags": [
+      "serif",
+      "system"
+    ],
+    "line_height": 1.55,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
   },
   {
     "name": "Piazzolla",
@@ -819,7 +913,8 @@
     "id": "system-mono",
     "stack": "Consolas, monaco, monospace",
     "tags": [
-      "mono"
+      "mono",
+      "system"
     ],
     "line_height": 1.6,
     "line_width": 39,
@@ -831,7 +926,8 @@
     "id": "system-sans",
     "stack": "-apple-system, BlinkMacSystemFont, 'avenir next', avenir, 'helvetica neue', helvetica, ubuntu, roboto, noto, 'segoe ui', arial, sans-serif",
     "tags": [
-      "sans"
+      "sans",
+      "system"
     ],
     "line_height": 1.4,
     "line_width": 38,
@@ -843,7 +939,8 @@
     "id": "system-serif",
     "stack": "serif",
     "tags": [
-      "serif"
+      "serif",
+      "system"
     ],
     "line_height": 1.45,
     "line_width": 38,
@@ -868,7 +965,21 @@
     "id": "times",
     "stack": "Times,'Times New Roman',serif",
     "tags": [
-      "serif"
+      "serif",
+      "system"
+    ],
+    "line_height": 1.45,
+    "line_width": 38,
+    "font_size": 16,
+    "styles": ""
+  },
+  {
+    "name": "Trebuchet",
+    "id": "trebuchet-ms",
+    "stack": "'trebuchet ms', tahoma, verdana, sans-serif",
+    "tags": [
+      "sans",
+      "system"
     ],
     "line_height": 1.45,
     "line_width": 38,
@@ -906,7 +1017,8 @@
     "id": "verdana",
     "stack": "Verdana, 'Bitstream Vera Sans', Geneva, sans-serif",
     "tags": [
-      "sans"
+      "sans",
+      "system"
     ],
     "line_height": 1.425,
     "line_width": 37.9,

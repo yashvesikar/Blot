@@ -1,10 +1,10 @@
 {
-  "name": "System serif",
+  "name": "Courier New",
   "tags": [
-    "serif",
+    "mono",
     "system"
   ],
-  "stack": "serif",
+  "stack": "'courier new', courier, consolas, monospace",
   "line_height": 1.45,
   "line_width": 38,
   "font_size": 16
