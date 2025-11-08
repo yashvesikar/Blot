@@ -13,15 +13,16 @@ html {
   --dark-accent-color: #0066de; /* used for button hover background*/
 
   --border-color: #EEEEEC;
+  --dark-border-color: #ccc;
   --light-border-color: #f9f9f9;
   --inset-image-border-color: rgba(255,255,255,0.05);
 
   --warning-text-color: #F6C30F;
 
-  --error-text-color: #d53030;
+  --error-text-color: #c72503;
   --error-background-color: #fdf1ed;
 
-  --success-text-color: #30792A;
+  --success-text-color: #038600;
   --success-background-color: #f0ffe8;
 
   --large-border-radius: 10px;

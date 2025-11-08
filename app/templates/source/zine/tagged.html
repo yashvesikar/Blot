@@ -4,13 +4,13 @@
   <body>
     {{> header}}
     <div class="container">
-      <h1>{{tag}}</h1><br/>
+      <h1>{{tag}}</h1><br>
       {{#entries}}
       <a href="{{{url}}}">{{title}}</a>
       <span class="small">{{date}}</span>
-      <br />
+      <br>
       {{/entries}}
-      <br />
+      <br>
       {{#pagination}}
       <div class="pagination small">
         {{#previous}}

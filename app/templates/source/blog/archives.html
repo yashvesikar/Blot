@@ -11,14 +11,14 @@
         <input placeholder="Search..." value="{{#query}}{{query}}{{/query}}" name="q" id="search" type="text" />&nbsp; <input type="submit" value="Go"/>
       </form>
 
-      <br />
+      <br>
 
     <div class="entry">
 
       {{#archives}}
         {{#months}}
           {{#entries}}
-          <a href="{{{url}}}" title="{{title}}">{{title}}</a> <span class="light">{{date}}</span><Br />
+          <a href="{{{url}}}" title="{{title}}">{{title}}</a> <span class="light">{{date}}</span><br>
           {{/entries}}
         {{/months}}
       {{/archives}}
