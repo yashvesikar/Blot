@@ -34,6 +34,9 @@ function initializeSourceEditor() {
       "Cmd-S": doSave,
       "Ctrl-S": doSave,
     },
+    indentUnit: 2, // tab = 2 spaces
+    tabSize: 2, // render tabs as 2 spaces
+    indentWithTabs: false, // insert spaces, not tab chars
   });
 
   editor.on("change", function () {

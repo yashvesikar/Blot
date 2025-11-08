@@ -31,18 +31,20 @@
     top:-0.1em;
 
 }
-
+.file-list a svg {
+  width: 18px;height: 18px;
+}
 .file-list a span,
 .file-list a svg {
-  margin-right: 2px;
+  margin-right: 0px;
 
 }
   
 .file-list a {
 	font-size: 14px;
-  padding:2px 16px;
+  padding:2px 11px;
 	display: block;
-	color: #777;
+	color: var(--medium-text-color);
 	text-decoration: none;
   background-color: transparent;
   transition: background-color 0.2s;

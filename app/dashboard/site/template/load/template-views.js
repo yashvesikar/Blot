@@ -14,6 +14,8 @@ module.exports = function (req, res, next) {
     views.forEach(function (view) {
       if (req.params.viewSlug && view.name === req.params.viewSlug)
         view.selected = "selected";
+      view.extension = {};
+      view.extension[view.name.split('.').pop()] = true;
     });
 
     views = sort(views);
