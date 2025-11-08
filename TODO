@@ -1,15 +1,12 @@
-Overdue subscription form not working
-- log out button on overdue subscription form not working
-
-Work on template editor
-
-Create a new template local '{{{system-css}}}' which merges `{{{appCSS}}}, {{{font.styles}}}, {{{title_font.styles}}}`
-
 Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
 
 Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
 - Use as [reference](https://fsanchez.io)
+
+Work on template editor
+
+Create a new template local '{{{system-css}}}' which merges `{{{appCSS}}}, {{{font.styles}}}, {{{title_font.styles}}}`
 
 Make it possible to serve abritrary template views efficiently through the CDN... JS CSS etc. and remove usage of cssURL, jsURL?
 
