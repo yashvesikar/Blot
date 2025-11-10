@@ -4,7 +4,7 @@ Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
 - Use as [reference](https://fsanchez.io)
 
-Add {{#cdn}} template helper
+Add `{{cdn}}` template helper
 - add route to cdn.js which lets you render abritrary views from the site, e.g. /blog_id/template/style.css
 - determine which views are referenced by {{#cdn}} at template save time
 - compute hash of views which are referenced inside {{#cdn}}, including partials, whenever a referenced view is saved.
@@ -13,6 +13,8 @@ Add {{#cdn}} template helper
 Turn andrew's template into a seperate 'Hypertext' template
 
 Apply improvements from andrew's template into documentation template
+
+Turn francesco's template into a seperate 'Restaurant' template
 
 Work on template editor
 
@@ -28,8 +30,6 @@ Adjust color settings into a simple 'presets' picker, then an option to dive int
 Add lang selector (map english -> en) to template editor
 
 Create a new template local '{{{system-css}}}' which merges `{{{appCSS}}}, {{{font.styles}}}, {{{title_font.styles}}}`
-
-Turn francesco's template into a seperate 'Restaurant' template
 
 ---
 
