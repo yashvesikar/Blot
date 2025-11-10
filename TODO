@@ -1,48 +1,35 @@
-Add {{#cdn}} template helper
-- add route to cdn.js which lets you render abritrary views from the site, e.g. /blog_id/template/style.css
-- determine which views are referenced by {{#cdn}} at template save time
-- compute hash of views which are referenced inside {{#cdn}}, including partials, whenever a referenced view is saved.
-
-Build image upload feature into template editor. Support default banner images.
-
-Update all templates to handle new empty menu at start (e.g. reference feed and move search into archives and add archives page link).
-
-Build markdown description feature into template editor. Support default site description.
-
-Make image avatar setting site-specific.
-
-Build favicon generator into template editor. Make it distinct from avatar.
-
-Adjust color settings into a simple 'presets' picker, then an option to dive into specific altertions on seperate view.
-- make it possible to conenct two colors, e.g. navigation background color -> same as background color
-
 Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
 
 Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
 - Use as [reference](https://fsanchez.io)
 
-Add lang selector (map english -> en) to template editor
+Add {{#cdn}} template helper
+- add route to cdn.js which lets you render abritrary views from the site, e.g. /blog_id/template/style.css
+- determine which views are referenced by {{#cdn}} at template save time
+- compute hash of views which are referenced inside {{#cdn}}, including partials, whenever a referenced view is saved.
+- Make it possible to serve abritrary template views efficiently through the CDN... JS CSS etc. and remove usage of cssURL, jsURL?
 
-Work on template editor
-
-Create a new template local '{{{system-css}}}' which merges `{{{appCSS}}}, {{{font.styles}}}, {{{title_font.styles}}}`
-
-Make it possible to serve abritrary template views efficiently through the CDN... JS CSS etc. and remove usage of cssURL, jsURL?
-
-Turn andrew's template into a seperate 'Notebook' template
+Turn andrew's template into a seperate 'Hypertext' template
 
 Apply improvements from andrew's template into documentation template
 
+Work on template editor
+
+Build image upload feature into template editor. Support default banner images and image avatars, with default images set, maybe some kind of global library feature across templates...
+
+Build markdown description feature into template editor. Support default site description.
+
+Build favicon generator into template editor. Make it distinct from avatar.
+
+Adjust color settings into a simple 'presets' picker, then an option to dive into specific altertions on seperate view.
+- make it possible to conenct two colors, e.g. navigation background color -> same as background color
+
+Add lang selector (map english -> en) to template editor
+
+Create a new template local '{{{system-css}}}' which merges `{{{appCSS}}}, {{{font.styles}}}, {{{title_font.styles}}}`
+
 Turn francesco's template into a seperate 'Restaurant' template
-
-Reach out to include Blot on textbundle website
-
-Improve tools/bear 
-- Reach out to Bear to let them know about textbundle support
-
-Improve tools/ulysses
-- Reach out to Ulysses to let them know about textbundle support
 
 ---
 
@@ -295,6 +282,14 @@ Create abstract models/storage that could be used to eventually migrate blog dat
 - 2. Move the path normalization logic from `helper/localPath.js` into the new storage module (or have `localPath` call the storage API), keeping existing validations intact.
 - 3. Provide unit coverage mirroring `app/helper/tests/localPath.js` to confirm the new abstraction still resolves paths correctly for typical blog IDs and paths.
 - 4. Add mechanism for error storage, e.g. Dropbox .page file error or Dropbox file too large error, etc.
+
+Reach out to include Blot on textbundle website
+
+Improve tools/bear 
+- Reach out to Bear to let them know about textbundle support
+
+Improve tools/ulysses
+- Reach out to Ulysses to let them know about textbundle support
 
 Improve server performance by 1. Create `app/build/plugins/folderAssets/index.js` that exports a `render` handler; reuse the logic from `app/blog/render/replaceFolderLinks/html.js` and `lookupFile` so it asynchronously rewrites `<a href>`/`<img src>` etc. during build-time processing to CDN urls, resolving the correct case where needed.
 - 2. Register the plugin in `app/build/plugins/index.js` so it runs for HTML entries (respecting `options.isHTML`) and make it default-enabled for blogs.
