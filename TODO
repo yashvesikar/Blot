@@ -505,6 +505,12 @@ Reduce service provider risk:
 Implement mac server screenshot endpoint
 - We should use the helper/transformer to speed up screenshot re-generation
 
+Update redis client for improved performance
+- perhaps to ioredis?
+
+Update redis server to version 8
+- take advantage of full text search
+
 Implement limit for allentries, sitemap, etc.
 
 Set long-timeout for git client requests on reverse proxy
@@ -549,8 +555,6 @@ How to fix menu links with incorrect case IDs?
 - Write script to catch these and patch
 
 Why do posts on blog_eddd8e5 take so long to set, let alone rebuild?
-
-Clean out all but the neccessary information from deleted entries to save redis space
 
 Make iCloud site routes blocking so the mac server waits for the main server to finish building before sending the next sync update? But consider timeout
 
@@ -1307,11 +1311,6 @@ Write new clients to sync blog folders
 
 ---
 
-Improvements to backup system
-- Add hourly local redis rdb dumps to /cache
-- Test maintenance mode
-- Add script to roll back into hourly local db dumps and remote backups
-
 Begin collecting proper measurements for page-rendering speed on the server
 
 Improvements to teaser generator
@@ -1325,7 +1324,6 @@ Improvements to teaser generator
 Make it possible to [disable draft preview files](https://blot.im/questions/3193)
 
 Performance improvements
-- Consider switching redis client, perhaps to ioredis?
 - Use a docker image to speed up test suite: https://github.com/davidmerfield/Blot/pull/463
 - Faster server, with SSL termination across CDN
 - set up 'cdn.blot.im' as cloudfront distribution endpoint?
