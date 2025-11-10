@@ -14,9 +14,7 @@ mkdir -p "$CERT_DIR/private"
 
 # skip if both files exist and are non-empty
 if [[ -s "$CRT" && -s "$KEY" ]]; then
-  echo "✓ Existing dev certificates found at:"
-  echo "  $CRT"
-  echo "  $KEY"
+  echo "[start] Existing dev certificates found"
   exit 0
 fi
 
@@ -26,7 +24,7 @@ if ! command -v mkcert >/dev/null 2>&1; then
   exit 1
 fi
 
-echo "Generating new development TLS certificates with mkcert..."
+echo "[start] Generating new development TLS certificates with mkcert..."
 mkcert -install
 
 mkcert -key-file "$KEY" -cert-file "$CRT" \
@@ -35,6 +33,4 @@ mkcert -key-file "$KEY" -cert-file "$CRT" \
 chmod 0644 "$CRT" || true
 chmod 0600 "$KEY" || true
 
-echo "✓ Certificates generated:"
-echo "  $CRT"
-echo "  $KEY"
+echo "[start] Certificates generated"

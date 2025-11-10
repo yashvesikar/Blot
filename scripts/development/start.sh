@@ -1,64 +1,89 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# hide '^C' glyph while running ----
+if [ -t 1 ]; then
+  STTY_ORIG="$(stty -g)"
+  stty -echoctl
+  restore_tty() { stty "$STTY_ORIG" 2>/dev/null || true; }
+  trap restore_tty EXIT
+fi
+# --------------------------------------------------
+
 # Resolve repo paths
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd ../../ && pwd)"
+: "${BLOT_HOST:=local.blot}"
 
-# Create the env file if none exists
-touch $DIR/.env
-
-BLOT_HOST=${BLOT_HOST:-local.blot}
-
+# Files
 SETUP="$DIR/config/openresty/setup.sh"
 COMPOSE_FILE="$DIR/scripts/development/docker-compose.yml"
 FOLDER_SERVER="$DIR/scripts/development/open-folder-server.js"
 
-# Ensure env for Docker build, but do not overwrite if already set
+# Env for builds
 export COMPOSE_DOCKER_CLI_BUILD="${COMPOSE_DOCKER_CLI_BUILD:-bake}"
 export DOCKER_BUILDKIT="${DOCKER_BUILDKIT:-1}"
 
-# 1) Host-side dev certs
-echo "[start] Running setup: $SETUP"
+# Compose wrapper
+compose() {
+  if command -v docker-compose >/dev/null 2>&1; then
+    BLOT_HOST="$BLOT_HOST" COMPOSE_BAKE=true docker-compose -f "$COMPOSE_FILE" "$@"
+  else
+    BLOT_HOST="$BLOT_HOST" COMPOSE_BAKE=true docker compose -f "$COMPOSE_FILE" "$@"
+  fi
+}
+
+# Portable timeout helper
+run_with_timeout() {
+  local seconds="$1"; shift
+  if command -v timeout >/dev/null 2>&1; then
+    timeout "$seconds" "$@"
+  elif command -v gtimeout >/dev/null 2>&1; then
+    gtimeout "$seconds" "$@"
+  else
+    "$@"   # no timeout available; run as-is
+  fi
+}
+
+echo "[start] Running setup"
 bash "$SETUP" "$BLOT_HOST"
 
-# 2) Start auxiliary server
-echo "[start] Launching open-folder-server: $FOLDER_SERVER"
+echo "[start] Launching local folder opener"
 node "$FOLDER_SERVER" &
 FOLDER_PID=$!
-echo "[start] open-folder-server pid=$FOLDER_PID"
 
-# Signal handling
+compose up --build -d
+
+# start logs in background to avoid 'exit status 130' noise on Ctrl-C
+compose logs -f --no-log-prefix node-app &
+LOGS_PID=$!
+
 SHUTTING_DOWN=0
 cleanup() {
-  if [[ "$SHUTTING_DOWN" -eq 1 ]]; then return; fi
+  (( SHUTTING_DOWN )) && return
   SHUTTING_DOWN=1
-  echo "[start] Caught signal, shutting down…"
 
-  # Stop docker-compose first (so network goes down cleanly)
-  if command -v docker-compose >/dev/null 2>&1; then
-    docker-compose -f "$COMPOSE_FILE" down --remove-orphans || true
-  else
-    docker compose -f "$COMPOSE_FILE" down --remove-orphans || true
+  # stop log follower quietly first
+  kill "$LOGS_PID" 2>/dev/null || true
+  wait "$LOGS_PID" 2>/dev/null || true
+
+  # bounded silent Redis SAVE before teardown
+  if compose ps --services | grep -q '^redis$'; then
+    run_with_timeout 5 compose exec -T redis redis-cli SAVE >/dev/null 2>&1 || true
   fi
 
-  # Kill folder server if still running
-  if kill -0 "$FOLDER_PID" >/dev/null 2>&1; then
+  # hard, immediate shutdown
+  compose down --remove-orphans --timeout 0 || true
+
+  # stop aux server
+  if kill -0 "$FOLDER_PID" 2>/dev/null; then
     kill "$FOLDER_PID" 2>/dev/null || true
     wait "$FOLDER_PID" 2>/dev/null || true
   fi
 }
 trap cleanup INT TERM
 
-# 3) Bring up compose (foreground)
-echo "[start] docker compose up --build"
-if command -v docker-compose >/dev/null 2>&1; then
-  BLOT_HOST="$BLOT_HOST" docker-compose -f "$COMPOSE_FILE" up --build
-  COMPOSE_STATUS=$?
-else
-  BLOT_HOST="$BLOT_HOST" docker compose -f "$COMPOSE_FILE" up --build
-  COMPOSE_STATUS=$?
-fi
+# wait on logs; normal exit handled by trap
+wait "$LOGS_PID" 2>/dev/null || true
 
-# On exit, run cleanup and return compose status
 cleanup
-exit "$COMPOSE_STATUS"
+exit 0
