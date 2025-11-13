@@ -1,4 +1,5 @@
-
+move purge into app/helper and consolidate with existing purge in setup
+move renderview into app/blog/render
 Enforce size limits on setting tempalte views
 Add integration tests for cdn paths with weird view names, etc.
 Add integration tests for preview subdomain logic (skip for my- not for site)
