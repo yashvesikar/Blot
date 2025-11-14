@@ -7,6 +7,7 @@ const Blog = require("models/blog");
 const generateCdnUrl = require("models/template/util/generateCdnUrl");
 const writeToFolder = require("models/template/writeToFolder");
 const getView = require("models/template/getView");
+const config = require("../../config");
 
 // Promisify callback-based functions
 const setViewAsync = promisify(Template.setView);
@@ -108,13 +109,33 @@ async function fetchAsset(assetUrl) {
  * Process a single view to replace cssURL/scriptURL tokens with CDN helpers
  */
 async function processView(user, blog, template, view) {
+  // Skip SITE templates (default templates) - already migrated
+  if (template.id.startsWith("SITE:") || template.owner === "SITE") {
+    return;
+  }
+
   if (!view || !view.content) {
     return; // Skip views without content
   }
 
   // Extend blog object to ensure url, cssURL, scriptURL are available
   const extendedBlog = Blog.extend(blog);
-  const baseUrl = extendedBlog.url || extendedBlog.blogURL;
+  
+  // Determine the base URL based on whether the template is installed
+  // If template.id === blog.template, the template is installed, use blogURL
+  // Otherwise, use previewURL for the template
+  let baseUrl;
+  if (template.id === blog.template) {
+    // Template is installed - use blog URL
+    baseUrl = extendedBlog.url || extendedBlog.blogURL;
+  } else {
+    // Template is NOT installed - construct preview URL
+    // Extract template slug from template ID (everything after first colon)
+    const templateSlug = template.id.split(':').slice(1).join(':');
+    const isMine = template.owner === blog.id;
+    const myPrefix = isMine ? 'my-' : '';
+    baseUrl = `https://preview-of-${myPrefix}${templateSlug}-on-${blog.handle}.${config.host}`;
+  }
 
   if (!baseUrl) {
     report.fetchErrors.push({
@@ -465,100 +486,193 @@ async function processView(user, blog, template, view) {
 }
 
 /**
+ * Log the migration report
+ */
+function logReport(callback) {
+  // Log report
+  console.log("\n=== Migration Report ===\n");
+
+  console.log(`Successfully migrated: ${report.successes.length} views`);
+  if (report.successes.length > 0) {
+    console.log("\nSuccesses:");
+    report.successes.forEach((item) => {
+      console.log(
+        `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
+      );
+      item.replacements.forEach((r) => {
+        const skipNote = r.skippedValidation
+          ? " (validation skipped - view does not exist)"
+          : "";
+        console.log(
+          `    → Replaced ${r.type}URL with {{#cdn}}/${r.viewName}{{/cdn}}${skipNote}`
+        );
+      });
+    });
+  }
+
+  console.log(`\nMismatches: ${report.mismatches.length} views`);
+  if (report.mismatches.length > 0) {
+    console.log("\nMismatches (reverted):");
+    report.mismatches.forEach((item) => {
+      console.log(
+        `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
+      );
+      console.log(`    Original URLs: ${item.originalUrls.join(", ")}`);
+      console.log(`    CDN URLs: ${item.cdnUrls.join(", ")}`);
+    });
+  }
+
+  console.log(`\nErrors: ${report.fetchErrors.length} views`);
+  if (report.fetchErrors.length > 0) {
+    console.log("\nErrors:");
+    report.fetchErrors.forEach((item) => {
+      console.log(
+        `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
+      );
+      console.log(`    Error: ${item.error}`);
+      if (item.originalUrl)
+        console.log(`    Original URL: ${item.originalUrl}`);
+      if (item.cdnUrl) console.log(`    CDN URL: ${item.cdnUrl}`);
+    });
+  }
+
+  console.log(`\nRevert Errors: ${report.revertErrors.length} views`);
+  if (report.revertErrors.length > 0) {
+    console.log("\nRevert Errors (failed to revert changes):");
+    report.revertErrors.forEach((item) => {
+      console.log(
+        `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
+      );
+      console.log(`    Error: ${item.error}`);
+    });
+  }
+
+  console.log("\n=== End Report ===\n");
+
+  callback(null);
+}
+
+/**
+ * Process all views for a specific blog
+ * This short-circuits the iteration when a specific blog is passed
+ */
+function processBlogViews(user, blog, callback) {
+  const async = require("async");
+  const getTemplateListAsync = promisify(Template.getTemplateList);
+  const getAllViewsAsync = promisify(Template.getAllViews);
+
+  getTemplateListAsync(blog.id)
+    .then(function (templates) {
+      // Process each template
+      async.eachSeries(
+        templates,
+        function (template, nextTemplate) {
+          // Skip SITE templates (default templates) - already migrated
+          if (template.id.startsWith("SITE:") || template.owner === "SITE") {
+            return nextTemplate();
+          }
+
+          // Only process templates owned by the blog
+          if (template.owner !== blog.id) return nextTemplate();
+
+          // Get all views for this template
+          getAllViewsAsync(template.id)
+            .then(function (views) {
+              // Process each view
+              async.eachOfSeries(
+                views,
+                function (view, name, nextView) {
+                  processView(user, blog, template, view)
+                    .then(function () {
+                      nextView();
+                    })
+                    .catch(function (error) {
+                      // Log error but continue processing
+                      console.error(
+                        `Error processing view ${view?.name} in template ${template?.id}:`,
+                        error
+                      );
+                      report.fetchErrors.push({
+                        blogID: blog?.id,
+                        templateID: template?.id,
+                        viewName: view?.name,
+                        error: error.message,
+                      });
+                      nextView();
+                    });
+                },
+                nextTemplate
+              );
+            })
+            .catch(function (error) {
+              console.error(
+                `Error getting views for template ${template.id}:`,
+                error
+              );
+              nextTemplate();
+            });
+        },
+        callback
+      );
+    })
+    .catch(callback);
+}
+
+/**
  * Main function
  */
 function main(specificBlog, callback) {
-  eachView(
-    async function (user, blog, template, view, next) {
-      if (specificBlog && specificBlog.id !== blog.id) return next();
+  if (specificBlog) {
+    // Short-circuit: process only the specific blog
+    const User = require("models/user");
+    const getByIdAsync = promisify(User.getById);
 
-      try {
-        await processView(user, blog, template, view);
-        next();
-      } catch (error) {
-        // Log error but continue processing
-        console.error(
-          `Error processing view ${view?.name} in template ${template?.id}:`,
-          error
-        );
-        report.fetchErrors.push({
-          blogID: blog?.id,
-          templateID: template?.id,
-          viewName: view?.name,
-          error: error.message,
-        });
-        next();
-      }
-    },
-    function (err) {
-      if (err) {
-        console.error("Error during iteration:", err);
-        return callback(err);
+    getByIdAsync(specificBlog.owner, function (err, user) {
+      if (err || !user) {
+        return callback(err || new Error("No user found for blog owner"));
       }
 
-      // Log report
-      console.log("\n=== Migration Report ===\n");
+      processBlogViews(user, specificBlog, function (err) {
+        if (err) {
+          console.error("Error during processing:", err);
+          return callback(err);
+        }
 
-      console.log(`Successfully migrated: ${report.successes.length} views`);
-      if (report.successes.length > 0) {
-        console.log("\nSuccesses:");
-        report.successes.forEach((item) => {
-          console.log(
-            `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
+        logReport(callback);
+      });
+    });
+  } else {
+    // Process all blogs using eachView
+    eachView(
+      async function (user, blog, template, view, next) {
+        try {
+          await processView(user, blog, template, view);
+          next();
+        } catch (error) {
+          // Log error but continue processing
+          console.error(
+            `Error processing view ${view?.name} in template ${template?.id}:`,
+            error
           );
-          item.replacements.forEach((r) => {
-            const skipNote = r.skippedValidation
-              ? " (validation skipped - view does not exist)"
-              : "";
-            console.log(
-              `    → Replaced ${r.type}URL with {{#cdn}}/${r.viewName}{{/cdn}}${skipNote}`
-            );
+          report.fetchErrors.push({
+            blogID: blog?.id,
+            templateID: template?.id,
+            viewName: view?.name,
+            error: error.message,
           });
-        });
+          next();
+        }
+      },
+      function (err) {
+        if (err) {
+          console.error("Error during iteration:", err);
+          return callback(err);
+        }
+
+        logReport(callback);
       }
-
-      console.log(`\nMismatches: ${report.mismatches.length} views`);
-      if (report.mismatches.length > 0) {
-        console.log("\nMismatches (reverted):");
-        report.mismatches.forEach((item) => {
-          console.log(
-            `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
-          );
-          console.log(`    Original URLs: ${item.originalUrls.join(", ")}`);
-          console.log(`    CDN URLs: ${item.cdnUrls.join(", ")}`);
-        });
-      }
-
-      console.log(`\nErrors: ${report.fetchErrors.length} views`);
-      if (report.fetchErrors.length > 0) {
-        console.log("\nErrors:");
-        report.fetchErrors.forEach((item) => {
-          console.log(
-            `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
-          );
-          console.log(`    Error: ${item.error}`);
-          if (item.originalUrl)
-            console.log(`    Original URL: ${item.originalUrl}`);
-          if (item.cdnUrl) console.log(`    CDN URL: ${item.cdnUrl}`);
-        });
-      }
-
-      console.log(`\nRevert Errors: ${report.revertErrors.length} views`);
-      if (report.revertErrors.length > 0) {
-        console.log("\nRevert Errors (failed to revert changes):");
-        report.revertErrors.forEach((item) => {
-          console.log(
-            `  - ${item.blogID} / ${item.templateID} / ${item.viewName}`
-          );
-          console.log(`    Error: ${item.error}`);
-        });
-      }
-
-      console.log("\n=== End Report ===\n");
-
-      callback(null);
-    }
-  );
+    );
+  }
 }
 
 // If run directly, execute main
