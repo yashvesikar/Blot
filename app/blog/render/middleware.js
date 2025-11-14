@@ -135,7 +135,7 @@ module.exports = function (req, res, _next) {
               req.log("Replaced folder links with CDN links");
             }
 
-            if (viewType === STYLE && !req.preview) {
+            if (viewType === STYLE) {
               req.log("Minifying CSS");
               try {
                 output = minifyCSS(output);
@@ -146,7 +146,7 @@ module.exports = function (req, res, _next) {
               }
             }
 
-            if (viewType === JS && !req.preview) {
+            if (viewType === JS) {
               req.log("Minifying JavaScript");
               try {
                 output = await minifyJS(output);
