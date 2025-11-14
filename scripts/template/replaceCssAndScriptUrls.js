@@ -211,6 +211,58 @@ async function processView(user, blog, template, view) {
   // Update working view content
   workingView.content = modifiedContent;
 
+  // Check if template is installed
+  const isInstalled = template.id === blog.template;
+
+  // For non-installed templates, skip validation and just save
+  if (!isInstalled) {
+    try {
+      // Call setView to update the view and trigger CDN manifest update
+      await setViewAsync(template.id, workingView);
+
+      // If template is locally-edited, write to folder
+      if (template.localEditing) {
+        try {
+          await writeToFolderAsync(blog.id, template.id);
+        } catch (error) {
+          // Log error but don't fail the migration
+          console.error(
+            `Warning: Failed to write template ${template.id} to folder:`,
+            error.message
+          );
+        }
+      }
+
+      // Build replacements array
+      const replacementReports = replacements.map((r) => ({
+        type: r.type,
+        viewName: r.viewName,
+        skippedValidation: true, // Non-installed templates skip validation
+      }));
+
+      report.successes.push({
+        blogID: blog.id,
+        templateID: template.id,
+        viewName: view.name,
+        replacements: replacementReports,
+      });
+    } catch (error) {
+      // Log error but continue processing
+      console.error(
+        `Error processing non-installed template view ${view?.name} in template ${template?.id}:`,
+        error
+      );
+      report.fetchErrors.push({
+        blogID: blog.id,
+        templateID: template.id,
+        viewName: view.name,
+        error: error.message,
+      });
+    }
+    return;
+  }
+
+  // For installed templates, perform full validation
   try {
     // Check if target views exist before fetching assets
     const replacementsToValidate = [];
