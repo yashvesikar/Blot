@@ -65,13 +65,16 @@ async function migrateHash(hash, viewName) {
   }
 
   const redisKey = key.renderedOutput(hash);
+  const redisContent = await getAsync(redisKey);
+
+  if (!redisContent) return false; // already migrated
+
   const filePath = getRenderedOutputPath(hash, viewName);
 
   // Check if already on disk with correct view name
   if (await fs.pathExists(filePath)) {
     // Verify content matches
     const diskContent = await fs.readFile(filePath, "utf8");
-    const redisContent = await getAsync(redisKey);
 
     if (diskContent === redisContent) {
       // Content matches, safe to delete from Redis
@@ -85,18 +88,13 @@ async function migrateHash(hash, viewName) {
     }
   }
 
-  // Get from Redis
-  const content = await getAsync(redisKey);
-  if (!content) {
-    return false; // Not in Redis, skip
-  }
 
   // Write to disk with original view name
-  await writeRenderedOutputToDisk(hash, content, viewName);
+  await writeRenderedOutputToDisk(hash, redisContent, viewName);
 
   // Verify write
   const verifyContent = await readRenderedOutputFromDisk(hash, viewName);
-  if (verifyContent !== content) {
+  if (verifyContent !== redisContent) {
     throw new Error("Content mismatch after write");
   }
 
@@ -280,9 +278,45 @@ async function migrate() {
   }
 
   if (unexpectedKeys.length > 0) {
-    console.log(`\nℹ️  Note: ${unexpectedKeys.length} Redis keys found that were not in any template manifest.`);
-    console.log("These may be orphaned keys or from templates that were deleted.");
-    console.log("They will continue to be served from Redis via the legacy route.");
+    console.log(`\nℹ️  Found ${unexpectedKeys.length} orphaned Redis keys not in any template manifest.`);
+    console.log("Purging orphaned keys...\n");
+    
+    let orphanedPurged = 0;
+    let orphanedFailed = 0;
+    const orphanedErrors = [];
+
+    for (const hash of unexpectedKeys) {
+      try {
+        const redisKey = key.renderedOutput(hash);
+        await delAsync(redisKey);
+        orphanedPurged++;
+        
+        if (orphanedPurged % 100 === 0) {
+          console.log(`  Purged ${orphanedPurged} orphaned keys...`);
+        }
+      } catch (err) {
+        console.error(`Failed to purge orphaned hash ${hash}:`, err.message);
+        orphanedFailed++;
+        orphanedErrors.push({
+          hash: hash,
+          error: err.message,
+        });
+      }
+    }
+
+    console.log(`\nOrphaned keys purge complete:`);
+    console.log(`  Purged: ${orphanedPurged}`);
+    console.log(`  Failed: ${orphanedFailed}`);
+
+    if (orphanedErrors.length > 0) {
+      console.log("\nOrphaned key purge errors:");
+      orphanedErrors.slice(0, 10).forEach((error) => {
+        console.log(`  ${JSON.stringify(error)}`);
+      });
+      if (orphanedErrors.length > 10) {
+        console.log(`  ... and ${orphanedErrors.length - 10} more errors`);
+      }
+    }
   }
 
   console.log(`\n✅ Sanity check passed: All ${expectedHashes.size} expected hashes were migrated from Redis.`);
