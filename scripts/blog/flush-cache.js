@@ -145,8 +145,8 @@ async function flushCacheForBlog(identifier) {
     await flushAllBlogs();
 
     // wait for flush to clear
-    console.log("waiting");
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    console.log("waiting a few minutes...");
+    await new Promise((resolve) => setTimeout(resolve, 5 * 60 * 1000));
     console.log("waited");
     return;
   }
