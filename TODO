@@ -1,5 +1,7 @@
 move purge from cdn function into app/helper and consolidate with existing purge in setup.js
 
+Blogs have huge numbers of archived templates – modify the tempalte archiver to only 'create' templates for sites using them, otherwise disappear them. work out how to clean up some of the many archived templates added to sites... (remove ones with zero changes?)
+
 move renderview somewhere into app/blog/render
 
 can we speed up setview slightly, it's quite slow?
