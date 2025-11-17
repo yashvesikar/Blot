@@ -106,7 +106,7 @@ const restoreFiles = async (drive, files) => {
 };
 
 const processBlog = async (blog) => {
-  if (blog.client !== "google_drive") return { gitFoldersFound: 0, filesRestored: 0 };
+  if (blog.client !== "google-drive") return { gitFoldersFound: 0, filesRestored: 0 };
 
   console.log(`Processing blog ${blog.id} (${blog.handle})`);
 
