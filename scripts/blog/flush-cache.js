@@ -17,9 +17,9 @@ const { promisify } = require("util");
 const flushCacheAsync = promisify(flushCache);
 const getBlogAsync = (identifier) =>
   new Promise((resolve, reject) => {
-    getBlog(identifier, function (err, user, blog) {
+    getBlog(identifier, (_err, _user, blog) => {
       if (blog) resolve(blog);
-      reject(new Error("No blog: " + identifier));
+      reject(new Error(`No blog: ${identifier}`));
     });
   });
 
@@ -50,7 +50,7 @@ async function flushAllBlogs() {
 
   await new Promise((resolve, reject) => {
     eachBlog(
-      async function (user, blog, nextBlog) {
+      async (_user, blog, nextBlog) => {
         totalBlogs++;
 
         try {
@@ -80,14 +80,14 @@ async function flushAllBlogs() {
           nextBlog();
         }
       },
-      function (err) {
+      (err) => {
         if (err) return reject(err);
         resolve();
       }
     );
   });
 
-  console.log("\n" + "=".repeat(60));
+  console.log(`\n${"=".repeat(60)}`);
   console.log("Flush complete:");
   console.log(`  Total blogs processed: ${totalBlogs}`);
   console.log(`  Blogs flushed: ${flushedBlogs}`);
@@ -123,6 +123,7 @@ async function flushCacheForBlog(identifier) {
 
     try {
       const blog = await getBlogAsync(identifier);
+      
       if (!blog) {
         console.error(`❌ Blog not found: ${identifier}`);
         return 1;

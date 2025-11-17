@@ -5,15 +5,15 @@ Template delete should purge the cdn hashes
 Don't update the blog cacheID when editing a template which is not installed (e.g. set view, etc.)
 - can we safely skip the CDN manifest generation too....? these templates are only available on preview subdomains...
 
-Remove the legacy redis hash routing from cdn/index.js
+Remove the legacy redis hash routing from cdn/index.js and key definition
 - also create new script to forcefully migrate the dangling hashes from redis to disk, if they exist
+
+Can we move minification out of app/blog, then run minification after computing the hash, before storing on disk? should speed up
 
 can we speed up setview slightly, it's quite slow?
 - maybe we run multiple asset computations in parallel?
 
-Can we move minification out of app/blog, then run minification after computing the hash, before storing on disk? should speed up
-
-Fix script to replace cssURL to handle blogs with invalid domains
+Fix script to replace cssURL to handle blogs with invalid domains (it's breaking the migration)
 
 Replace existing cssURL and scriptURL and css_url and script_url properties in templates with new cdn helper
 - do this by editing the templates
