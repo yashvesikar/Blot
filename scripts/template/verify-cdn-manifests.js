@@ -3,6 +3,7 @@ const eachTemplate = require("../each/template");
 const updateCdnManifest = promisify(
   require("models/template/util/updateCdnManifest")
 );
+const config = require("config");
 
 let processedCount = 0;
 let changedCount = 0;
@@ -75,6 +76,15 @@ function describeChanges(oldManifest, newManifest) {
 async function processTemplate(user, blog, template, next) {
   processedCount += 1;
 
+  // Construct previewURL for the template
+  const templateSlug = template.id.split(':').slice(1).join(':');
+  const isMine = template.owner === blog.id;
+  const myPrefix = isMine ? 'my-' : '';
+  const previewURL = `https://preview-of-${myPrefix}${templateSlug}-on-${blog.handle}.${config.host}`;
+  
+  // Check if template is installed and construct blogURL
+  const isInstalled = template.id === blog.template;
+
   const existingManifest =
     template.cdn || (template.metadata && template.metadata.cdn) || {};
   const existingString = stringifyManifest(existingManifest);
@@ -87,10 +97,20 @@ async function processTemplate(user, blog, template, next) {
       changedCount += 1;
       const changes = describeChanges(existingManifest, updatedManifest);
 
-      console.log(`Template ${template.id} CDN manifest changed:`);
+      console.log(`Template ${template.id} ${previewURL} CDN manifest changed:`);
+
+
       changes.forEach((message) => {
         console.log(`  - ${message}`);
       });
+
+      if (isInstalled) {
+        const blogURL = blog.domain 
+          ? `https://${blog.domain}` 
+          : `https://${blog.handle}.${config.host}`;
+        console.log(`Template ${template.id} is installed on: ${blogURL}`);
+        console.log();
+      }
     }
   } catch (err) {
     console.error(`Error verifying CDN manifest for template ${template.id}:`, err);
