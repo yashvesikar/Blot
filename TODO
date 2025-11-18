@@ -1,6 +1,8 @@
+Add script to identify users with subfolders in template directories:
+- if not many, email manually?
+
 Create example sites with missing git folders, multiple subfolders, redudundant examples
 - Dropbox: https://img.blot.im/ /Templates/portfolio-copy 
-
 
 Run scripts to restore missing git subfolder files
 - MULTIPLe missing git folders for one site?
