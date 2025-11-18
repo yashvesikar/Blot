@@ -1,14 +1,10 @@
-Run rebuild templates after verify-cdn-hash (purge of old incorrect hashes)
-
-Delete templates folder in bunny cdn perma cache (many 429s)
-
----
-
 Finish scripts to restore missing git subfolder files
-- Write script to checkout old commit, turn on local template editing, git init, writeToFolder
-- Tell [Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlKRdTJhChKdmSPmTzFzhsvV)
+- Write script to checkout old commit, turn on local template editing, git init, writeToFolder while I debug
+- Tell [Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlKRdTJhChKdmSPmTzFzhsvV) once scripts are run
 
 FIX dangerous writeToFolder file removal behaviour, esp. nested files
+- Respect ignoreFile function
+- Ignore subfolders
 
 ---
 
@@ -62,6 +58,9 @@ Modify nginx config to serve as many CDN static files as possible
 - eventually these files will be on s3 but for now, use nginx with try files where possible then pass on to upstream
 
 Resolve inconsistency: 'Create site' vs New template vs Create file
+
+'Preview' link on template editor should become 'Visit site' for installed template
+- or maybe add a new button 'visit site'?
 
 Fix bug with huge archives page 
 - `https://deoxy.blot.im/archives`
