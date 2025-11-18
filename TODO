@@ -1,15 +1,29 @@
+Run rebuild templates after verify-cdn-hash (purge of old incorrect hashes)
+
+Delete templates folder in bunny cdn perma cache (many 429s)
+
+---
+
 Finish scripts to restore missing git subfolder files
 - Write script to checkout old commit, turn on local template editing, git init, writeToFolder
 - Tell [Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlKRdTJhChKdmSPmTzFzhsvV)
 
-Run rebuild templates after verify-cdn-hash (purge of old incorrect hashes)
+FIX dangerous writeToFolder file removal behaviour, esp. nested files
 
-Add true async flushcache function which waits for queue to drain
+---
+
+Fix bug with iCloud sync where revisions to file content in subfolders don't sync and tell Fede and [JP](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlDfdPkKKQjHSPwcJDWTnbCW) and [S](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXvHvwdwsVcHWFZBmJFTTFC)
+
+---
+
+Maybe we mix cacheID into query string for {{#cdn}} on preview subdomains with caching headers for improved template editor performance without expensive hash computation?
+
+Template delete should purge the cdn hashes / URLs
+
+Handle 429s in purgeCDNUrls? Group multiple into single request?
 
 Remove the legacy redis hash routing from cdn/index.js and key definition
 - also create new script to forcefully migrate the dangling hashes from redis to disk, if they exist
-
-Fix bug with iCloud sync where revisions to file content in subfolders don't sync and tell Fede and [JP](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlDfdPkKKQjHSPwcJDWTnbCW) and [S](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXvHvwdwsVcHWFZBmJFTTFC)
 
 We should get notifcations when stripe recovers an overdue subscription, as opposed to the user entering the form
 
@@ -17,13 +31,9 @@ invalid package.json causes crazy error on template editor (missing colon)
 
 Resync all Dropbox/Drive blogs to apply new ignored files logic
 
-FIX dangerous writeToFolder file removal behaviour, esp. nested files
-
 Make entries.js support query.page as well as params.page and [make Ian's feed work](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXwDpcLsVnJDXQHcLnhMsnG)
 
 Speed up global template build by not even invoke the setView function if there are no changes... (this avoids running updateCDNManifest when SITE template has no changes)
-
-Template delete should purge the cdn hashes / URLs
 
 Blogs have huge numbers of archived templates – modify the tempalte archiver to only 'create' templates for sites using them, otherwise disappear them. work out how to clean up some of the many archived templates added to sites... (remove ones with zero changes?)
 
