@@ -1,15 +1,17 @@
-Run scripts to restore missing git subfolder files
-Fix missing git files in:
+Create example sites with missing git folders, multiple subfolders, redudundant examples
 - Dropbox: https://img.blot.im/ /Templates/portfolio-copy 
+
+
+Run scripts to restore missing git subfolder files
+- MULTIPLe missing git folders for one site?
+Fix missing git files in:
 - Dropbox backup: 
 - Google Drive: 
 - Tell [Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlKRdTJhChKdmSPmTzFzhsvV)
 
-Can we move minification out of app/blog, then run minification after computing the hash, before storing on disk? should speed up
-
 Run rebuild templates after verify-cdn-hash (purge of old incorrect hashes)
-- Skip calculating CDN manifest unless template is installed Don't update the blog cacheID when editing a template which is not installed (e.g. set view, etc.) can we safely skip the CDN manifest generation too....? these templates are only available on preview subdomains...
-- Add true async flushcache function which waits for queue to drain
+
+Add true async flushcache function which waits for queue to drain
 
 Remove the legacy redis hash routing from cdn/index.js and key definition
 - also create new script to forcefully migrate the dangling hashes from redis to disk, if they exist
@@ -19,6 +21,10 @@ Fix bug with iCloud sync where revisions to file content in subfolders don't syn
 We should get notifcations when stripe recovers an overdue subscription, as opposed to the user entering the form
 
 invalid package.json causes crazy error on template editor (missing colon)
+
+Resync all Dropbox/Drive blogs to apply new ignored files logic
+
+FIX dangerous writeToFolder file removal behaviour, esp. nested files
 
 Make entries.js support query.page as well as params.page and [make Ian's feed work](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXwDpcLsVnJDXQHcLnhMsnG)
 
