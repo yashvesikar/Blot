@@ -20,14 +20,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
@@ -48,6 +40,14 @@ jobs:
 
       - name: Verify SSH connection
         run: ssh blot "echo 'SSH connection successful'"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Deploy via npm script
         run: npm run deploy-node -- ${{ github.sha }}
