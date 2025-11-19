@@ -10,10 +10,6 @@ FIX dangerous writeToFolder file removal behaviour, esp. nested files
 
 ---
 
-Fix bug with iCloud sync where revisions to file content in subfolders don't sync and tell Fede and [JP](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlDfdPkKKQjHSPwcJDWTnbCW) and [S](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXvHvwdwsVcHWFZBmJFTTFC)
-
----
-
 Maybe we mix cacheID into query string for {{#cdn}} on preview subdomains with caching headers for improved template editor performance without expensive hash computation?
 
 Template delete should purge the cdn hashes / URLs
