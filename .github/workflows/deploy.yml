@@ -38,7 +38,11 @@ jobs:
           chmod 700 ~/.ssh
           cat >> ~/.ssh/config << EOF
           Host blot
+<<<<<<< HEAD
             HostName ${BLOT_DEPLOY_SSH_KEY}
+=======
+            HostName ${EC2_HOST}
+>>>>>>> 774ff9dbfc2fcda94a81b73603c0bbd39e8f4d46
             User deploy
             StrictHostKeyChecking no
             UserKnownHostsFile /dev/null
