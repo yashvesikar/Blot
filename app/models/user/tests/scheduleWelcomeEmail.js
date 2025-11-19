@@ -7,7 +7,7 @@ describe("user", function () {
 
   it("sends welcome email immediately when overdue", function (done) {
     var uid = this.user.uid;
-    var pastDate = Date.now() - 10 * 60 * 1000;
+    var pastDate = Date.now() - 3 * 60 * 60 * 1000;
 
     User.set(
       uid,
