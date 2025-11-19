@@ -2,9 +2,9 @@ Finish scripts to restore missing git subfolder files
 - Write script to checkout old commit, turn on local template editing, git init, writeToFolder while I debug
 - Tell [Paul](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqlKRdTJhChKdmSPmTzFzhsvV) once scripts are run
 
-FIX dangerous writeToFolder file removal behaviour, esp. nested files
-- Respect ignoreFile function
-- Ignore subfolders
+--- 
+
+Add github deploy button and setup coding and deployment from phone
 
 ---
 
