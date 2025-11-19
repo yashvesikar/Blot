@@ -7,7 +7,7 @@ const getById = require("./getById");
 const set = require("./set");
 
 const scheduledWelcomeEmails = new Map();
-const WELCOME_EMAIL_DELAY_MS = 5 * 60 * 1000; // 5 minutes
+const WELCOME_EMAIL_DELAY_MS = 2 * 60 * 60 * 1000; // 2 hours
 
 function getCreatedDate(user) {
   if (!user) return new Date();
