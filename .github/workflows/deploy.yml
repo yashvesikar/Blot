@@ -11,7 +11,43 @@ env:
   BLOT_EC2_HOST: ${{ secrets.BLOT_EC2_HOST }}
 
 jobs:
+  wait-for-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for build image to be available
+        run: |
+          echo "Waiting for build image to be available..."
+          
+          IMAGE="${{ env.REGISTRY_URL }}:${{ github.sha }}"
+          MAX_WAIT_MINUTES=30
+          WAIT_INTERVAL=10
+          MAX_ITERATIONS=$((MAX_WAIT_MINUTES * 60 / WAIT_INTERVAL))
+          ITERATION=0
+          
+          while [ $ITERATION -lt $MAX_ITERATIONS ]; do
+            if docker manifest inspect "$IMAGE" > /dev/null 2>&1; then
+              echo "✅ Build image found: $IMAGE"
+              exit 0
+            fi
+            
+            echo "Image not found yet. Waiting ${WAIT_INTERVAL} seconds... (attempt $((ITERATION + 1))/$MAX_ITERATIONS)"
+            sleep $WAIT_INTERVAL
+            ITERATION=$((ITERATION + 1))
+          done
+          
+          echo "❌ Timeout: Build image not found after ${MAX_WAIT_MINUTES} minutes: $IMAGE"
+          exit 1
+
   deploy:
+    needs: wait-for-build
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: Tests
