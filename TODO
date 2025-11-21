@@ -1,10 +1,11 @@
-Add github deploy button and setup coding and deployment from phone
-
----
-
 Resync all Dropbox/Drive blogs to apply new ignored files logic
 
 ---
+
+Secure deploy ssh on GitHub
+
+Set up aws cost anomaly detection 
+- add daily aws cost to email
 
 Make entries.js support query.page as well as params.page and [make Ian's feed work](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXwDpcLsVnJDXQHcLnhMsnG)
 
@@ -577,8 +578,6 @@ Set long-timeout for git client requests on reverse proxy
 - prevent request retry for non
 
 Add tests for webp thumbnails
-
-Add deploy button to GitHub so I can deploy code while away
 
 Improve the camera make and model names extracted by exiftool using a third-party library, e.g. SONY ILCE-7M3 -> Sony α7 III
 - [ ] Tell [Chuck](https://mail.google.com/mail/u/0/#inbox/QgrcJHrhvXLmnzQkFJsDwTvsrSbqBFVgtxV)
