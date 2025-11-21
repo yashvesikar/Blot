@@ -440,3 +440,10 @@
       example: |
         <link rel="preconnect" href="{{{cdn}}}" />
         <link rel="stylesheet" href="{{#cdn}}/style.css{{/cdn}}">
+
+    - name: plugin
+      type: object
+      description: |
+        Provides access to the public CSS or JavaScript for specific plugins so you can load only what you need. The helper respects your blog's plugin settings and returns nothing for missing or disabled plugins.
+      example: |
+        <style>{{{plugin.katex.css}}}</style>
