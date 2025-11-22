@@ -1,8 +1,8 @@
-Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
-
 Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
 - Use as [reference](https://fsanchez.io)
+
+Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
 
 Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
 
@@ -10,8 +10,8 @@ Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u
 
 Secure deploy ssh on GitHub
 
-Set up aws cost anomaly detection 
-- add daily aws cost to email
+Set up AWS cost anomaly detection 
+- add daily aws cost to email update
 
 Fix bug with repeat resyncs of specific sites via Google Drive:
 - To identify, run node scripts/google-drive/resync.js multiple times, some sites continually resync the same files...
