@@ -8,6 +8,10 @@ Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u
 
 ---
 
+Update question on what to do to import posts from wordpress or squarespace: instead of contact me, reference the importer. 
+
+Make it possible to configure the export file format (e.g. instead of markdown, word documents) on the importer
+
 Secure deploy ssh on GitHub
 
 Set up AWS cost anomaly detection
