@@ -74,7 +74,7 @@ Can we optimize renderView in some way?
 - use a proper library, cap memory, etc.
 - should majorly improve performance on popular sites
 
-Modify nginx config to serve as many CDN static files as possible
+verify that nginx config serves as many CDN static files as possible
 - eventually these files will be on s3 but for now, use nginx with try files where possible then pass on to upstream
 
 Resolve inconsistency: 'Create site' vs New template vs Create file
@@ -88,6 +88,8 @@ Fix bug with huge archives page
 ---
 
 Turn andrew's template into a seperate 'Hypertext' template
+
+Investigate replybox for comments
 
 Apply improvements from andrew's template into documentation template
 
