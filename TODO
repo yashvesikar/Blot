@@ -1,9 +1,3 @@
-Fix R's tag pages
-
-Fix sync issue with customer
-
----
-
 Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
 - Use as [reference](https://fsanchez.io)
@@ -15,10 +9,6 @@ Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u
 ---
 
 Fix bug with Elizabeth's Google Docs (export 403 file exceeds...)
-
-Update question on what to do to import posts from wordpress or squarespace: instead of contact me, reference the importer. 
-
-Make it possible to configure the export file format (e.g. instead of markdown, word documents) on the importer
 
 Secure deploy ssh on GitHub
 
@@ -94,6 +84,12 @@ Fix bug with huge archives page
 ---
 
 Turn andrew's template into a seperate 'Hypertext' template
+
+Update obsidian tools pages (improve)
+
+Update question on what to do to import posts from wordpress or squarespace: instead of contact me, reference the importer. 
+
+Make it possible to configure the export file format (e.g. instead of markdown, word documents) on the importer
 
 Investigate replybox for comments
 
