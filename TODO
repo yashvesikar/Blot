@@ -1273,6 +1273,18 @@ Add way to set the slug-part of a URL for a post and tell [George](https://mail.
 
 ---
 
+Investigate migrating from Redis to SQLite per-blog database
+- Evaluate feasibility of storing one SQLite database per blog in data/blogs/{blogID}/blog.db
+- Assess performance implications (memory usage, query speed, connection management)
+- Design hybrid approach: SQLite per-blog for blog-scoped data + small Redis/master DB for global lookups (handle/domain mappings, blog IDs set)
+- Identify all global queries that span multiple blogs (getHosts, handle/domain resolution) and plan migration strategy
+- Estimate memory savings vs current Redis approach (SQLite uses OS page cache vs Redis keeping everything in RAM)
+- Consider connection pooling/lazy opening strategy for managing many SQLite connections
+- Evaluate concurrent write patterns and SQLite locking behavior
+- Create proof-of-concept migration for entry storage (currently blog:{id}:entry:{path} in Redis)
+- Benchmark query performance comparison (Redis sorted sets vs SQLite queries)
+- Document migration path and breaking changes required
+
 Can Blot blogs be federated? Respond to [Nigel](https://mail.google.com/mail/u/0/#inbox/FMfcgzGrbRWfcBdwKdRZxsBKjKDwrkTp) once I do some research on this
 
 Rebuild folder sites and tell [Michael](https://mail.google.com/mail/u/0/?zx=j8rkxjpin0du#inbox/FMfcgzGqRQBnhXzfWsqFZhBCGVMMzDGX) that the broken image link is fixed
