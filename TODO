@@ -1,12 +1,39 @@
+Fix sync bug with [Levi's folder](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtlTflHjVlNGSjKDwjjgVFsw)
+
+Fix bug with documentation template nav and tell [Philip](https://mail.google.com/mail/u/0/#inbox/FMfcgzQdzcpNtQLMVJSXtksHwTBjGkMV)
+
 Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
 - Set up vanilla zoom
 - Use as [reference](https://fsanchez.io)
 
 Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
 
-Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
+Work on template for [Nadim](https://mail.google.com/mail/u/0/#inbox/FMfcgzQcqtXvtLQrqlLpxXRwLlPrbGCP)
 
 ---
+
+Switch domain to blot.site
+
+---
+
+Release new website
+
+---
+
+Work on templates
+- Turn andrew's template into a seperate 'Hypertext' template
+
+---
+
+Record new video
+
+---
+
+Send out winter newsletter
+
+---
+
+Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
 
 Fix bug with Elizabeth's Google Docs (export 403 file exceeds...)
 
@@ -81,9 +108,16 @@ Resolve inconsistency: 'Create site' vs New template vs Create file
 Fix bug with huge archives page 
 - `https://deoxy.blot.im/archives`
 
----
+Investigate sergio's icloud bug:
+- I had a folder called _attachments/ with all my images to ensure they’re not generated as pages
+- Syncing to that folder was a bit buggy, with some pictures ending up broken when referenced via markdown
+- Cut/paste a couple times sometimes fixed the issue, sometimes not
+- Renamed folder to Attachments 
+- Prefixed all files with _ and changed references
+- Broken state
+- Rebuild fixes it, site looks good now
 
-Turn andrew's template into a seperate 'Hypertext' template
+---
 
 Update obsidian tools pages (improve)
 
@@ -367,6 +401,8 @@ Improve tools/bear
 
 Improve tools/ulysses
 - Reach out to Ulysses to let them know about textbundle support
+
+Look into figma make
 
 Improve server performance by 1. Create `app/build/plugins/folderAssets/index.js` that exports a `render` handler; reuse the logic from `app/blog/render/replaceFolderLinks/html.js` and `lookupFile` so it asynchronously rewrites `<a href>`/`<img src>` etc. during build-time processing to CDN urls, resolving the correct case where needed.
 - 2. Register the plugin in `app/build/plugins/index.js` so it runs for HTML entries (respecting `options.isHTML`) and make it default-enabled for blogs.
