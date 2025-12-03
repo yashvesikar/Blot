@@ -9,6 +9,8 @@ Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxT
 Switch domain to blot.site
 - update macserver remote url
 - think about cdn (and existing URLs in posts)
+- set up mail
+- switch from mailgun to SES over new domain
 
 ---
 
@@ -1083,11 +1085,6 @@ Improvements to website:
 
 ---
 
-Consider switching domain to blot.site
-- add support for different user subdomain in dev?
-- set up mail
-- switch from mailgun to SES over new domain
-
 Add aws cost usage and forecast to daily update email
 - https://docs.aws.amazon.com/cli/latest/reference/ce/get-cost-and-usage.html
 
@@ -1222,7 +1219,6 @@ Add support for paying with crypto, BTC ETH
 Improve Are.na importer so it handles descriptions + also other file types (e.g. PDF, text) and tell [Marco](https://mail.google.com/mail/u/0/#inbox/QgrcJHsBvDqvbgfkRJfBlwLBwlDHDncxVnl)
 
 Improvements to server
-- [ ] move development cdn onto its own host to better simular cross-domain issues
 - [ ] test maintenance and redirector on dashboard
 - [ ] restrict post to /dashboard route so we can tune nginx logic?
 - [ ] tune performance of express-mustache in production and development
