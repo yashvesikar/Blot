@@ -1,6 +1,6 @@
 {
-	"name": "Fira Code",
-	"stack": "'Fira Code'",
+	"name": "Geist Mono",
+	"stack": "'Geist Mono', monospace",
 	"line_height": 1.4,
 	"line_width": 38,
 	"font_size": 16,
