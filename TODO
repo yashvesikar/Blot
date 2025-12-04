@@ -46,6 +46,8 @@ Bug reports:
 - Migrate base templates from entries to {{#posts}} and tell Omar
 - Document the special routing features for entries.html and tell Omar
 
+Make it clearer in the UI that creating a second site increases the subscription at the next billing cycle, probably with a one-time notice.
+
 Fix bug with repeat resyncs of specific sites via Google Drive:
 - To identify, run node scripts/google-drive/resync.js multiple times, some sites continually resync the same files...
 
