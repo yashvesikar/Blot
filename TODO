@@ -119,6 +119,9 @@ Investigate sergio's icloud bug:
 
 Update obsidian tools pages (improve)
 
+Follow up with Bunny about bug with spaces in file names served from folder
+- or write code to workaround
+
 Update question on what to do to import posts from wordpress or squarespace: instead of contact me, reference the importer. 
 
 Make it possible to configure the export file format (e.g. instead of markdown, word documents) on the importer
@@ -214,11 +217,6 @@ Fix bugs with custom domain setup
 - Validate the domain is pointing to Blot before allowing resty-auto-ssl to request a cert. we seem to get into a DNS mismatch where a client thinks a domain points to Blot, and triggers a cert request through resty-auto-ssl but whatever DNS server Blot's server points to has the stale record (pointing elsewhere)
 - Disable redirect to HTTPS for blogs by default (to ensure old browsers without SNI work) but ensure all prominent links to the blog on dashboard use HTTPS
 - cache domain validity and display checkmark on dashboard
-
-Fix bug where changes to documentation CSS do not make it into production:
-- stale servers serve the old CSS 
-- purge bunny after deployment complete?
-- can servers share the tmp dir views directory?
 
 Fix bug with Documentation template and the setting 'Adds zoom to large images' and [tell customer](https://mail.google.com/mail/u/0/#inbox/FMfcgzQbgJMGTSPcnwTNxVJVPZZnrhJB)
 
