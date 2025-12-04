@@ -2,11 +2,21 @@
   font-family: 'Geist';
   font-style: normal;
   font-weight: 400;
-  src: url('{{{config.cdn.origin}}}/fonts/geist/400.eot?version=759f2a&extension=.eot'); 
-  src: url('{{{config.cdn.origin}}}/fonts/geist/400.eot?version=759f2a&extension=.eot#iefix') format('embedded-opentype'), 
-       url('{{{config.cdn.origin}}}/fonts/geist/400.woff?version=36adb7&extension=.woff') format('woff'),
-       url('{{{config.cdn.origin}}}/fonts/geist/400.ttf?version=1713ac&extension=.ttf') format('truetype'),
-       url('{{{config.cdn.origin}}}/fonts/geist/400.otf?version=23188f&extension=.otf') format('opentype');
+  src: url('{{{config.cdn.origin}}}/fonts/geist/400.eot?version=280f76&extension=.eot'); 
+  src: url('{{{config.cdn.origin}}}/fonts/geist/400.eot?version=280f76&extension=.eot#iefix') format('embedded-opentype'), 
+       url('{{{config.cdn.origin}}}/fonts/geist/400.woff?version=2f8a94&extension=.woff') format('woff'),
+       url('{{{config.cdn.origin}}}/fonts/geist/400.ttf?version=3bf843&extension=.ttf') format('truetype'),
+       url('{{{config.cdn.origin}}}/fonts/geist/400.otf?version=4b8355&extension=.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: italic;
+  font-weight: 400;
+  src: url('{{{config.cdn.origin}}}/fonts/geist/400-italic.eot?version=e59360&extension=.eot'); 
+  src: url('{{{config.cdn.origin}}}/fonts/geist/400-italic.eot?version=e59360&extension=.eot#iefix') format('embedded-opentype'), 
+       url('{{{config.cdn.origin}}}/fonts/geist/400-italic.woff?version=090047&extension=.woff') format('woff'),
+       url('{{{config.cdn.origin}}}/fonts/geist/400-italic.ttf?version=5f28e6&extension=.ttf') format('truetype'),
+       url('{{{config.cdn.origin}}}/fonts/geist/400-italic.otf?version=e42485&extension=.otf') format('opentype');
 }
 .pull-double {margin-left:-0.346em}
 .push-double{margin-right:0.346em}
