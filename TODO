@@ -12,6 +12,16 @@ Switch domain to blot.site
 - set up mail
 - switch from mailgun to SES over new domain
 
+Hidden link to ban IP (idea from herman)
+- think about nofollow / 
+
+Check if I am blocking empty user agents
+
+Ban sql injection url queries from logs
+
+Cap url length 
+- ban
+
 ---
 
 Release new website
