@@ -376,6 +376,8 @@ Build out simple discover page with links to publish in daily email
 
 Add photo/pictures/pics/images grid to tagged page of blog template and photos subfolder to default folder.
 
+Add plugin to generate anchor links next to headings automatically and tell [Peter](https://mail.google.com/mail/u/0/#inbox/FMfcgzQZTzTSGBNGZrJghtTNGNKvdzlg)
+
 Refactor front end domain page to have radio button to seelct between custom domain and blot subdomain
 Inbox
 - don't delete custom domain, though (maybe add property redirectDomain ?)
