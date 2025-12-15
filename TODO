@@ -31,6 +31,10 @@ Fix bug with Elizabeth's Google Docs (export 403 file exceeds...)
 
 Secure deploy ssh on GitHub
 
+Add GitHub deploy button for macserver
+
+Add GitHub deploy button for openresty 
+
 Set up AWS cost anomaly detection
 - add daily aws cost to email update
 
