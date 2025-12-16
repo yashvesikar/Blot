@@ -13,30 +13,19 @@ Work on templates
 
 Record new video
 
-Move image zoom to template settings
-
 ---
 
 Send out winter newsletter
 
 ---
 
+Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
+
 Investigate issues with image heavy obsidian vaults
 
 Investigate obsidian and ia writer wikilink resolution issues
 
-Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
-
 Fix bug with Elizabeth's Google Docs (export 403 file exceeds...)
-
-Secure deploy ssh on GitHub
-
-Add GitHub deploy button for macserver
-
-Add GitHub deploy button for openresty 
-
-Set up AWS cost anomaly detection
-- add daily aws cost to email update
 
 Bug reports:
 - The syntax highlighter font selector doesn't seem to work, neither with my template nor with the default ones. You can't select a font and tell Omar
@@ -139,6 +128,15 @@ Add lang selector (map english -> en) to template editor
 
 Create a new template local '{{{system-css}}}' which merges `{{{appCSS}}}, {{{font.styles}}}, {{{title_font.styles}}}`
 
+Secure deploy ssh on GitHub
+
+Add GitHub deploy button for macserver
+
+Add GitHub deploy button for openresty 
+
+Set up AWS cost anomaly detection
+- add daily aws cost to email update
+
 ---
 
 Fix bug with camelCase custom metadata and tell [questioner](https://blot.im/questions/2294)
@@ -187,6 +185,8 @@ Fix bug with 'failed to update folder lock' that throws an error – is the issu
 
 Fix bug with iCloud client which doesn't surface / handle removed folder
 - to reproduce, connect to icloud then delete the folder
+
+Move image zoom to template settings
 
 Fix bug with cancelled subscriptions that keeps the account around
 - finish script to identify long-expired customers with blogs to safely delete and free up space. 
