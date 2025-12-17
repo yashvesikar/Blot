@@ -1,25 +1,43 @@
 Winter newsletter
 
-*You received this email because you subscribed to [Blot’s newsletter](https://blot.im/about/news). You can [unsubscribe](https://blot.im/about/news/cancel) if you like. Please reply directly to this email if you have any thoughts or questions.*
+*You received this email because you subscribed to [Blot's newsletter](https://blot.im/news). You can [unsubscribe](https://blot.im/news/cancel) at any time. Please reply directly to this email if you have any thoughts or questions.*
 
 **New features**
-- Plugin which injects titles into markdown posts without them. This makes using Obsidian much easier. 
-- added pagination to tagged template pages
-- Added support for TextBundle files.
+- Blot now supports the [TextBundle format](https://blot.im/how/files/markdown#textbundle), which lets you embed images in Markdown files when using apps like [Bear](https://blot.im/tools/bear) and [Ulysses](https://blot.im/tools/ulysses).
+- You can now use [markdown highlighting](https://blot.im/how/files/markdown#highlighting) by surrounding text with double equals signs (==like this==).
+- Tagged template pages now support pagination using query parameters.
+- Date format strings in templates are now rendered before formatting, allowing for more dynamic date displays.
+- A plugin automatically injects titles into markdown posts without them, making it easier to use Obsidian.
+- The template editor now includes a mobile preview feature and improved controls for customizing templates.
 
 **Changes**
-- added file size limit to dropbox client
+- The CDN infrastructure was improved with better manifest handling and moved from Redis to disk storage for improved reliability.
+- The Dropbox file size limit was increased to 100MB.
+- New Geist fonts were added to the template editor.
+- Templates are now automatically forked per blog when using site templates, preventing conflicts between sites.
+- The template editor received numerous improvements including better file handling, improved UI, and more reliable editing.
+- Documentation improvements including guides for common tasks.
 
-**Bugs fixed**
-- fixed bug with issue syncing large files via dropbox
-- fixed bug with wikilinks referencing deleted entries
+**Bug fixes**
+- Fixed bug with syncing large files via Dropbox.
+- Fixed bug with wikilinks referencing deleted entries.
+- Fixed issues with the search page and question search.
+- Fixed bug with scheduled posts.
+- Fixed various template editor bugs including issues with Firefox, submenus, and template duplication.
+- Fixed bug with large page numbers in pagination.
+- Fixed issues with domain verification using authoritative DNS resolvers.
+- Fixed various template rendering issues across different templates.
 
 **Questions**
 
 **Mistakes**
 
-**Plans for this season**
+**Plans for the spring**
+- Continue improving the template editor and developer documentation.
+- Work on template performance and reliability improvements.
+- Further enhancements to the mobile experience across templates.
 
-If you have any thoughts or questions about any of this, please don’t hesitate to reply directly to this email.
+If you have any thoughts or questions, please don't hesitate to reply directly to this email.
 
-Sincerely, David
+Sincerely,
+David
