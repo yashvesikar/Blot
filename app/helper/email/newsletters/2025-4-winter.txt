@@ -4,11 +4,11 @@ Winter newsletter
 
 **New features**
 - Added two new templates:
-  - The [Hypertext template](https://blot.im/templates/hypertext), designed for a digital garden, personal wiki or knowledge base. The sidebar navigation maps directly to the structure of your folder.
+  - The [Hypertext template](https://blot.im/templates/hypertext), designed for a digital garden or personal wiki and inspired by [Obsidian Publish](https://obsidian.md/publish). The sidebar navigation maps directly to the structure of your folder.
   - The [Journal template](https://blot.im/templates/journal), designed for a blog and based on [Tufte.css](https://edwardtufte.github.io/tufte-css/).
 - Blot now supports the [TextBundle format](https://blot.im/how/files/markdown#textbundle), which lets you embed images in Markdown files when using apps like [Ulysses](https://blot.im/tools/ulysses) and [Bear](https://blot.im/tools/bear).
 - You can now [highlight text](https://blot.im/how/files/markdown#highlighting) in Markdown files.
-- Added [Geist fonts](https://vercel.com/font) to the font picker on the web template editor.
+- Added [Geist](https://vercel.com/font) to the font picker on the web template editor.
 - Blot can now automatically insert a title heading based on the file name. This makes it much easier to use [Obsidian](https://blot.im/tools/obsidian) to work on your site.
 
 **Changes**
@@ -31,14 +31,15 @@ Winter newsletter
 
 **Mistakes**
 
-The last period was [without a single incident of downtime](https://status.blot.im) and I have dramatically improved the server stability and average response time after implementing some bot blocking measures. 
+The last period was [without a single incident of downtime](https://status.blot.im) and I have improved the server stability and average response time after implementing some measures to block excessive non-human traffic.
 
-I did introduce a bug that temporarily removed some user data. A recent change now routes your site’s CSS and JavaScript through Blot’s CDN. For sites with locally edited templates, this involved writing the modified templates into the folder. A recent change to that code unintentionally deleted .git subfolders inside these template folders. With the help of [Paul](https://paul.af/) I was able to identify the problem and then restore all affected repositories and fix the code to preserve existing subdirectories. If your site was affected, I contacted you directly. I’m sorry.
+I was responsible for a bug that temporarily removed some user data. A recent change now routes your site’s CSS and JavaScript through Blot’s CDN. For sites with locally edited templates, this involved writing the modified templates into your site folders. A recent change to that code unintentionally deleted .git subfolders inside these template folders. With the help of [Paul](https://paul.af/) I was able to identify the problem and then restore all affected repositories and fix the code to preserve existing subdirectories. If your site was affected, I contacted you directly.
 
 **Plans for the spring**
-- Continue improving the templates, template editor and developer documentation.
-- I am working on scaling both the infrastructure and the application code. One upcoming change is an adjustment to how posts are stored. Currently, each post is stored as a single JSON blob in Redis, which requires fetching the entire object even when only a few fields are needed. I plan to migrate this data to Redis hashes, allowing selective retrieval of specific properties (for example, titles and URLs for archive pages), which will improve the speed of your site.
-- I plan to migrate more data from local disk storage to an object-storage API. Blot sometimes fails when individual servers run out of disk space. Moving to an unbounded object store (i.e. S3) will avoid this issue.
+- Improve the existing templates and add new templates.
+- Adjust the way posts are stored in the database. Currently, each post is stored as a single JSON blob in Redis, which requires fetching the entire object even when only a few fields are needed. I plan to migrate this data to Redis hashes, allowing selective retrieval of specific properties (for example, titles and URLs for archive pages), which will improve the speed of your site.
+- Migrate more data from local disk storage to an object-storage API. Blot sometimes fails when individual servers run out of disk space. Moving to an unbounded object store (i.e. S3) will avoid this issue.
+- Work on the web template editor and developer documentation.
 
 If you have any thoughts or questions, please don’t hesitate to reply directly to this email.
 
