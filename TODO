@@ -1,30 +1,26 @@
 Release new brochure site
 
----
-
-Work on templates
-- Transfer theme for [Fede](https://wordpress.org/themes/kanso/)
-  - Release as profile template
-- Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
-- Turn Andrew's template into a seperate 'Hypertext' template
-
----
-
 Record new video
 
 ---
 
-Send out winter newsletter
-
----
-
-Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
+Make it possible to disable processing of image files into individual posts and tell [Brendan](https://mail.google.com/mail/u/0/#inbox/FMfcgzQdzvsdKBgDQqPRcBzTJKVPqNfr)
 
 Investigate issues with image heavy obsidian vaults
 
 Investigate obsidian and ia writer wikilink resolution issues
 
+Release [Fede](https://wordpress.org/themes/kanso/)'s theme as profile template
+
 Fix bug with Elizabeth's Google Docs (export 403 file exceeds...)
+
+---
+
+Transfer theme for [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
+
+Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u/0/#inbox/KtbxLzFrMrLsxTzRKrfFWQBgXxBHCVbGTg)
+
+---
 
 Bug reports:
 - The syntax highlighter font selector doesn't seem to work, neither with my template nor with the default ones. You can't select a font and tell Omar
