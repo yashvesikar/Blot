@@ -33,7 +33,9 @@ Winter newsletter
 
 The last period was [without a single incident of downtime](https://status.blot.im) and I have improved the server stability and average response time after implementing some measures to block excessive non-human traffic.
 
-I was responsible for a bug that temporarily removed some user data. A recent change now routes your site’s CSS and JavaScript through Blot’s CDN. For sites with locally edited templates, this involved writing the modified templates into your site folders. An earlier change to that code unintentionally deleted .git subfolders inside these template folders. With the help of [Paul](https://paul.af/), I was able to identify the problem and then restore all affected repositories and fix the code to preserve existing subdirectories. If your site was affected, I contacted you directly.
+I was responsible for a bug that temporarily removed some user data. A recent change now routes your site’s CSS and JavaScript through Blot’s CDN. For sites with locally edited templates, this involved writing the modified templates into your site folders. An earlier change to that code unintentionally deleted .git subfolders inside these template folders. 
+
+With the help of [Paul](https://paul.af/), I was able to identify the problem and then restore all affected repositories and fix the code to preserve existing subdirectories. If your site was affected, I contacted you directly.
 
 **Plans for the spring**
 - Improve the existing templates and add new templates.
