@@ -22,6 +22,8 @@ Add comments from Bluesky feature and tell [John](https://mail.google.com/mail/u
 
 ---
 
+Improve hypertext template to support listing pages as well as posts in the sidebar
+
 Bug reports:
 - The syntax highlighter font selector doesn't seem to work, neither with my template nor with the default ones. You can't select a font and tell Omar
 - The website preview on the dashboard does not scroll, at least on FireFox on MacOS and tell Omar
